@@ -257,10 +257,11 @@ an empty result. On the site it is labelled the same way it is in the app: `LIGH
 3 GENERATED STOPS`. Do not dress it up as equivalent to a reconstruction.
 
 **Waitlist.** The apps are not in the stores, so the page does not pretend they are. The
-download section is a form: one email field on `--surface`, three radio choices for the phone,
-one primary button, and a mono note stating exactly what the address is used for. On success
-the field and the button are removed and the status line replaces them, so there is nothing
-left to submit twice. Failures speak plainly and never blame the reader. The form carries a
+download section is a form with exactly one thing to do: an email field and a button, sharing a
+single rounded box that takes the focus ring as a whole. Nothing else competes with it. On
+success the box is removed and the status line replaces it, so there is nothing left to submit
+twice, and only then does the follow-up question appear, asking which city to build next. Ask
+for the smallest thing first and the rest afterwards. Failures speak plainly and never blame the reader. The form carries a
 hidden `company` field that a person never sees; anything that fills it is treated as a bot and
 silently accepted without a write.
 
