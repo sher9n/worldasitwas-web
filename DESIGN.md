@@ -386,6 +386,11 @@ Thames, a light travels the border of the invitation, the plates never sit perfe
 the phone runs the product on a loop. `fx-reveal`, `fx-atmos`, `fx-pulse`, `fx-lift`, `fx-count`
 and `fx-parallax` are built and off, so they can be judged rather than argued about.
 
+**Today is a photograph, not a diagram.** The era viewer once ended on a drawn map of modern
+London, which read as a wireframe beside three real images. It ends on a photograph of the
+Thames at sunset now, graded to the same warm tone as the rest, so all four eras are the same
+kind of thing: a real view of the city, credited, a few centuries apart.
+
 **The phone is the product, demonstrated.** It types a place, the map finds the street, the year
 is dragged back, Travel is pressed, and the map becomes the older city. Two maps live in the same
 SVG (`.map-now`, `.map-then`) and cross-fade, which is the whole idea in four seconds without a
@@ -394,8 +399,10 @@ describes what it demonstrates rather than what it contains.
 
 **A slow zoom beats a reveal.** An entrance you only see once, and only if you happen to scroll
 past at the right moment, is invisible most of the time. A drift that never quite stops is
-legible whenever anyone looks. Keep it under about 5% of scale over half a minute: past that it
-reads as an effect rather than as depth.
+legible whenever anyone looks. It runs about 1% to 18% of scale over twenty seconds, on the
+plates and on the era viewer, with neighbours deliberately out of phase so no two images move
+together. Subtle enough to be missed is the same as absent; the first two attempts at this were
+both too quiet to see.
 
 Two rules the self-walking timeline has to keep, and they generalise to anything that moves on
 its own: **it yields the moment someone touches it** (twenty seconds before it resumes), and

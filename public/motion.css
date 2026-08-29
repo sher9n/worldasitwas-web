@@ -210,13 +210,21 @@
 /* ---------- fx-alive: the images never sit perfectly still ---------- */
 /* smaller than you would design on purpose, which is the point: you read it as
    depth rather than as an effect */
-.fx-alive .plate{overflow:hidden}
-.fx-alive .plate img{animation:alive 30s ease-in-out infinite alternate;
-  transform-origin:center 55%;will-change:transform}
-.fx-alive .plate:nth-of-type(even) img{animation-duration:38s;animation-direction:alternate-reverse}
+.fx-alive .plate,
+.fx-alive .viewer{overflow:hidden}
+.fx-alive .plate img,
+.fx-alive .viewer-layer img{animation:alive 20s ease-in-out infinite alternate;
+  transform-origin:center 52%;will-change:transform}
+.fx-alive .plate:nth-of-type(even) img{animation-duration:26s;animation-direction:alternate-reverse;
+  transform-origin:58% 48%}
+/* the era viewer runs the other way, so a plate and the viewer beside it never
+   drift in lockstep */
+.fx-alive .viewer-layer:nth-child(even) img{animation-duration:24s;
+  animation-direction:alternate-reverse;transform-origin:44% 54%}
+/* big enough to see, slow enough not to nag */
 @keyframes alive{
-  from{transform:scale(1.012)}
-  to{transform:scale(1.055)}
+  from{transform:scale(1.012) translate3d(0,0,0)}
+  to{transform:scale(1.185) translate3d(-1.8%,-2%,0)}
 }
 
 /* ---------- fx-phone: the mock runs the product ---------- */
@@ -324,7 +332,8 @@
   .fx-lift .later li:hover{transform:none!important}
   .fx-reveal .plate img,
   .fx-reveal .plate figcaption{transform:none!important;opacity:1!important;transition:none!important}
-  .fx-alive .plate img{animation:none!important}
+  .fx-alive .plate img,
+  .fx-alive .viewer-layer img{animation:none!important}
   .fx-phone .phone-caret{animation:none;opacity:0}
   .phone-map svg,.mini-dot,.map-then,.map-now{transition:none!important}
 }

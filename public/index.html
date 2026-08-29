@@ -54,8 +54,11 @@
   }
 })();
 </script>
-<link rel="stylesheet" href="/style.css?v=2">
-<link rel="stylesheet" href="/motion.css?v=1">
+<link rel="stylesheet" href="/style.css?v=3">
+<link rel="stylesheet" href="/motion.css?v=2">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+<script defer src="/phone.js?v=1"></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -131,6 +134,7 @@
     <div class="hero-device reveal" style="--i:2">
       <div class="phone" id="phone" role="img" aria-label="The app, demonstrating itself: a place is typed in, the map finds Fleet Street, the year is dragged back to 1850, and Travel is pressed.">
         <div class="phone-screen">
+          <div id="phoneApp"></div>
           <div class="phone-status" aria-hidden="true"><span>9:41</span><span>100%</span></div>
           <div class="phone-search" aria-hidden="true"><span class="meta">Where</span><b id="phWhere">London</b><i class="phone-caret"></i></div>
           <div class="phone-map" aria-hidden="true">
@@ -283,40 +287,10 @@
             </picture>
           </div>
           <div class="viewer-layer" data-era="3">
-            <svg viewBox="0 0 900 600" preserveAspectRatio="xMidYMid slice" role="img" aria-label="The app's plain map of London today, with a pin on Fleet Street.">
-              <defs><radialGradient id="todayHalo"><stop offset="0" stop-color="currentColor" stop-opacity=".26"/><stop offset=".7" stop-color="currentColor" stop-opacity="0"/></radialGradient></defs>
-              <rect class="m-ground" width="900" height="600"/>
-              <path class="m-park" d="M60 96 C 130 70, 250 76, 300 118 S 316 214, 236 236 S 74 232, 52 176 Z"/>
-              <path class="m-park" d="M600 120 C 656 104, 730 110, 762 140 S 770 206, 712 220 S 606 214, 588 176 Z"/>
-              <path d="M-20 402 C 110 358, 250 372, 350 414 S 560 484, 680 440 S 860 396, 920 410 L 920 470 C 850 456, 700 512, 570 494 S 330 440, 220 428 S 60 418, -20 448 Z" class="m-water"/>
-              <g class="m-blocks">
-                <path d="M340 60 h84 v58 h-84 z"/><path d="M440 56 h72 v66 h-72 z"/><path d="M528 62 h92 v56 h-92 z"/>
-                <path d="M336 136 h96 v66 h-96 z"/><path d="M448 132 h70 v72 h-70 z"/><path d="M534 138 h92 v64 h-92 z"/>
-                <path d="M60 268 h92 v58 h-92 z"/><path d="M168 262 h76 v66 h-76 z"/><path d="M260 266 h100 v60 h-100 z"/><path d="M376 260 h78 v70 h-78 z"/><path d="M470 266 h96 v58 h-96 z"/><path d="M582 262 h84 v66 h-84 z"/><path d="M682 268 h96 v58 h-96 z"/><path d="M794 264 h96 v62 h-96 z"/>
-                <path d="M64 340 h88 v44 h-88 z"/><path d="M170 342 h72 v40 h-72 z"/><path d="M262 338 h98 v46 h-98 z"/><path d="M378 342 h74 v40 h-74 z"/><path d="M468 338 h94 v44 h-94 z"/><path d="M580 342 h82 v40 h-82 z"/><path d="M680 340 h94 v44 h-94 z"/>
-                <path d="M120 500 h96 v78 h-96 z"/><path d="M234 508 h86 v70 h-86 z"/><path d="M338 512 h104 v66 h-104 z"/><path d="M462 502 h96 v76 h-96 z"/><path d="M578 510 h92 v68 h-92 z"/><path d="M690 500 h104 v78 h-104 z"/>
-              </g>
-              <g class="m-streets" stroke-width="1.4" stroke-linecap="round">
-                <path d="M0 126 C 120 120, 220 130, 330 124 S 560 112, 900 120"/>
-                <path d="M0 216 H 900"/><path d="M0 334 H 900"/>
-                <path d="M0 382 C 140 374, 300 390, 460 380 S 760 364, 900 372"/>
-                <path d="M330 40 V 384"/><path d="M436 40 V 386"/><path d="M524 40 V 384"/><path d="M630 40 V 386"/><path d="M760 40 V 384"/><path d="M160 240 V 386"/><path d="M60 240 V 384"/>
-                <path d="M0 486 C 160 478, 320 494, 520 484 S 800 470, 900 476"/>
-                <path d="M226 448 V 600"/><path d="M330 452 V 600"/><path d="M452 448 V 600"/><path d="M568 452 V 600"/><path d="M680 448 V 600"/>
-              </g>
-              <path class="m-road" d="M0 292 C 140 286, 280 300, 430 288 S 700 262, 900 272" stroke-width="2.8" stroke-linecap="round"/>
-              <circle class="m-halo" cx="452" cy="292" r="46"/>
-              <circle class="m-pin-wide" cx="452" cy="292" r="8" stroke-width="3"/>
-              <g transform="translate(474 278)">
-                <rect class="m-chip" width="132" height="28" rx="6"/>
-                <text class="m-chip-text" x="66" y="19" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11" letter-spacing="1.5">FLEET STREET</text>
-              </g>
-              <g class="m-label" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11" letter-spacing="2">
-                <text x="86" y="440">THAMES</text>
-                <text x="120" y="150">HYDE PARK</text>
-                <text x="624" y="164">REGENT'S PARK</text>
-              </g>
-            </svg>
+            <picture>
+              <source data-plate media="(prefers-color-scheme: light)" srcset="/plates/era-london-today-900-light.jpg 900w, /plates/era-london-today-light.jpg 1500w" sizes="(max-width:1024px) 92vw, 62vw">
+              <img src="/plates/era-london-today.jpg" srcset="/plates/era-london-today-900.jpg 900w, /plates/era-london-today.jpg 1500w" sizes="(max-width:1024px) 92vw, 62vw" width="1500" height="1000" loading="lazy" decoding="async" alt="Photograph of the Thames at sunset today, Tower Bridge lit and the City skyline behind it.">
+            </picture>
           </div>
           <div class="viewer-stamp">
             <span class="numeral" id="stampYear">1850</span>
@@ -947,8 +921,8 @@
     },
     {
       year: "Today", label: "London, 2026", title: "London, today.",
-      desc: "The city you can walk out into. This is where every journey starts. Pick a corner, then move the year.",
-      caption: "The map, today · Your starting point",
+      desc: "The city you can walk out into, and the river still doing the same work. This is where every journey starts. Pick a corner, then move the year.",
+      caption: "David Iliff, the Thames at sunset, 2008 · CC BY 3.0",
       rows: [
         ["People", "About 8.9 million", "known"],
         ["Money", "Pounds and pence", "known"],
