@@ -107,6 +107,11 @@
       var map = useMemo(function () { return buildMap(year); }, [year]);
       var era = eraFor(year);
 
+      // the page listens: travelling in the phone takes the whole hero with it
+      useEffect(function () {
+        window.dispatchEvent(new CustomEvent("waiw:year", { detail: { year: year } }));
+      }, [year]);
+
       function stopDemo() {
         demo.current.timers.forEach(clearTimeout);
         demo.current.timers = [];

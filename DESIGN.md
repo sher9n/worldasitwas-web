@@ -386,6 +386,18 @@ Thames, a light travels the border of the invitation, the plates never sit perfe
 the phone runs the product on a loop. `fx-reveal`, `fx-atmos`, `fx-pulse`, `fx-lift`, `fx-count`
 and `fx-parallax` are built and off, so they can be judged rather than argued about.
 
+**History is not only its disasters.** The era timeline once opened on the Great Fire and ended
+near the Blitz, which made a page about visiting the past feel like a page about surviving it.
+It runs 1616, 1747, 1851, 1900, today: Shakespeare's playhouses, a bridge going up, a glass hall
+built in nine months around a living elm, the largest city in the world, and the river still
+working. The archive keeps one dark era, because pretending otherwise would be its own kind of
+dishonesty, but the demonstration leads with what was made rather than what burned.
+
+**The hero follows the year.** Moving the phone's slider moves the whole page: the background
+becomes the nearest view we hold to that year and the credit line follows it. The hero drifts on
+its own until the phone gives it a year, and then the phone leads for good. One control, one
+truth on screen.
+
 **Today is a photograph, not a diagram.** The era viewer once ended on a drawn map of modern
 London, which read as a wireframe beside three real images. It ends on a photograph of the
 Thames at sunset now, graded to the same warm tone as the rest, so all four eras are the same
