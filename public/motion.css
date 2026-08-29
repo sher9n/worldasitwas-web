@@ -1,0 +1,195 @@
+/* World As It Was, motion
+   ---------------------------------------------------------------------------
+   Every effect is behind a switch on <html>, so each one can be turned on and
+   off on its own and judged against the others:
+
+     fx-timeline   the year slider gets weight
+     fx-load       an orchestrated hero entrance
+     fx-marks      the confidence underlines draw themselves in
+     fx-drift      the hero cross-dissolves through centuries by itself
+     fx-atmos      a slow drift on the plates, and faint grain
+     fx-parallax   the hero plate moves against the scroll (the brief says no)
+
+   Nothing here animates layout. Opacity and transform only, so scrolling stays
+   smooth, and the whole file stands down under prefers-reduced-motion.
+   --------------------------------------------------------------------------- */
+
+:root{
+  --spring:cubic-bezier(.22,1,.36,1);
+  --spring-back:cubic-bezier(.34,1.56,.64,1);
+}
+
+/* ---------- fx-timeline: the signature interaction gets weight ---------- */
+.fx-timeline .scrub-halo{transition:left .52s var(--spring-back)}
+.fx-timeline .scrub-range::-webkit-slider-thumb{transition:transform .18s var(--spring-back)}
+.fx-timeline .scrub-range:active::-webkit-slider-thumb{transform:scale(1.18)}
+.fx-timeline .scrub-range::-moz-range-thumb{transition:transform .18s var(--spring-back)}
+.fx-timeline .scrub-range:active::-moz-range-thumb{transform:scale(1.18)}
+.fx-timeline .scrub-nodes i{transition:background-color .3s var(--spring),border-color .3s var(--spring)}
+.fx-timeline .scrub-labels button{transition:color .2s var(--spring),transform .2s var(--spring)}
+.fx-timeline .scrub-labels button[aria-current="true"]{transform:translateY(-2px)}
+
+/* the year rolls over instead of swapping */
+.fx-timeline .viewer-stamp .numeral,
+.fx-timeline .viewer-stamp .meta{display:inline-block}
+.fx-timeline .stamp-roll{animation:roll .42s var(--spring) both}
+@keyframes roll{
+  from{opacity:0;transform:translateY(.34em)}
+  to{opacity:1;transform:none}
+}
+
+/* the record restates itself line by line */
+.fx-timeline .record dl > *{animation:row-in .38s var(--spring) both;
+  animation-delay:calc(var(--r,0) * 42ms)}
+@keyframes row-in{
+  from{opacity:0;transform:translateY(6px)}
+  to{opacity:1;transform:none}
+}
+
+/* the plate arrives rather than appearing */
+.fx-timeline .viewer-layer{transition:opacity .52s var(--spring),transform .52s var(--spring)}
+.fx-timeline .viewer-layer:not(.on){transform:scale(1.012)}
+
+/* ---------- fx-load: the hero sets itself ---------- */
+.fx-load .hero-copy > *,
+.fx-load .hero-device,
+.fx-load .hero-credit{animation:hero-in .72s var(--spring) both;
+  animation-delay:calc(var(--l,0) * 90ms + 60ms)}
+.fx-load .hero-copy .eyebrow{--l:0}
+.fx-load .hero-copy .display-1{--l:1}
+.fx-load .hero-copy .lede{--l:2}
+.fx-load .hero-copy .actions{--l:3}
+.fx-load .hero-copy .meta{--l:4}
+.fx-load .hero-device{--l:3}
+.fx-load .hero-credit{--l:6}
+@keyframes hero-in{
+  from{opacity:0;transform:translateY(16px)}
+  to{opacity:1;transform:none}
+}
+/* the plate itself settles, which is what makes the rest feel like a sequence */
+.fx-load .hero-plate img{animation:plate-settle 1.6s var(--spring) both}
+@keyframes plate-settle{
+  from{opacity:0;transform:scale(1.05)}
+  to{opacity:1;transform:none}
+}
+
+/* ---------- fx-marks: certainty draws itself in ---------- */
+/* text-decoration cannot animate, so the rule becomes a pseudo-element that can */
+.fx-marks .narration .known,
+.fx-marks .narration .likely,
+.fx-marks .narration .generated{text-decoration:none;position:relative}
+.fx-marks .narration .known::after,
+.fx-marks .narration .likely::after,
+.fx-marks .narration .generated::after{
+  content:"";position:absolute;left:0;right:0;bottom:-3px;
+  border-bottom:1px solid currentColor;
+  transform:scaleX(0);transform-origin:left center;
+  transition:transform .62s var(--spring)}
+.fx-marks .narration .known::after{border-bottom-color:var(--known-line);border-bottom-style:solid}
+.fx-marks .narration .likely::after{border-bottom-color:var(--likely-line);border-bottom-style:dashed}
+.fx-marks .narration .generated::after{border-bottom-color:var(--generated-line);border-bottom-style:dotted}
+.fx-marks .narration.drawn .known::after{transform:scaleX(1);transition-delay:.1s}
+.fx-marks .narration.drawn .likely::after{transform:scaleX(1);transition-delay:.5s}
+.fx-marks .narration.drawn .generated::after{transform:scaleX(1);transition-delay:.9s}
+/* the legend keys follow the narration */
+.fx-marks .legend .rule{transform:scaleX(0);transform-origin:left center;
+  transition:transform .5s var(--spring)}
+.fx-marks .legend.drawn .rule{transform:scaleX(1)}
+.fx-marks .legend.drawn li:nth-child(2) .rule{transition-delay:.12s}
+.fx-marks .legend.drawn li:nth-child(3) .rule{transition-delay:.24s}
+
+/* ---------- fx-drift: the hero moves through time on its own ---------- */
+.hero-drift{position:absolute;inset:0;display:none}
+.fx-drift .hero-drift{display:block}
+.fx-drift .hero-plate > picture,
+.fx-drift .hero-plate > img{opacity:0}
+.hero-drift .d-frame{position:absolute;inset:0;opacity:0;
+  transition:opacity 2.2s linear}
+.hero-drift .d-frame.on{opacity:1}
+.hero-drift img{width:100%;height:100%;object-fit:cover;object-position:50% 48%}
+.hero-year{display:none}
+.fx-drift .hero-year{display:inline-block;color:var(--accent-text);
+  font-family:var(--display);font-style:italic;font-size:1.1em}
+
+/* ---------- fx-atmos: air, not effects ---------- */
+.fx-atmos .plate img,
+.fx-atmos .viewer-layer img,
+.fx-atmos .hero-drift img{animation:breathe 34s ease-in-out infinite alternate}
+@keyframes breathe{
+  from{transform:scale(1.02) translate3d(0,0,0)}
+  to{transform:scale(1.06) translate3d(-1%,-.8%,0)}
+}
+.fx-atmos .hero-plate::before{
+  content:"";position:absolute;inset:-40%;z-index:1;pointer-events:none;opacity:.5;
+  background:
+    radial-gradient(60% 40% at 30% 20%,rgba(232,184,106,.06),transparent 70%),
+    radial-gradient(50% 40% at 75% 60%,rgba(232,184,106,.05),transparent 70%);
+  animation:smoke 48s ease-in-out infinite alternate}
+@keyframes smoke{
+  from{transform:translate3d(-2%,0,0) rotate(0deg)}
+  to{transform:translate3d(3%,-2%,0) rotate(4deg)}
+}
+
+/* ---------- fx-parallax: kept switchable so it can be judged, not adopted ---------- */
+.fx-parallax .hero-plate{will-change:transform}
+
+/* ---------- the lab dock ---------- */
+.lab{position:fixed;right:18px;bottom:18px;z-index:200;width:272px;
+  background:var(--surface);border:1px solid var(--border);border-radius:16px;
+  box-shadow:0 20px 50px rgba(0,0,0,.3);overflow:hidden;
+  font-family:var(--ui);color:var(--text)}
+.lab[hidden]{display:none}
+.lab-head{display:flex;align-items:center;gap:10px;padding:13px 15px;
+  border-bottom:1px solid var(--hairline);cursor:pointer;user-select:none}
+.lab-head .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);flex:none}
+.lab-head b{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;
+  font-weight:400;color:var(--text);flex:1}
+.lab-head .chev{font-size:11px;color:var(--text-meta);transition:transform .2s var(--spring)}
+.lab.closed .chev{transform:rotate(180deg)}
+.lab.closed .lab-body{display:none}
+.lab-body{padding:6px 0 10px}
+.lab-row{display:flex;align-items:flex-start;gap:11px;padding:9px 15px;cursor:pointer;
+  transition:background-color .12s}
+.lab-row:hover{background:var(--tint)}
+.lab-row input{appearance:none;-webkit-appearance:none;margin:2px 0 0;flex:none;
+  width:30px;height:18px;border-radius:9px;background:var(--ground);
+  border:1px solid var(--border);cursor:pointer;position:relative;
+  transition:background-color .18s var(--spring),border-color .18s var(--spring)}
+.lab-row input::after{content:"";position:absolute;top:2px;left:2px;width:12px;height:12px;
+  border-radius:50%;background:var(--text-meta);transition:transform .2s var(--spring-back),background-color .18s}
+.lab-row input:checked{background:var(--accent);border-color:var(--accent)}
+.lab-row input:checked::after{transform:translateX(12px);background:var(--accent-on)}
+.lab-row input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.lab-txt{min-width:0}
+.lab-txt b{display:block;font-weight:500;font-size:13px;line-height:1.35;margin-bottom:2px}
+.lab-txt span{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--text-meta);line-height:1.5}
+.lab-foot{display:flex;gap:8px;padding:10px 15px 4px;border-top:1px solid var(--hairline);margin-top:6px}
+.lab-foot button{flex:1;font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--text-meta);border:1px solid var(--hairline);
+  border-radius:8px;padding:7px 4px;background:transparent;cursor:pointer;
+  transition:color .12s,border-color .12s}
+.lab-foot button:hover{color:var(--text);border-color:var(--border)}
+@media (max-width:620px){
+  .lab{right:12px;left:12px;bottom:12px;width:auto}
+}
+
+/* ---------- nothing moves for anyone who asked for that ---------- */
+@media (prefers-reduced-motion:reduce){
+  .fx-timeline .stamp-roll,
+  .fx-timeline .record dl > *,
+  .fx-load .hero-copy > *,
+  .fx-load .hero-device,
+  .fx-load .hero-credit,
+  .fx-load .hero-plate img,
+  .fx-atmos .plate img,
+  .fx-atmos .viewer-layer img,
+  .fx-atmos .hero-drift img,
+  .fx-atmos .hero-plate::before{animation:none!important}
+  .fx-marks .narration .known::after,
+  .fx-marks .narration .likely::after,
+  .fx-marks .narration .generated::after,
+  .fx-marks .legend .rule{transform:scaleX(1)!important;transition:none!important}
+  .hero-drift .d-frame{transition:none}
+  .fx-parallax .hero-plate{transform:none!important}
+}

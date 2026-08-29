@@ -30,9 +30,29 @@
   r.className += " js";
   try { var t = localStorage.getItem("waiw-theme");
         if (t === "light" || t === "dark") r.setAttribute("data-theme", t); } catch (e) {}
+
+  // Motion is per-effect and applied before first paint so nothing flashes.
+  // The lab (localhost, or ?lab) can change these live.
+  var FX = { timeline:"fx-timeline", load:"fx-load", marks:"fx-marks",
+             drift:"fx-drift", atmos:"fx-atmos", parallax:"fx-parallax" };
+  var on = { timeline:true, load:true, marks:true, drift:true, atmos:false, parallax:false };
+  try {
+    var saved = JSON.parse(localStorage.getItem("waiw-fx") || "null");
+    if (saved) for (var k in FX) if (typeof saved[k] === "boolean") on[k] = saved[k];
+  } catch (e) {}
+  for (var k2 in FX) if (on[k2]) r.className += " " + FX[k2];
+
+  if (location.hostname === "localhost" || location.hostname === "127.0.0.1"
+      || /(^|[?&])lab(=|&|$)/.test(location.search)) {
+    var lab = document.createElement("script");
+    lab.src = "/lab.js?v=1";
+    lab.defer = true;
+    document.head.appendChild(lab);
+  }
 })();
 </script>
 <link rel="stylesheet" href="/style.css?v=2">
+<link rel="stylesheet" href="/motion.css?v=1">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -69,6 +89,20 @@
 <!-- ============ HERO ============ -->
 <section class="hero" id="top">
   <div class="hero-plate" aria-hidden="true">
+    <div class="hero-drift" id="heroDrift">
+      <div class="d-frame on" data-d="0"><picture>
+        <source data-plate media="(prefers-color-scheme: light)" srcset="/plates/hero/thames-1647-light.jpg">
+        <img src="/plates/hero/thames-1647.jpg" width="2400" height="1029" decoding="async" alt=""></picture></div>
+      <div class="d-frame" data-d="1"><picture>
+        <source data-plate media="(prefers-color-scheme: light)" srcset="/plates/hero/thames-1747-light.jpg">
+        <img src="/plates/hero/thames-1747.jpg" width="2400" height="1029" loading="lazy" decoding="async" alt=""></picture></div>
+      <div class="d-frame" data-d="2"><picture>
+        <source data-plate media="(prefers-color-scheme: light)" srcset="/plates/hero/thames-1900-light.jpg">
+        <img src="/plates/hero/thames-1900.jpg" width="2400" height="1029" loading="lazy" decoding="async" alt=""></picture></div>
+      <div class="d-frame" data-d="3"><picture>
+        <source data-plate media="(prefers-color-scheme: light)" srcset="/plates/hero/thames-today-light.jpg">
+        <img src="/plates/hero/thames-today.jpg" width="2400" height="1029" loading="lazy" decoding="async" alt=""></picture></div>
+    </div>
     <picture>
       <source data-plate media="(prefers-color-scheme: light)"
               srcset="/plates/hero-over-london-by-rail-800-light.jpg 800w, /plates/hero-over-london-by-rail-1200-light.jpg 1200w, /plates/hero-over-london-by-rail-1600-light.jpg 1600w, /plates/hero-over-london-by-rail-1920-light.jpg 1920w"
@@ -160,7 +194,7 @@
     </div>
   </div>
 
-  <p class="hero-credit meta">Gustave Doré, Over London by Rail, 1872 · Yale Center for British Art</p>
+  <p class="hero-credit meta" id="heroCredit">Gustave Doré, Over London by Rail, 1872 · Yale Center for British Art</p>
 </section>
 
 <!-- ============ HOW ============ -->
@@ -630,6 +664,98 @@
     reveals.forEach(function (el) { el.classList.add("in"); });
   }
 
+  /* ---- the confidence marks draw themselves in when they arrive ---- */
+  (function () {
+    var narration = document.querySelector(".narration");
+    var legend = document.querySelector(".legend");
+    if (!narration || !("IntersectionObserver" in window)) {
+      if (narration) narration.classList.add("drawn");
+      if (legend) legend.classList.add("drawn");
+      return;
+    }
+    var draw = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        en.target.classList.add("drawn");
+        draw.unobserve(en.target);
+      });
+    }, { threshold: 0.35 });
+    draw.observe(narration);
+    if (legend) draw.observe(legend);
+  })();
+
+  /* ---- the hero drifts through four centuries of the same river ---- */
+  (function () {
+    var stage = document.getElementById("heroDrift");
+    var credit = document.getElementById("heroCredit");
+    if (!stage || !credit) return;
+
+    var CREDITS = [
+      "Wenceslaus Hollar, Long View of London from Bankside, 1647 · public domain",
+      "Canaletto, Westminster Bridge with the Lord Mayor's Procession, 1747 · public domain",
+      "Detroit Publishing photochrom, Houses of Parliament from the river, about 1900 · Library of Congress",
+      "David Iliff, Thames sunset panorama, 2008 · CC BY 3.0"
+    ];
+    var STILL = credit.textContent;
+    var frames = stage.querySelectorAll(".d-frame");
+    var at = 0;
+    var timer = null;
+    var calm = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    function show(i) {
+      at = i % frames.length;
+      frames.forEach(function (f, n) { f.classList.toggle("on", n === at); });
+      credit.textContent = CREDITS[at];
+    }
+    function start() {
+      if (timer || (calm && calm.matches)) return;
+      timer = setInterval(function () {
+        if (document.hidden) return;          // no work in a background tab
+        show(at + 1);
+      }, 6400);
+    }
+    function stop() {
+      clearInterval(timer);
+      timer = null;
+      credit.textContent = STILL;
+    }
+    function sync() {
+      if (document.documentElement.classList.contains("fx-drift")) { show(at); start(); }
+      else { stop(); }
+    }
+    window.addEventListener("waiw:fx", sync);
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) { clearInterval(timer); timer = null; }
+      else if (document.documentElement.classList.contains("fx-drift")) start();
+    });
+    sync();
+  })();
+
+  /* ---- parallax, switchable so it can be judged rather than assumed ---- */
+  (function () {
+    var plate = document.querySelector(".hero-plate");
+    var hero = document.querySelector(".hero");
+    if (!plate || !hero) return;
+    var ticking = false;
+    function frame() {
+      ticking = false;
+      if (!document.documentElement.classList.contains("fx-parallax")) {
+        plate.style.transform = "";
+        return;
+      }
+      var y = window.scrollY;
+      if (y > hero.offsetHeight) return;
+      plate.style.transform = "translate3d(0," + (y * 0.18).toFixed(1) + "px,0)";
+    }
+    window.addEventListener("scroll", function () {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(frame);
+    }, { passive: true });
+    window.addEventListener("waiw:fx", frame);
+    frame();
+  })();
+
   /* ---- era scrubber ---- */
   var ERAS = [
     {
@@ -710,13 +836,20 @@
 
     stampYear.textContent = era.year;
     stampLabel.textContent = era.label;
+    // restart the roll: removing and re-adding the class is what replays it
+    [stampYear, stampLabel].forEach(function (el) {
+      el.classList.remove("stamp-roll");
+      void el.offsetWidth;
+      el.classList.add("stamp-roll");
+    });
     caption.textContent = era.caption;
     title.textContent = era.title;
     desc.textContent = era.desc;
 
     var html = "";
-    era.rows.forEach(function (r) {
-      html += "<dt>" + r[0] + "</dt><dd><span class=\"" + r[2] + "\">" + r[1] + "</span></dd>";
+    era.rows.forEach(function (r, n) {
+      html += "<dt style=\"--r:" + (n * 2) + "\">" + r[0] + "</dt>" +
+              "<dd style=\"--r:" + (n * 2 + 1) + "\"><span class=\"" + r[2] + "\">" + r[1] + "</span></dd>";
     });
     rows.innerHTML = html;
 
