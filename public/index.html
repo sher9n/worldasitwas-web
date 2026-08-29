@@ -519,9 +519,11 @@
         </div>
         <fieldset class="platforms">
           <legend class="meta">Which phone</legend>
-          <label><input type="radio" name="platform" value="ios"><span>iPhone</span></label>
-          <label><input type="radio" name="platform" value="android"><span>Android</span></label>
-          <label><input type="radio" name="platform" value="either" checked><span>Either</span></label>
+          <div class="platform-row">
+            <label><input type="radio" name="platform" value="ios"><span>iPhone</span></label>
+            <label><input type="radio" name="platform" value="android"><span>Android</span></label>
+            <label><input type="radio" name="platform" value="either" checked><span>Either</span></label>
+          </div>
         </fieldset>
         <!-- a bot fills every field it finds; a person never sees this one -->
         <div class="trap" aria-hidden="true">
