@@ -36,7 +36,8 @@ the plate toning recipe and the rules that are easy to break by accident.
 
 The short version. The site follows the app's **Archive** direction: near-black grounds, one
 amber accent, Cormorant Garamond italic for places and years, Inter for everything else, and a
-monospace for data. Colour is in three layers at the top of `style.css`: a fixed brand scale,
+monospace for data. Colour is in two layers at the top of `style.css`: a fixed brand scale, and the role tokens
+that flip with the theme.css`: a fixed brand scale,
 the fixed `--night-*` island, and the role tokens that flip with the theme. Never write a raw
 colour into a component rule.
 
