@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>World As It Was</title>
 <meta name="description" content="Choose a place. Choose a year. Press Travel. World As It Was rebuilds a city as it stood, from the historical record, and tells you how sure it is. Coming to iPhone and Android.">
-<meta name="theme-color" content="#07090d">
+<meta name="theme-color" content="#07090d" media="(prefers-color-scheme: dark)" data-theme-color="dark">
+<meta name="theme-color" content="#f7f2e7" media="(prefers-color-scheme: light)" data-theme-color="light">
 <link rel="canonical" href="https://worldasitwas.com/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="World As It Was">
@@ -21,7 +22,14 @@
 <link rel="preload" as="image" href="/plates/hero-over-london-by-rail-1600.jpg"
       imagesrcset="/plates/hero-over-london-by-rail-800.jpg 800w, /plates/hero-over-london-by-rail-1200.jpg 1200w, /plates/hero-over-london-by-rail-1600.jpg 1600w, /plates/hero-over-london-by-rail-1920.jpg 1920w" imagesizes="100vw">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,300;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<script>document.documentElement.className+=" js";</script>
+<script>
+(function () {
+  var r = document.documentElement;
+  r.className += " js";
+  try { var t = localStorage.getItem("waiw-theme");
+        if (t === "light" || t === "dark") r.setAttribute("data-theme", t); } catch (e) {}
+})();
+</script>
 <link rel="stylesheet" href="/style.css">
 </head>
 <body>
@@ -36,7 +44,13 @@
       <a href="#confidence">Confidence</a>
       <a href="#archive">The archive</a>
     </nav>
-    <a class="btn btn-secondary btn-sm" href="#download">Get the app</a>
+    <div class="header-end">
+      <div class="theme-toggle" role="group" aria-label="Colour theme">
+        <button type="button" data-theme-set="light" aria-pressed="false">Light</button>
+        <button type="button" data-theme-set="dark" aria-pressed="true">Dark</button>
+      </div>
+      <a class="btn btn-secondary btn-sm" href="#download">Get the app</a>
+    </div>
   </div>
 </header>
 
@@ -491,6 +505,50 @@
 <script>
 (function () {
   "use strict";
+
+  /* ---- theme: system by default, pinned once the reader chooses ---- */
+  var root = document.documentElement;
+  var KEY = "waiw-theme";
+  var buttons = [].slice.call(document.querySelectorAll("[data-theme-set]"));
+  var mq = window.matchMedia ? window.matchMedia("(prefers-color-scheme: light)") : null;
+  var metaDark = document.querySelector('meta[data-theme-color="dark"]');
+  var metaLight = document.querySelector('meta[data-theme-color="light"]');
+
+  function effective() {
+    return root.getAttribute("data-theme") || (mq && mq.matches ? "light" : "dark");
+  }
+
+  function sync() {
+    var now = effective();
+    var pinned = !!root.getAttribute("data-theme");
+    buttons.forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.getAttribute("data-theme-set") === now));
+    });
+    // the browser picks the first theme-color whose media matches, so pinning a
+    // theme means taking the medias off rather than adding another tag
+    if (metaDark && metaLight) {
+      if (pinned) {
+        metaDark.media = now === "dark" ? "all" : "not all";
+        metaLight.media = now === "light" ? "all" : "not all";
+      } else {
+        metaDark.media = "(prefers-color-scheme: dark)";
+        metaLight.media = "(prefers-color-scheme: light)";
+      }
+    }
+  }
+
+  buttons.forEach(function (b) {
+    b.addEventListener("click", function () {
+      var choice = b.getAttribute("data-theme-set");
+      root.setAttribute("data-theme", choice);
+      try { localStorage.setItem(KEY, choice); } catch (e) {}
+      sync();
+    });
+  });
+  if (mq && mq.addEventListener) {
+    mq.addEventListener("change", function () { if (!root.getAttribute("data-theme")) sync(); });
+  }
+  sync();
 
   /* ---- scroll reveal ---- */
   var reveals = document.querySelectorAll(".reveal");

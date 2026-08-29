@@ -30,18 +30,35 @@ www to apex redirect and defaults to `worldasitwas.com`.
 
 ## Design
 
-The site follows the app's **Archive** direction. Near-black grounds, one amber accent,
-Cormorant Garamond italic for places and years, Inter for everything else, and a monospace
-for data. Every token lives in `:root` at the top of `style.css`; if a token changes in the
-app, change it there and the page follows.
+**[DESIGN.md](DESIGN.md) is the design system.** Read it before changing anything visual. It
+covers both themes, the palettes with their measured contrast ratios, typography, components,
+the plate toning recipe and the rules that are easy to break by accident.
 
-Two rules worth keeping:
+The short version. The site follows the app's **Archive** direction: near-black grounds, one
+amber accent, Cormorant Garamond italic for places and years, Inter for everything else, and a
+monospace for data. Colour is in three layers at the top of `style.css`: a fixed brand scale,
+the fixed `--night-*` island, and the role tokens that flip with the theme. Never write a raw
+colour into a component rule.
 
-- **Amber marks three things only:** something you can act on, something that is live or
+Three rules worth keeping:
+
+- **The accent marks three things only:** something you can act on, something that is live or
   ready, and the Known confidence tier. It is never decoration.
 - **Confidence is shown, not hidden.** Known, Likely and Generated are marked on the words
   themselves (`.known`, `.likely`, `.generated`), on the sample narration and on every value
   in the arrival record.
+- **Night islands stay dark in both themes.** The hero, the phone mock, the plates and the era
+  viewer show the product or a print, and both are dark. Everything around them turns to paper
+  in light mode.
+
+## Themes
+
+Dark is the default. Light comes on automatically with `prefers-color-scheme`, and the header
+toggle pins a choice in `localStorage` (`waiw-theme`), applied by a script in `<head>` before
+first paint so there is no flash. Priority is pinned, then system, then dark.
+
+The light values appear twice in `style.css`, once under the media query and once under
+`[data-theme="light"]`. Keep the two blocks identical.
 
 ## The era scrubber
 
