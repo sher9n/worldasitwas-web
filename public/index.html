@@ -54,8 +54,11 @@
   }
 })();
 </script>
-<link rel="stylesheet" href="/style.css?v=2">
-<link rel="stylesheet" href="/motion.css?v=1">
+<link rel="stylesheet" href="/style.css?v=3">
+<link rel="stylesheet" href="/motion.css?v=2">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+<script defer src="/phone.js?v=1"></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -131,6 +134,7 @@
     <div class="hero-device reveal" style="--i:2">
       <div class="phone" id="phone" role="img" aria-label="The app, demonstrating itself: a place is typed in, the map finds Fleet Street, the year is dragged back to 1850, and Travel is pressed.">
         <div class="phone-screen">
+          <div id="phoneApp"></div>
           <div class="phone-status" aria-hidden="true"><span>9:41</span><span>100%</span></div>
           <div class="phone-search" aria-hidden="true"><span class="meta">Where</span><b id="phWhere">London</b><i class="phone-caret"></i></div>
           <div class="phone-map" aria-hidden="true">

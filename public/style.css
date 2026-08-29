@@ -698,3 +698,76 @@ body,.site-header,.site-footer,.section,.record,.narration,.era,.store,.theme-to
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;
     transition-duration:.01ms!important}
 }
+
+/* ---------- the phone, as a working widget ----------
+   The static SVG in the markup holds until React mounts; once it does, the
+   real one replaces it and the still version is hidden. */
+#phoneApp{display:none}
+/* the mount has to be a flex child of the screen, or the map has no height to fill */
+#phoneApp.live{display:flex;flex-direction:column;flex:1;min-height:0}
+.phone-live .phone-screen > .phone-status,
+.phone-live .phone-screen > .phone-search,
+.phone-live .phone-screen > .phone-map,
+.phone-live .phone-screen > .phone-sheet{display:none}
+
+.ph{display:flex;flex-direction:column;flex:1;min-height:0}
+.ph-status{display:flex;justify-content:space-between;align-items:center;padding:14px 22px 10px;
+  font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--text-2);flex:none}
+
+.ph-search{display:flex;align-items:center;gap:10px;margin:0 14px 10px;height:44px;padding:0 14px;
+  background:var(--phone-chrome);border:1px solid var(--hairline);border-radius:var(--r-ui);
+  flex:none;cursor:text;transition:border-color .16s var(--ease),box-shadow .16s var(--ease)}
+.ph-search:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-ring)}
+.ph-where{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--text-meta);flex:none}
+.ph-search input{flex:1;min-width:0;border:0;background:transparent;font-family:var(--ui);
+  font-weight:500;font-size:15px;color:var(--text);padding:0}
+.ph-search input:focus{outline:none}
+.ph-search input::placeholder{color:var(--text-meta);font-weight:400}
+
+.ph-map{position:relative;flex:1;min-height:0;overflow:hidden}
+.ph-map svg{position:absolute;inset:0;width:100%;height:100%}
+.ph-map .m-blocks path,.ph-map .m-streets path,.ph-map .m-water,.ph-map .m-park{
+  transition:d .28s linear,opacity .4s}
+.m-rail{fill:none;stroke:var(--map-road);stroke-width:1.4;opacity:.85}
+
+.ph-sheet{position:relative;z-index:2;flex:none;background:var(--phone-body);
+  border-top:1px solid var(--hairline);border-radius:20px 20px 0 0;padding:14px 18px 18px;
+  box-shadow:var(--shadow-sheet)}
+.ph-label{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--text-meta);margin:0}
+.ph-yearrow{display:flex;align-items:baseline;gap:10px;margin:2px 0 8px}
+.ph-year{font-family:var(--display);font-style:italic;font-size:44px;line-height:1;
+  color:var(--accent-text);font-variant-numeric:tabular-nums}
+.ph-era{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--text-meta)}
+
+.ph-slider{position:relative;height:26px;margin-top:2px}
+.ph-track{position:absolute;left:0;right:0;top:12px;height:2px;border-radius:2px;background:var(--rule)}
+.ph-fill{position:absolute;left:0;top:12px;height:2px;border-radius:2px;background:var(--accent);
+  opacity:.75}
+.ph-knob{position:absolute;top:13px;width:15px;height:15px;border-radius:50%;background:var(--accent);
+  border:2px solid var(--phone-body);transform:translate(-50%,-50%);box-shadow:var(--shadow-pin);
+  pointer-events:none}
+.ph-knob::before{content:"";position:absolute;inset:-11px;border-radius:50%;
+  background:radial-gradient(circle,var(--accent-halo),transparent 70%)}
+.ph-slider input{-webkit-appearance:none;appearance:none;position:absolute;inset:0;width:100%;
+  height:26px;margin:0;background:transparent;cursor:grab}
+.ph-slider input:active{cursor:grabbing}
+.ph-slider input::-webkit-slider-runnable-track{height:26px;background:transparent}
+.ph-slider input::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;opacity:0}
+.ph-slider input::-moz-range-track{height:26px;background:transparent}
+.ph-slider input::-moz-range-thumb{width:26px;height:26px;opacity:0;border:0}
+.ph-slider input:focus-visible ~ .ph-knob{box-shadow:0 0 0 3px var(--accent-ring)}
+
+.ph-scale{display:flex;justify-content:space-between;margin:4px 0 12px;
+  font-family:var(--mono);font-size:9px;letter-spacing:.08em;color:var(--text-meta)}
+.ph-go{width:100%;height:44px;border:0;border-radius:var(--r-ui);background:var(--accent);
+  color:var(--accent-on);font-family:var(--ui);font-weight:600;font-size:15px;cursor:pointer;
+  transition:background-color .14s,transform .14s var(--spring-back)}
+.ph-go:hover{background:var(--accent-hover)}
+.ph-go:active{transform:scale(.975)}
+.ph.is-arrived .ph-go{background:transparent;color:var(--text-2);
+  border:1px solid var(--border);font-weight:500}
+.ph-foot{margin-top:10px;text-align:center;font-family:var(--mono);font-size:9.5px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--text-meta)}
