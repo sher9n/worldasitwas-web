@@ -624,10 +624,20 @@ body,.site-header,.site-footer,.section,.record,.narration,.era,.store,.theme-to
 .platforms{border:0;padding:0;margin:22px 0 0;min-width:0}
 .platforms legend{padding:0;margin-bottom:12px}
 .platform-row{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center}
-.platforms label{display:inline-flex;align-items:center;gap:8px;cursor:pointer;font-size:15px;
-  color:var(--text-86);min-height:28px}
-.platforms input{accent-color:var(--accent);width:17px;height:17px;margin:0;cursor:pointer}
+.platforms label{display:inline-flex;align-items:center;gap:10px;cursor:pointer;font-size:15px;
+  color:var(--text-86);min-height:28px;transition:color .12s}
 .platforms label:hover{color:var(--text)}
+/* drawn, not the browser's own: a default radio goes pale and grey on parchment */
+.platforms input{
+  appearance:none;-webkit-appearance:none;margin:0;flex:none;cursor:pointer;
+  width:18px;height:18px;border-radius:50%;
+  background:var(--surface);border:1px solid var(--border);
+  transition:border-color .14s,background-color .14s,box-shadow .14s}
+.platforms label:hover input{border-color:var(--border-hover)}
+.platforms input:checked{border-color:var(--accent);
+  background:radial-gradient(circle at 50% 50%,var(--accent) 0 4.5px,var(--surface) 5px 100%)}
+.platforms input:focus-visible{outline:none;border-color:var(--accent);
+  box-shadow:0 0 0 3px var(--accent-ring)}
 .trap{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 .waitlist button[type="submit"]{margin-top:26px}
 .waitlist button[disabled]{opacity:.6;cursor:progress}
