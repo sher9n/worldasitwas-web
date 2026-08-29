@@ -207,7 +207,11 @@ the toggle stays, because the hero's call to action is one scroll away.
 
 **Primary button.** Accent fill, `--accent-on` text, Inter 600 15px, height 48px (44px minimum
 touch target), radius 12px. Hover lightens in dark, deepens in light. There is one primary
-button per view.
+button per view, and in the hero it belongs to the product, not the mailing list: the loudest
+thing on the page is "Move the year", because the hero's job is to make someone want to be
+somewhere. The sign-up sits beside it as an outline, and again in the header where it stays
+reachable from anywhere. A hero that shouts "join the waitlist" is selling the list instead of
+the thing.
 
 **Secondary button.** Transparent, 1px `--border`, `--text`.
 
@@ -260,7 +264,10 @@ an empty result. On the site it is labelled the same way it is in the app: `LIGH
 download section is a panel, not a paragraph that trails off the page: `--surface`, hairline
 border, an amber hairline across its top edge, and inside it exactly one thing to do. The email
 field and the button share a single rounded box that takes the focus ring as a whole, and that
-box sits on `--ground` so it reads as a slot cut into the panel. Nothing else competes with it. On
+box sits on `--ground` so it reads as a slot cut into the panel. The panel is two columns on a
+wide screen, the promise on the left and the box on the right, because a form alone in a
+full-width band leaves half the page empty and reads as an afterthought. Nothing else competes
+with it. On
 success the box is removed and the status line replaces it, so there is nothing left to submit
 twice, and only then does the follow-up question appear, asking which city to build next. Ask
 for the smallest thing first and the rest afterwards. Failures speak plainly and never blame the reader. The form carries a
