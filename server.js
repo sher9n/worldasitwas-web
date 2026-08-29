@@ -27,9 +27,11 @@ const types = {
 };
 
 function cacheControl(pathname) {
+  // Plates are content-addressed by name and never change under the same URL.
   if (pathname.startsWith("/plates/")) return "public, max-age=31536000, immutable";
-  if (pathname.endsWith(".html") || pathname === "/") return "public, max-age=0, must-revalidate";
-  return "public, max-age=3600";
+  // Everything else revalidates. CSS cached for an hour against freshly deployed
+  // HTML is how you ship a page styled by the previous release.
+  return "public, max-age=0, must-revalidate";
 }
 
 // text compresses well; JPEG does not, so it is served as-is
@@ -44,11 +46,25 @@ function sendFile(req, res, filePath, status = 200) {
     return false;
   }
   const ext = extname(filePath).toLowerCase();
+  const etag = `W/"${stat.size.toString(16)}-${stat.mtimeMs.toString(36)}"`;
   const headers = {
     "content-type": types[ext] || "application/octet-stream",
     "cache-control": cacheControl(req.url.split("?")[0]),
     "x-content-type-options": "nosniff",
+    etag,
+    "last-modified": stat.mtime.toUTCString(),
   };
+
+  const known = req.headers["if-none-match"];
+  if (known && known.split(/,\s*/).includes(etag)) {
+    res.writeHead(304, {
+      etag,
+      "cache-control": headers["cache-control"],
+      "last-modified": headers["last-modified"],
+    });
+    res.end();
+    return true;
+  }
 
   const accepts = String(req.headers["accept-encoding"] || "");
   let encoder = null;
