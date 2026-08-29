@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://worldasitwas.com/sitemap.xml
