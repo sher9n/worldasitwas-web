@@ -381,6 +381,12 @@ Matter-of-fact. Concrete places, concrete years. Short declaratives.
   comma or a full stop.
 - Numbers are real: 6 stops, 42 minutes, on foot.
 
+**Headings say what the section is.** A heading is a signpost, not a puzzle. "Move through time"
+beats "Stand still. Move the year"; "History isn't always certain" beats "Known. Likely.
+Generated", which names three labels the reader has not met yet. If a heading only makes sense
+once you have read the paragraph under it, it is the wrong heading. The clever version usually
+belongs in the body, if anywhere.
+
 ---
 
 ## 10. Tokens
