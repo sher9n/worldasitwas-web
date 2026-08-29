@@ -1,8 +1,10 @@
 import { createServer } from "node:http";
 import { createReadStream, statSync } from "node:fs";
 import { createGzip, createBrotliCompress, constants as zlibConstants } from "node:zlib";
+import { timingSafeEqual } from "node:crypto";
 import { extname, join, normalize, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
+import { pool, dbReady, validEmail, addToWaitlist, waitlistSummary } from "./db.js";
 
 const port = Number(process.env.PORT) || 3000;
 const root = resolve(fileURLToPath(new URL("./public/", import.meta.url)));
@@ -74,6 +76,115 @@ function sendFile(req, res, filePath, status = 200) {
   return true;
 }
 
+// ---------------------------------------------------------------- waitlist API
+
+const WINDOW_MS = 10 * 60 * 1000;
+const MAX_PER_WINDOW = 6;
+const hits = new Map();
+
+function rateLimited(ip) {
+  const now = Date.now();
+  const bucket = (hits.get(ip) || []).filter((t) => now - t < WINDOW_MS);
+  bucket.push(now);
+  hits.set(ip, bucket);
+  if (hits.size > 5000) {
+    for (const [k, v] of hits) if (!v.some((t) => now - t < WINDOW_MS)) hits.delete(k);
+  }
+  return bucket.length > MAX_PER_WINDOW;
+}
+
+function clientIp(req) {
+  const fwd = String(req.headers["x-forwarded-for"] || "").split(",")[0].trim();
+  return fwd || req.socket.remoteAddress || "unknown";
+}
+
+function json(res, status, body) {
+  const payload = JSON.stringify(body);
+  res.writeHead(status, {
+    "content-type": "application/json; charset=utf-8",
+    "content-length": Buffer.byteLength(payload),
+    "cache-control": "no-store",
+  });
+  res.end(payload);
+}
+
+function readBody(req, limit = 4096) {
+  return new Promise((resolve, reject) => {
+    let size = 0;
+    const chunks = [];
+    req.on("data", (c) => {
+      size += c.length;
+      if (size > limit) { reject(new Error("too large")); req.destroy(); return; }
+      chunks.push(c);
+    });
+    req.on("end", () => resolve(Buffer.concat(chunks).toString("utf8")));
+    req.on("error", reject);
+  });
+}
+
+async function handleJoin(req, res) {
+  if (!pool || !(await dbReady)) {
+    return json(res, 503, { ok: false, error: "The waitlist is not available right now." });
+  }
+  if (rateLimited(clientIp(req))) {
+    return json(res, 429, { ok: false, error: "Too many attempts. Try again in a few minutes." });
+  }
+
+  let body;
+  try {
+    body = JSON.parse(await readBody(req) || "{}");
+  } catch {
+    return json(res, 400, { ok: false, error: "We could not read that. Please try again." });
+  }
+
+  // a bot fills every field it finds; a person never sees this one
+  if (body.company) return json(res, 200, { ok: true, added: false });
+
+  const email = typeof body.email === "string" ? body.email.trim() : "";
+  if (!validEmail(email)) {
+    return json(res, 400, { ok: false, error: "That does not look like an email address." });
+  }
+
+  const allowed = ["ios", "android", "either"];
+  const platform = allowed.includes(body.platform) ? body.platform : "either";
+
+  try {
+    const { added } = await addToWaitlist({ email, platform, source: "site" });
+    // never log the address itself
+    console.log(`[waitlist] sign-up accepted (new=${added}, platform=${platform})`);
+    return json(res, 200, { ok: true, added });
+  } catch (err) {
+    console.error("[waitlist] insert failed:", err.message);
+    return json(res, 500, { ok: false, error: "Something broke on our side. Please try again." });
+  }
+}
+
+async function handleExport(req, res, url) {
+  const key = process.env.WAITLIST_ADMIN_KEY;
+  const given = url.searchParams.get("key") || String(req.headers["x-admin-key"] || "");
+  if (!key || given.length !== key.length || !timingSafeEqual(Buffer.from(given), Buffer.from(key))) {
+    return json(res, 404, { ok: false, error: "Not found" });
+  }
+  if (!pool || !(await dbReady)) return json(res, 503, { ok: false, error: "No database" });
+
+  const summary = await waitlistSummary();
+  if (url.searchParams.get("format") === "csv") {
+    const rows = ["email,platform,source,created_at"];
+    for (const r of summary.recent) {
+      rows.push([r.email, r.platform || "", r.source || "", r.created_at.toISOString()]
+        .map((v) => `"${String(v).replace(/"/g, '""')}"`).join(","));
+    }
+    const csv = rows.join("\n");
+    res.writeHead(200, {
+      "content-type": "text/csv; charset=utf-8",
+      "content-disposition": 'attachment; filename="waitlist.csv"',
+      "cache-control": "no-store",
+    });
+    return res.end(csv);
+  }
+  return json(res, 200, { ok: true, ...summary });
+}
+
 const server = createServer((req, res) => {
   const host = (req.headers.host || "").split(":")[0];
   let pathname;
@@ -82,6 +193,23 @@ const server = createServer((req, res) => {
   } catch {
     res.writeHead(400, { "content-type": "text/plain" });
     return res.end("Bad request");
+  }
+
+  if (pathname === "/api/waitlist" && req.method === "POST") {
+    handleJoin(req, res).catch((err) => {
+      console.error("[waitlist] unhandled:", err.message);
+      json(res, 500, { ok: false, error: "Something broke on our side." });
+    });
+    return;
+  }
+
+  if (pathname === "/api/waitlist" && (req.method === "GET" || req.method === "HEAD")) {
+    const url = new URL(req.url, `http://${req.headers.host || "localhost"}`);
+    handleExport(req, res, url).catch((err) => {
+      console.error("[waitlist] export failed:", err.message);
+      json(res, 500, { ok: false, error: "Export failed." });
+    });
+    return;
   }
 
   if (pathname === "/health") {

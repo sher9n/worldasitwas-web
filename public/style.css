@@ -2,13 +2,14 @@
    ---------------------------------------------------------------------------
    Two themes, one system. Read DESIGN.md before changing anything here.
 
-   THREE LAYERS OF COLOUR:
+   TWO LAYERS OF COLOUR:
    1. Brand scale   fixed values, never themed. The raw ink, paper, amber, bronze.
-   2. Night tokens  --night-*. The dark island: hero, phone, plates, viewer.
-                    These NEVER change, in either theme, because they show the
-                    app, and the app is dark.
-   3. Role tokens   everything else. Dark values live on :root; the light theme
-                    overrides them, and only them.
+   2. Role tokens   everything else, including the hero, the phone, the plates,
+                    the era viewer and the SVG map. Dark values live on :root;
+                    the light theme overrides them, and only them.
+
+   Both themes go all the way. Nothing on the page stays dark in light mode:
+   the plates have their own light-toned files, swapped by a <picture> source.
 
    Never write a raw colour into a component rule. Add a role token instead.
    --------------------------------------------------------------------------- */
@@ -22,21 +23,42 @@
   --parchment:#f7f2e7; --parchment-deep:#efe8d7; --parchment-lift:#fffdf8;
   --soot:#14110c;
 
-  /* ---- 2. night island (fixed in both themes) ---- */
-  --night-ground:#07090d;
-  --night-field:#0b0e14;
-  --night-surface:#11151c;
-  --night-text:#f4ecd8;
-  --night-text-2:#cbd1de;
-  --night-meta:#7d8597;
-  --night-hairline:rgba(244,236,216,.10);
-  --night-border:rgba(244,236,216,.24);
-  --night-border-hover:rgba(244,236,216,.48);
-  --night-rule:rgba(244,236,216,.18);
-  --night-accent:#e8b86a;
-  --night-accent-hover:#f0c884;
-  --night-accent-on:#11151c;
-  --night-halo:rgba(232,184,106,.22);
+  /* ---- 2. imagery and device surfaces: themed, like everything else ---- */
+  --plate-field:#0b0e14;
+  --plate-scrim:linear-gradient(transparent 44%,rgba(7,9,13,.86) 80%,#07090d);
+  --viewer-scrim:
+    linear-gradient(rgba(7,9,13,.78),rgba(7,9,13,.28) 16%,transparent 34%),
+    linear-gradient(transparent 50%,rgba(7,9,13,.84) 84%,#07090d);
+  --hero-ground:#07090d;
+  --hero-vignette:inset 0 0 130px 30px rgba(7,9,13,.9);
+  --hero-scrim:
+    linear-gradient(#07090d,rgba(7,9,13,.62) 34%,transparent 62%),
+    linear-gradient(transparent 46%,rgba(7,9,13,.72) 78%,#07090d),
+    linear-gradient(90deg,rgba(7,9,13,.86),rgba(7,9,13,.5) 46%,rgba(7,9,13,.12) 74%);
+  --hero-scrim-narrow:
+    linear-gradient(#07090d,rgba(7,9,13,.58) 26%,transparent 54%),
+    linear-gradient(transparent 40%,rgba(7,9,13,.74) 74%,#07090d),
+    linear-gradient(90deg,rgba(7,9,13,.62),rgba(7,9,13,.32) 60%,rgba(7,9,13,.12));
+  --phone-body:#11151c;
+  --phone-screen:#0b0e14;
+  --phone-chrome:rgba(17,21,28,.9);
+  --shadow-sheet:0 -22px 60px rgba(0,0,0,.62);
+  --shadow-phone:0 34px 90px rgba(0,0,0,.66);
+
+  /* the app map, drawn in SVG */
+  --map-ground:#0b0e14;
+  --map-park:#0d1219;
+  --map-water:#0e1420;
+  --map-block:rgba(203,209,222,.075);
+  --map-street:rgba(203,209,222,.16);
+  --map-road:rgba(203,209,222,.28);
+  --map-route:rgba(244,236,216,.42);
+  --map-stop:#0b0e14;
+  --map-stop-edge:rgba(244,236,216,.55);
+  --map-chip:#11151c;
+  --map-chip-edge:rgba(244,236,216,.14);
+  --map-chip-text:#f4ecd8;
+  --map-label:rgba(203,209,222,.45);
 
   /* ---- 3. roles: DARK is the default theme ---- */
   --ground:#07090d;
@@ -135,6 +157,41 @@
     --shadow-lift:0 26px 60px rgba(20,17,12,.16);
     --shadow-pin:0 2px 8px rgba(20,17,12,.22);
 
+
+    --plate-field:#efe9dc;
+    --plate-scrim:linear-gradient(transparent 52%,rgba(247,242,231,.82) 82%,#f7f2e7);
+    --viewer-scrim:
+      linear-gradient(rgba(247,242,231,.82),rgba(247,242,231,.3) 16%,transparent 34%),
+      linear-gradient(transparent 56%,rgba(247,242,231,.84) 86%,#f7f2e7);
+    --hero-ground:#f7f2e7;
+    --hero-vignette:inset 0 0 130px 30px rgba(247,242,231,.86);
+    --hero-scrim:
+      linear-gradient(#f7f2e7,rgba(247,242,231,.66) 34%,transparent 62%),
+      linear-gradient(transparent 46%,rgba(247,242,231,.76) 78%,#f7f2e7),
+      linear-gradient(90deg,rgba(247,242,231,.9),rgba(247,242,231,.58) 46%,rgba(247,242,231,.16) 74%);
+    --hero-scrim-narrow:
+      linear-gradient(#f7f2e7,rgba(247,242,231,.62) 26%,transparent 54%),
+      linear-gradient(transparent 40%,rgba(247,242,231,.78) 74%,#f7f2e7),
+      linear-gradient(90deg,rgba(247,242,231,.72),rgba(247,242,231,.4) 60%,rgba(247,242,231,.16));
+    --phone-body:#fffdf8;
+    --phone-screen:#efe9dc;
+    --phone-chrome:rgba(255,253,248,.92);
+    --shadow-sheet:0 -22px 50px rgba(20,17,12,.13);
+    --shadow-phone:0 26px 60px rgba(20,17,12,.2);
+
+    --map-ground:#efe9dc;
+    --map-park:#e6dfcc;
+    --map-water:#ded7c3;
+    --map-block:rgba(20,17,12,.10);
+    --map-street:rgba(20,17,12,.20);
+    --map-road:rgba(20,17,12,.34);
+    --map-route:rgba(20,17,12,.44);
+    --map-stop:#fffdf8;
+    --map-stop-edge:rgba(20,17,12,.5);
+    --map-chip:#fffdf8;
+    --map-chip-edge:rgba(20,17,12,.2);
+    --map-chip-text:#14110c;
+    --map-label:rgba(20,17,12,.45);
     color-scheme:light;
   }
 }
@@ -178,6 +235,41 @@
   --shadow-lift:0 26px 60px rgba(20,17,12,.16);
   --shadow-pin:0 2px 8px rgba(20,17,12,.22);
 
+
+  --plate-field:#efe9dc;
+  --plate-scrim:linear-gradient(transparent 52%,rgba(247,242,231,.82) 82%,#f7f2e7);
+  --viewer-scrim:
+    linear-gradient(rgba(247,242,231,.82),rgba(247,242,231,.3) 16%,transparent 34%),
+    linear-gradient(transparent 56%,rgba(247,242,231,.84) 86%,#f7f2e7);
+  --hero-ground:#f7f2e7;
+  --hero-vignette:inset 0 0 130px 30px rgba(247,242,231,.86);
+  --hero-scrim:
+    linear-gradient(#f7f2e7,rgba(247,242,231,.66) 34%,transparent 62%),
+    linear-gradient(transparent 46%,rgba(247,242,231,.76) 78%,#f7f2e7),
+    linear-gradient(90deg,rgba(247,242,231,.9),rgba(247,242,231,.58) 46%,rgba(247,242,231,.16) 74%);
+  --hero-scrim-narrow:
+    linear-gradient(#f7f2e7,rgba(247,242,231,.62) 26%,transparent 54%),
+    linear-gradient(transparent 40%,rgba(247,242,231,.78) 74%,#f7f2e7),
+    linear-gradient(90deg,rgba(247,242,231,.72),rgba(247,242,231,.4) 60%,rgba(247,242,231,.16));
+  --phone-body:#fffdf8;
+  --phone-screen:#efe9dc;
+  --phone-chrome:rgba(255,253,248,.92);
+  --shadow-sheet:0 -22px 50px rgba(20,17,12,.13);
+  --shadow-phone:0 26px 60px rgba(20,17,12,.2);
+
+  --map-ground:#efe9dc;
+  --map-park:#e6dfcc;
+  --map-water:#ded7c3;
+  --map-block:rgba(20,17,12,.10);
+  --map-street:rgba(20,17,12,.20);
+  --map-road:rgba(20,17,12,.34);
+  --map-route:rgba(20,17,12,.44);
+  --map-stop:#fffdf8;
+  --map-stop-edge:rgba(20,17,12,.5);
+  --map-chip:#fffdf8;
+  --map-chip-edge:rgba(20,17,12,.2);
+  --map-chip-text:#14110c;
+  --map-label:rgba(20,17,12,.45);
   color-scheme:light;
 }
 
@@ -259,48 +351,45 @@ body,.site-header,.site-footer,.section,.record,.narration,.era,.store,.theme-to
 .header-end{display:flex;align-items:center;gap:14px}
 @media (max-width:900px){ .nav{display:none} }
 
-/* theme toggle: the pressed side is the theme you are in */
-.theme-toggle{display:flex;align-items:center;gap:2px;padding:3px;
-  border:1px solid var(--hairline);border-radius:var(--r-ui);background:var(--tint)}
-.theme-toggle button{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--text-meta);padding:0 10px;height:30px;border-radius:9px;
-  transition:color .12s,background-color .12s}
-.theme-toggle button:hover{color:var(--text)}
-.theme-toggle button[aria-pressed="true"]{color:var(--accent-text);background:var(--surface)}
+/* theme toggle: one button showing the theme you can switch TO */
+.theme-toggle{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;
+  border:1px solid var(--border);border-radius:var(--r-ui);color:var(--text-2);background:transparent;
+  cursor:pointer;transition:color .14s,border-color .14s,background-color .14s}
+.theme-toggle:hover{color:var(--accent-text);border-color:var(--border-hover);background:var(--tint)}
+.theme-toggle svg{width:19px;height:19px;display:block;
+  transition:transform .32s var(--ease),opacity .18s linear}
+.theme-toggle .icon-moon{display:none}
+/* the icon follows the same cascade as the palette, so it needs no JavaScript */
+@media (prefers-color-scheme:light){
+  :root:not([data-theme="dark"]) .theme-toggle .icon-sun{display:none}
+  :root:not([data-theme="dark"]) .theme-toggle .icon-moon{display:block}
+}
+:root[data-theme="light"] .theme-toggle .icon-sun{display:none}
+:root[data-theme="light"] .theme-toggle .icon-moon{display:block}
+.theme-toggle:hover svg{transform:rotate(18deg)}
+:root[data-theme="light"] .theme-toggle:hover svg{transform:rotate(-18deg)}
 @media (max-width:560px){
   .header-end .btn{display:none}          /* the hero CTA sits directly below */
-  .theme-toggle button{padding:0 9px}
 }
 
-/* ---------- hero (night island) ---------- */
-.hero{position:relative;isolation:isolate;overflow:hidden;background:var(--night-ground);
-  color:var(--night-text);
+/* ---------- hero ---------- */
+.hero{position:relative;isolation:isolate;overflow:hidden;background:var(--hero-ground);
+  color:var(--text);
   padding:clamp(56px,7vw,104px) 0 clamp(56px,6vw,88px);
   min-height:min(880px,calc(100svh - 64px));display:flex;align-items:center}
 .hero-plate{position:absolute;inset:0;z-index:-1}
 .hero-plate img{width:100%;height:100%;object-fit:cover;object-position:58% 42%}
 .hero-plate::after{content:"";position:absolute;inset:0;
-  box-shadow:inset 0 0 130px 30px rgba(7,9,13,.9);
-  background:
-    linear-gradient(#07090d,rgba(7,9,13,.62) 34%,transparent 62%),
-    linear-gradient(transparent 46%,rgba(7,9,13,.72) 78%,#07090d),
-    linear-gradient(90deg,rgba(7,9,13,.86),rgba(7,9,13,.5) 46%,rgba(7,9,13,.12) 74%)}
+  box-shadow:var(--hero-vignette);
+  background:var(--hero-scrim)}
 .hero-grid{position:relative;display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);
   gap:56px;align-items:center;width:100%}
-.hero .eyebrow{color:var(--night-text-2)}
-.hero .lede{color:rgba(244,236,216,.9)}
-.hero .meta{color:var(--night-meta)}
-.hero .btn-primary{background:var(--night-accent);color:var(--night-accent-on)}
-.hero .btn-primary:hover{background:var(--night-accent-hover);color:var(--night-accent-on)}
-.hero .btn-secondary{border-color:var(--night-border);color:var(--night-text)}
-.hero .btn-secondary:hover{border-color:var(--night-border-hover);color:var(--night-text)}
 .hero-copy .eyebrow{margin-bottom:22px}
 .hero-copy .display-1{margin-bottom:26px}
 .hero-copy .lede{margin-bottom:32px}
 .actions{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:26px}
 .hero-device{display:flex;justify-content:center}
-.hero-credit{position:absolute;right:var(--gutter);bottom:20px;z-index:1;text-align:right;max-width:60ch;
-  color:var(--night-meta)}
+.hero-credit{position:absolute;right:var(--gutter);bottom:20px;z-index:1;text-align:right;max-width:60ch}
 @media (max-width:1024px){
   /* stop being a flex row, or the credit becomes a squeezed sibling column */
   .hero{display:block;min-height:0;padding-bottom:56px}
@@ -312,48 +401,61 @@ body,.site-header,.site-footer,.section,.record,.narration,.era,.store,.theme-to
 @media (max-width:760px){
   .hero-plate img{object-position:52% 34%}
   /* a narrow screen is almost all left-hand gradient, so lighten it */
-  .hero-plate::after{background:
-    linear-gradient(#07090d,rgba(7,9,13,.58) 26%,transparent 54%),
-    linear-gradient(transparent 40%,rgba(7,9,13,.74) 74%,#07090d),
-    linear-gradient(90deg,rgba(7,9,13,.62),rgba(7,9,13,.32) 60%,rgba(7,9,13,.12))}
+  .hero-plate::after{background:var(--hero-scrim-narrow)}
   .hero-device{justify-content:center}
 }
 
-/* ---------- phone (night island: it shows the app, and the app is dark) ---------- */
-.phone{width:300px;flex:none;background:var(--night-surface);border:1px solid var(--night-hairline);
-  border-radius:44px;padding:10px;box-shadow:0 34px 90px rgba(0,0,0,.66);color:var(--night-text)}
-.phone-screen{position:relative;height:604px;background:var(--night-field);border-radius:35px;
+/* ---------- phone ---------- */
+.phone{width:300px;flex:none;background:var(--phone-body);border:1px solid var(--hairline);
+  border-radius:44px;padding:10px;box-shadow:var(--shadow-phone);color:var(--text)}
+.phone-screen{position:relative;height:604px;background:var(--phone-screen);border-radius:35px;
   overflow:hidden;display:flex;flex-direction:column}
 .phone-status{display:flex;justify-content:space-between;align-items:center;padding:14px 22px 0;
-  font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--night-text-2)}
+  font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--text-2)}
 .phone-search{position:absolute;top:42px;left:14px;right:14px;z-index:3;display:flex;align-items:baseline;
-  gap:10px;height:44px;padding:0 16px;background:rgba(17,21,28,.9);border:1px solid var(--night-hairline);
+  gap:10px;height:44px;padding:0 16px;background:var(--phone-chrome);border:1px solid var(--hairline);
   border-radius:var(--r-ui);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
-.phone-search .meta{font-size:10px;color:var(--night-meta)}
-.phone-search b{font-weight:500;font-size:15px;color:var(--night-text)}
+.phone-search .meta{font-size:10px}
+.phone-search b{font-weight:500;font-size:15px;color:var(--text)}
 .phone-map{position:relative;flex:1;min-height:0}
 .phone-map svg{position:absolute;inset:0;width:100%;height:100%}
-.phone-sheet{position:relative;z-index:2;background:var(--night-surface);
-  border-top:1px solid var(--night-hairline);border-radius:20px 20px 0 0;padding:14px 18px 20px;
-  box-shadow:0 -22px 60px rgba(0,0,0,.62)}
-.phone-sheet .meta{font-size:10px;color:var(--night-meta)}
-.phone-year{font-size:50px;margin:4px 0 10px;color:var(--night-accent)}
-.phone .btn-primary{background:var(--night-accent);color:var(--night-accent-on)}
+.phone-sheet{position:relative;z-index:2;background:var(--phone-body);
+  border-top:1px solid var(--hairline);border-radius:20px 20px 0 0;padding:14px 18px 20px;
+  box-shadow:var(--shadow-sheet)}
+.phone-sheet .meta{font-size:10px}
+.phone-year{font-size:50px;margin:4px 0 10px}
 .phone-travel{width:100%;margin-bottom:10px;pointer-events:none}
 .phone-foot{text-align:center}
 
 /* mini timeline inside the phone */
 .mini{position:relative;height:34px;margin-bottom:14px}
-.mini-line{position:absolute;left:0;right:0;top:8px;height:1px;background:var(--night-rule)}
+.mini-line{position:absolute;left:0;right:0;top:8px;height:1px;background:var(--rule)}
 .mini-ticks{position:absolute;left:0;right:0;top:4px;display:flex;justify-content:space-between}
-.mini-ticks i{width:1px;height:9px;background:rgba(244,236,216,.22)}
+.mini-ticks i{width:1px;height:9px;background:var(--node)}
 .mini-years{position:absolute;left:0;right:0;top:19px;display:flex;justify-content:space-between;
-  font-family:var(--mono);font-size:9px;letter-spacing:.08em;color:var(--night-meta)}
+  font-family:var(--mono);font-size:9px;letter-spacing:.08em;color:var(--text-meta)}
 .mini-dot{position:absolute;top:8px;left:62.5%;width:14px;height:14px;border-radius:50%;
-  background:var(--night-accent);border:2px solid var(--night-surface);transform:translate(-50%,-50%);
-  box-shadow:0 2px 10px rgba(0,0,0,.6)}
+  background:var(--accent);border:2px solid var(--phone-body);transform:translate(-50%,-50%);
+  box-shadow:var(--shadow-pin)}
 .mini-dot::before{content:"";position:absolute;inset:-13px;border-radius:50%;
-  background:radial-gradient(circle,var(--night-halo),transparent 68%)}
+  background:radial-gradient(circle,var(--accent-halo),transparent 68%)}
+
+/* ---------- the app map, drawn in SVG and themed like everything else ---------- */
+.m-ground{fill:var(--map-ground)}
+.m-park{fill:var(--map-park);stroke:var(--map-block)}
+.m-water{fill:var(--map-water);stroke:var(--map-block)}
+.m-blocks{fill:none;stroke:var(--map-block)}
+.m-streets{fill:none;stroke:var(--map-street)}
+.m-road{fill:none;stroke:var(--map-road)}
+.m-route{fill:none;stroke:var(--map-route)}
+.m-stops{fill:var(--map-stop);stroke:var(--map-stop-edge)}
+.m-pin{fill:var(--accent);stroke:var(--phone-body)}
+.m-pin-wide{fill:var(--accent);stroke:var(--map-ground)}
+.m-halo{fill:var(--accent-halo)}
+.phone-map svg,.viewer-layer svg{color:var(--accent)}   /* currentColor in the pin halo */
+.m-chip{fill:var(--map-chip);stroke:var(--map-chip-edge)}
+.m-chip-text{fill:var(--map-chip-text)}
+.m-label{fill:var(--map-label)}
 
 /* ---------- sections ---------- */
 .section{padding:var(--section) 0;background:var(--ground)}
@@ -371,13 +473,13 @@ body,.site-header,.site-footer,.section,.record,.narration,.era,.store,.theme-to
   .two-col.flip > .plate{order:-1}
 }
 
-/* ---------- plates (night island: a dark print, on paper or on ink) ---------- */
+/* ---------- plates ---------- */
 .plate{position:relative;overflow:hidden;border-radius:var(--r-card);
-  background:var(--night-field);border:1px solid var(--hairline)}
-.plate img{width:100%;height:100%;object-fit:cover}
-.plate::after{content:"";position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(transparent 44%,rgba(7,9,13,.86) 80%,#07090d)}
-.plate figcaption{position:absolute;left:20px;right:20px;bottom:18px;z-index:1;color:var(--night-meta)}
+  background:var(--plate-field);border:1px solid var(--hairline)}
+.plate img,.plate picture{width:100%;height:100%;display:block}
+.plate img{object-fit:cover}
+.plate::after{content:"";position:absolute;inset:0;pointer-events:none;background:var(--plate-scrim)}
+.plate figcaption{position:absolute;left:20px;right:20px;bottom:18px;z-index:1}
 .ratio-4x5{aspect-ratio:4/5}
 .ratio-3x2{aspect-ratio:3/2}
 
@@ -395,19 +497,18 @@ body,.site-header,.site-footer,.section,.record,.narration,.era,.store,.theme-to
 @media (max-width:1024px){ .scrub-grid{grid-template-columns:1fr;gap:36px} }
 
 .viewer{position:relative;border-radius:var(--r-card);overflow:hidden;border:1px solid var(--hairline);
-  background:var(--night-field);aspect-ratio:3/2}
+  background:var(--plate-field);aspect-ratio:3/2}
 .viewer-layer{position:absolute;inset:0;opacity:0;transition:opacity .42s var(--ease)}
 .viewer-layer.on{opacity:1}
+.viewer-layer picture{display:block;width:100%;height:100%}
 .viewer-layer img{width:100%;height:100%;object-fit:cover}
 .viewer-layer svg{width:100%;height:100%}
 .viewer::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:2;
-  background:
-    linear-gradient(rgba(7,9,13,.78),rgba(7,9,13,.28) 16%,transparent 34%),
-    linear-gradient(transparent 50%,rgba(7,9,13,.84) 84%,#07090d)}
-.viewer-caption{position:absolute;left:20px;right:20px;bottom:16px;z-index:3;color:var(--night-meta)}
+  background:var(--viewer-scrim)}
+.viewer-caption{position:absolute;left:20px;right:20px;bottom:16px;z-index:3}
 .viewer-stamp{position:absolute;left:20px;top:18px;z-index:3;display:flex;align-items:baseline;gap:10px}
-.viewer-stamp .numeral{font-size:clamp(34px,4vw,46px);color:var(--night-accent)}
-.viewer-stamp .meta{padding-bottom:4px;color:var(--night-meta)}
+.viewer-stamp .numeral{font-size:clamp(34px,4vw,46px)}
+.viewer-stamp .meta{padding-bottom:4px}
 
 .scrub{margin:36px 0 0}
 .scrub-rail{position:relative;height:44px}
@@ -507,15 +608,33 @@ body,.site-header,.site-footer,.section,.record,.narration,.era,.store,.theme-to
 @media (max-width:900px){ .later{grid-template-columns:repeat(2,minmax(0,1fr))} }
 @media (max-width:560px){ .later{grid-template-columns:1fr} }
 
-/* ---------- download ---------- */
-.stores{display:flex;flex-wrap:wrap;gap:12px;margin:36px 0 18px}
-.store{display:flex;flex-direction:column;justify-content:center;gap:5px;min-width:238px;height:66px;
-  padding:0 24px;border:1px solid var(--border);border-radius:var(--r-ui);color:var(--text);
+/* ---------- waitlist ---------- */
+.waitlist{margin-top:36px;max-width:520px}
+.waitlist .field{display:flex;flex-direction:column;gap:8px}
+.waitlist label.meta,.waitlist legend.meta{display:block}
+.waitlist input[type="email"]{
+  height:52px;padding:0 16px;font-family:var(--ui);font-size:16px;color:var(--text);
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--r-ui);
   transition:border-color .12s,background-color .12s}
-.store:hover{border-color:var(--border-hover);background:var(--tint);color:var(--text)}
-.store b{font-weight:600;font-size:15px;line-height:1}
-.store .meta{text-transform:none;letter-spacing:.1em}   /* keep "iOS" cased correctly */
-@media (max-width:560px){ .store{min-width:0;width:100%} }
+.waitlist input[type="email"]::placeholder{color:var(--text-meta)}
+.waitlist input[type="email"]:hover{border-color:var(--border-hover)}
+.waitlist input[type="email"]:focus{outline:none;border-color:var(--accent);
+  box-shadow:0 0 0 3px var(--accent-ring)}
+.waitlist input[type="email"][aria-invalid="true"]{border-color:var(--accent)}
+.platforms{border:0;padding:0;margin:20px 0 0;display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center}
+.platforms legend{padding:0;margin-bottom:10px;float:left;width:100%}
+.platforms label{display:inline-flex;align-items:center;gap:8px;cursor:pointer;font-size:15px;
+  color:var(--text-86);min-height:28px}
+.platforms input{accent-color:var(--accent);width:17px;height:17px;margin:0;cursor:pointer}
+.platforms label:hover{color:var(--text)}
+.trap{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.waitlist button[type="submit"]{margin-top:26px}
+.waitlist button[disabled]{opacity:.6;cursor:progress}
+.waitlist .meta{margin-top:16px;max-width:56ch}
+.wl-status{margin-top:14px;font-size:15px;line-height:1.5;min-height:1.2em}
+.wl-status[data-tone="ok"]{color:var(--accent-text)}
+.wl-status[data-tone="error"]{color:var(--text)}
+.wl-status:empty{margin-top:0}
 
 /* ---------- footer ---------- */
 .site-footer{background:var(--footer-ground);border-top:1px solid var(--hairline);padding:48px 0 40px}

@@ -19,8 +19,10 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2307090d'/%3E%3Ccircle cx='32' cy='31' r='7.5' fill='%23e8b86a'/%3E%3Ccircle cx='32' cy='31' r='16' fill='none' stroke='%23e8b86a' stroke-opacity='.4' stroke-width='2'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="image" href="/plates/hero-over-london-by-rail-1600.jpg"
+<link rel="preload" as="image" media="(prefers-color-scheme: dark)" href="/plates/hero-over-london-by-rail-1600.jpg"
       imagesrcset="/plates/hero-over-london-by-rail-800.jpg 800w, /plates/hero-over-london-by-rail-1200.jpg 1200w, /plates/hero-over-london-by-rail-1600.jpg 1600w, /plates/hero-over-london-by-rail-1920.jpg 1920w" imagesizes="100vw">
+<link rel="preload" as="image" media="(prefers-color-scheme: light)" href="/plates/hero-over-london-by-rail-1600-light.jpg"
+      imagesrcset="/plates/hero-over-london-by-rail-800-light.jpg 800w, /plates/hero-over-london-by-rail-1200-light.jpg 1200w, /plates/hero-over-london-by-rail-1600-light.jpg 1600w, /plates/hero-over-london-by-rail-1920-light.jpg 1920w" imagesizes="100vw">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,300;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <script>
 (function () {
@@ -45,11 +47,19 @@
       <a href="#archive">The archive</a>
     </nav>
     <div class="header-end">
-      <div class="theme-toggle" role="group" aria-label="Colour theme">
-        <button type="button" data-theme-set="light" aria-pressed="false">Light</button>
-        <button type="button" data-theme-set="dark" aria-pressed="true">Dark</button>
-      </div>
-      <a class="btn btn-secondary btn-sm" href="#download">Get the app</a>
+      <button class="theme-toggle" type="button" id="themeToggle"
+              aria-label="Switch to light theme" title="Switch to light theme">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.2"/>
+          <path d="M12 2.6v2.6M12 18.8v2.6M2.6 12h2.6M18.8 12h2.6M5.3 5.3l1.9 1.9M16.8 16.8l1.9 1.9M18.7 5.3l-1.9 1.9M7.2 16.8l-1.9 1.9"/>
+        </svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20.4 13.8A8.6 8.6 0 1 1 10.2 3.6a6.9 6.9 0 0 0 10.2 10.2z"/>
+        </svg>
+      </button>
+      <a class="btn btn-secondary btn-sm" href="#waitlist">Join the waitlist</a>
     </div>
   </div>
 </header>
@@ -59,18 +69,23 @@
 <!-- ============ HERO ============ -->
 <section class="hero" id="top">
   <div class="hero-plate" aria-hidden="true">
-    <img src="/plates/hero-over-london-by-rail-1600.jpg"
-         srcset="/plates/hero-over-london-by-rail-800.jpg 800w, /plates/hero-over-london-by-rail-1200.jpg 1200w, /plates/hero-over-london-by-rail-1600.jpg 1600w, /plates/hero-over-london-by-rail-1920.jpg 1920w"
-         sizes="100vw" width="1920" height="1549" fetchpriority="high" decoding="async" alt="">
+    <picture>
+      <source data-plate media="(prefers-color-scheme: light)"
+              srcset="/plates/hero-over-london-by-rail-800-light.jpg 800w, /plates/hero-over-london-by-rail-1200-light.jpg 1200w, /plates/hero-over-london-by-rail-1600-light.jpg 1600w, /plates/hero-over-london-by-rail-1920-light.jpg 1920w"
+              sizes="100vw">
+      <img src="/plates/hero-over-london-by-rail-1600.jpg"
+           srcset="/plates/hero-over-london-by-rail-800.jpg 800w, /plates/hero-over-london-by-rail-1200.jpg 1200w, /plates/hero-over-london-by-rail-1600.jpg 1600w, /plates/hero-over-london-by-rail-1920.jpg 1920w"
+           sizes="100vw" width="1920" height="1549" fetchpriority="high" decoding="async" alt="">
+    </picture>
   </div>
 
   <div class="wrap hero-grid">
     <div class="hero-copy reveal">
-      <p class="eyebrow">Coming to iPhone and Android</p>
+      <p class="eyebrow">Coming soon to iPhone and Android</p>
       <h1 class="display-1">London,<br>1850.</h1>
       <p class="lede">Gaslight, coal smoke, the newspaper trade. Choose a place, choose a year, and press Travel. The city around you becomes the one that stood there.</p>
       <div class="actions">
-        <a class="btn btn-primary" href="#download">Get the app</a>
+        <a class="btn btn-primary" href="#waitlist">Join the waitlist</a>
         <a class="btn btn-secondary" href="#timeline">Move the year</a>
       </div>
       <p class="meta">London 1850 · 6 stops · 42 min · Free</p>
@@ -84,15 +99,15 @@
           <div class="phone-map" aria-hidden="true">
             <svg viewBox="0 0 280 380" preserveAspectRatio="xMidYMid slice" role="presentation">
               <defs>
-                <radialGradient id="pinHalo"><stop offset="0" stop-color="#e8b86a" stop-opacity=".24"/><stop offset=".7" stop-color="#e8b86a" stop-opacity="0"/></radialGradient>
+                <radialGradient id="pinHalo"><stop offset="0" stop-color="currentColor" stop-opacity=".26"/><stop offset=".7" stop-color="currentColor" stop-opacity="0"/></radialGradient>
               </defs>
-              <rect width="280" height="380" fill="#0b0e14"/>
+              <rect class="m-ground" width="280" height="380"/>
               <!-- park -->
-              <path d="M12 96 C 34 84, 68 86, 84 102 S 92 142, 70 152 S 22 150, 12 130 Z" fill="#0d1219" stroke="rgba(203,209,222,.10)"/>
+              <path class="m-park" d="M12 96 C 34 84, 68 86, 84 102 S 92 142, 70 152 S 22 150, 12 130 Z"/>
               <!-- river -->
-              <path d="M-12 268 C 34 246, 78 254, 118 274 S 196 308, 238 288 S 282 266, 300 274 L 300 312 C 262 306, 232 330, 190 322 S 108 298, 66 292 S 18 282, -12 296 Z" fill="#0e1420" stroke="rgba(203,209,222,.13)"/>
+              <path d="M-12 268 C 34 246, 78 254, 118 274 S 196 308, 238 288 S 282 266, 300 274 L 300 312 C 262 306, 232 330, 190 322 S 108 298, 66 292 S 18 282, -12 296 Z" class="m-water"/>
               <!-- blocks -->
-              <g fill="none" stroke="rgba(203,209,222,.075)">
+              <g class="m-blocks">
                 <path d="M100 44 h44 v34 h-44 z"/><path d="M152 40 h40 v40 h-40 z"/><path d="M200 46 h48 v32 h-48 z"/>
                 <path d="M96 90 h52 v40 h-52 z"/><path d="M156 88 h38 v44 h-38 z"/><path d="M202 92 h50 v38 h-50 z"/>
                 <path d="M20 168 h46 v34 h-46 z"/><path d="M74 164 h40 v40 h-40 z"/><path d="M122 166 h52 v36 h-52 z"/><path d="M182 162 h40 v42 h-40 z"/><path d="M230 168 h48 v34 h-48 z"/>
@@ -100,7 +115,7 @@
                 <path d="M40 330 h50 v40 h-50 z"/><path d="M100 336 h46 v36 h-46 z"/><path d="M156 340 h56 v32 h-56 z"/><path d="M222 332 h54 v40 h-54 z"/>
               </g>
               <!-- streets -->
-              <g fill="none" stroke="rgba(203,209,222,.16)" stroke-width="1.1" stroke-linecap="round">
+              <g class="m-streets" stroke-width="1.1" stroke-linecap="round">
                 <path d="M0 84 C 60 80, 120 86, 180 82 S 250 76, 280 80"/>
                 <path d="M0 140 H 280"/><path d="M0 208 H 280"/>
                 <path d="M0 250 C 60 244, 120 254, 180 248 S 250 240, 280 246"/>
@@ -109,23 +124,23 @@
                 <path d="M96 300 V 380"/><path d="M154 302 V 380"/><path d="M218 300 V 380"/>
               </g>
               <!-- main road -->
-              <path d="M0 180 C 54 176, 96 186, 148 178 S 232 162, 280 168" fill="none" stroke="rgba(203,209,222,.28)" stroke-width="2" stroke-linecap="round"/>
+              <path class="m-road" d="M0 180 C 54 176, 96 186, 148 178 S 232 162, 280 168" stroke-width="2" stroke-linecap="round"/>
               <!-- walking route -->
-              <path d="M46 226 L 82 214 L 118 196 L 152 178 L 186 172 L 214 150"
-                    fill="none" stroke="rgba(244,236,216,.42)" stroke-width="1.6" stroke-dasharray="1 5"
+              <path class="m-route" d="M46 226 L 82 214 L 118 196 L 152 178 L 186 172 L 214 150"
+                    stroke-width="1.6" stroke-dasharray="1 5"
                     stroke-linecap="round" stroke-linejoin="round"/>
-              <g fill="#0b0e14" stroke="rgba(244,236,216,.55)" stroke-width="1.5">
+              <g class="m-stops" stroke-width="1.5">
                 <circle cx="46" cy="226" r="3.4"/><circle cx="82" cy="214" r="3.4"/>
                 <circle cx="118" cy="196" r="3.4"/><circle cx="186" cy="172" r="3.4"/><circle cx="214" cy="150" r="3.4"/>
               </g>
               <!-- current stop -->
-              <circle cx="152" cy="178" r="30" fill="url(#pinHalo)"/>
-              <circle cx="152" cy="178" r="6" fill="#e8b86a" stroke="#11151c" stroke-width="2"/>
+              <circle class="m-halo" cx="152" cy="178" r="30"/>
+              <circle class="m-pin" cx="152" cy="178" r="6" stroke-width="2"/>
               <g transform="translate(166 166)">
-                <rect width="92" height="23" rx="6" fill="#11151c" stroke="rgba(244,236,216,.14)"/>
-                <text x="46" y="15.5" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="8.5" letter-spacing="1" fill="#f4ecd8">FLEET STREET</text>
+                <rect class="m-chip" width="92" height="23" rx="6"/>
+                <text class="m-chip-text" x="46" y="15.5" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="8.5" letter-spacing="1">FLEET STREET</text>
               </g>
-              <text x="20" y="316" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="8" letter-spacing="1.4" fill="rgba(203,209,222,.45)">THAMES</text>
+              <text class="m-label" x="20" y="316" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="8" letter-spacing="1.4">THAMES</text>
             </svg>
           </div>
           <div class="phone-sheet" aria-hidden="true">
@@ -189,29 +204,38 @@
       <div>
         <div class="viewer" id="viewer">
           <div class="viewer-layer" data-era="0">
-            <img src="/plates/era-london-1666.jpg" srcset="/plates/era-london-1666-900.jpg 900w, /plates/era-london-1666.jpg 1500w" sizes="(max-width:1024px) 92vw, 62vw" width="1500" height="1000" loading="lazy" decoding="async" alt="Night painting of the Great Fire of London seen across the Thames, the city burning behind old London Bridge while boats crowd the water.">
+            <picture>
+              <source data-plate media="(prefers-color-scheme: light)" srcset="/plates/era-london-1666-900-light.jpg 900w, /plates/era-london-1666-light.jpg 1500w" sizes="(max-width:1024px) 92vw, 62vw">
+              <img src="/plates/era-london-1666.jpg" srcset="/plates/era-london-1666-900.jpg 900w, /plates/era-london-1666.jpg 1500w" sizes="(max-width:1024px) 92vw, 62vw" width="1500" height="1000" loading="lazy" decoding="async" alt="Night painting of the Great Fire of London seen across the Thames, the city burning behind old London Bridge while boats crowd the water.">
+            </picture>
           </div>
           <div class="viewer-layer on" data-era="1">
-            <img src="/plates/era-london-1850.jpg" srcset="/plates/era-london-1850-900.jpg 900w, /plates/era-london-1850.jpg 1500w" sizes="(max-width:1024px) 92vw, 62vw" width="1500" height="1000" loading="lazy" decoding="async" alt="Engraving of dockworkers among masts, rigging and barrels inside the London docks.">
+            <picture>
+              <source data-plate media="(prefers-color-scheme: light)" srcset="/plates/era-london-1850-900-light.jpg 900w, /plates/era-london-1850-light.jpg 1500w" sizes="(max-width:1024px) 92vw, 62vw">
+              <img src="/plates/era-london-1850.jpg" srcset="/plates/era-london-1850-900.jpg 900w, /plates/era-london-1850.jpg 1500w" sizes="(max-width:1024px) 92vw, 62vw" width="1500" height="1000" loading="lazy" decoding="async" alt="Engraving of dockworkers among masts, rigging and barrels inside the London docks.">
+            </picture>
           </div>
           <div class="viewer-layer" data-era="2">
-            <img src="/plates/era-london-1940.jpg" srcset="/plates/era-london-1940-900.jpg 900w, /plates/era-london-1940.jpg 1500w" sizes="(max-width:1024px) 92vw, 62vw" width="1500" height="1000" loading="lazy" decoding="async" alt="Photograph of Oxford Circus in September 1940, a department store torn open by a bomb, rubble on the pavement and people walking past.">
+            <picture>
+              <source data-plate media="(prefers-color-scheme: light)" srcset="/plates/era-london-1940-900-light.jpg 900w, /plates/era-london-1940-light.jpg 1500w" sizes="(max-width:1024px) 92vw, 62vw">
+              <img src="/plates/era-london-1940.jpg" srcset="/plates/era-london-1940-900.jpg 900w, /plates/era-london-1940.jpg 1500w" sizes="(max-width:1024px) 92vw, 62vw" width="1500" height="1000" loading="lazy" decoding="async" alt="Photograph of Oxford Circus in September 1940, a department store torn open by a bomb, rubble on the pavement and people walking past.">
+            </picture>
           </div>
           <div class="viewer-layer" data-era="3">
             <svg viewBox="0 0 900 600" preserveAspectRatio="xMidYMid slice" role="img" aria-label="The app's plain map of London today, with a pin on Fleet Street.">
-              <defs><radialGradient id="todayHalo"><stop offset="0" stop-color="#e8b86a" stop-opacity=".24"/><stop offset=".7" stop-color="#e8b86a" stop-opacity="0"/></radialGradient></defs>
-              <rect width="900" height="600" fill="#0b0e14"/>
-              <path d="M60 96 C 130 70, 250 76, 300 118 S 316 214, 236 236 S 74 232, 52 176 Z" fill="#101722" stroke="rgba(203,209,222,.16)"/>
-              <path d="M600 120 C 656 104, 730 110, 762 140 S 770 206, 712 220 S 606 214, 588 176 Z" fill="#101722" stroke="rgba(203,209,222,.16)"/>
-              <path d="M-20 402 C 110 358, 250 372, 350 414 S 560 484, 680 440 S 860 396, 920 410 L 920 470 C 850 456, 700 512, 570 494 S 330 440, 220 428 S 60 418, -20 448 Z" fill="#121b29" stroke="rgba(203,209,222,.2)"/>
-              <g fill="none" stroke="rgba(203,209,222,.11)">
+              <defs><radialGradient id="todayHalo"><stop offset="0" stop-color="currentColor" stop-opacity=".26"/><stop offset=".7" stop-color="currentColor" stop-opacity="0"/></radialGradient></defs>
+              <rect class="m-ground" width="900" height="600"/>
+              <path class="m-park" d="M60 96 C 130 70, 250 76, 300 118 S 316 214, 236 236 S 74 232, 52 176 Z"/>
+              <path class="m-park" d="M600 120 C 656 104, 730 110, 762 140 S 770 206, 712 220 S 606 214, 588 176 Z"/>
+              <path d="M-20 402 C 110 358, 250 372, 350 414 S 560 484, 680 440 S 860 396, 920 410 L 920 470 C 850 456, 700 512, 570 494 S 330 440, 220 428 S 60 418, -20 448 Z" class="m-water"/>
+              <g class="m-blocks">
                 <path d="M340 60 h84 v58 h-84 z"/><path d="M440 56 h72 v66 h-72 z"/><path d="M528 62 h92 v56 h-92 z"/>
                 <path d="M336 136 h96 v66 h-96 z"/><path d="M448 132 h70 v72 h-70 z"/><path d="M534 138 h92 v64 h-92 z"/>
                 <path d="M60 268 h92 v58 h-92 z"/><path d="M168 262 h76 v66 h-76 z"/><path d="M260 266 h100 v60 h-100 z"/><path d="M376 260 h78 v70 h-78 z"/><path d="M470 266 h96 v58 h-96 z"/><path d="M582 262 h84 v66 h-84 z"/><path d="M682 268 h96 v58 h-96 z"/><path d="M794 264 h96 v62 h-96 z"/>
                 <path d="M64 340 h88 v44 h-88 z"/><path d="M170 342 h72 v40 h-72 z"/><path d="M262 338 h98 v46 h-98 z"/><path d="M378 342 h74 v40 h-74 z"/><path d="M468 338 h94 v44 h-94 z"/><path d="M580 342 h82 v40 h-82 z"/><path d="M680 340 h94 v44 h-94 z"/>
                 <path d="M120 500 h96 v78 h-96 z"/><path d="M234 508 h86 v70 h-86 z"/><path d="M338 512 h104 v66 h-104 z"/><path d="M462 502 h96 v76 h-96 z"/><path d="M578 510 h92 v68 h-92 z"/><path d="M690 500 h104 v78 h-104 z"/>
               </g>
-              <g fill="none" stroke="rgba(203,209,222,.24)" stroke-width="1.4" stroke-linecap="round">
+              <g class="m-streets" stroke-width="1.4" stroke-linecap="round">
                 <path d="M0 126 C 120 120, 220 130, 330 124 S 560 112, 900 120"/>
                 <path d="M0 216 H 900"/><path d="M0 334 H 900"/>
                 <path d="M0 382 C 140 374, 300 390, 460 380 S 760 364, 900 372"/>
@@ -219,14 +243,14 @@
                 <path d="M0 486 C 160 478, 320 494, 520 484 S 800 470, 900 476"/>
                 <path d="M226 448 V 600"/><path d="M330 452 V 600"/><path d="M452 448 V 600"/><path d="M568 452 V 600"/><path d="M680 448 V 600"/>
               </g>
-              <path d="M0 292 C 140 286, 280 300, 430 288 S 700 262, 900 272" fill="none" stroke="rgba(203,209,222,.4)" stroke-width="2.8" stroke-linecap="round"/>
-              <circle cx="452" cy="292" r="46" fill="url(#todayHalo)"/>
-              <circle cx="452" cy="292" r="8" fill="#e8b86a" stroke="#0b0e14" stroke-width="3"/>
+              <path class="m-road" d="M0 292 C 140 286, 280 300, 430 288 S 700 262, 900 272" stroke-width="2.8" stroke-linecap="round"/>
+              <circle class="m-halo" cx="452" cy="292" r="46"/>
+              <circle class="m-pin-wide" cx="452" cy="292" r="8" stroke-width="3"/>
               <g transform="translate(474 278)">
-                <rect width="132" height="28" rx="6" fill="#11151c" stroke="rgba(244,236,216,.16)"/>
-                <text x="66" y="19" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11" letter-spacing="1.5" fill="#f4ecd8">FLEET STREET</text>
+                <rect class="m-chip" width="132" height="28" rx="6"/>
+                <text class="m-chip-text" x="66" y="19" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11" letter-spacing="1.5">FLEET STREET</text>
               </g>
-              <g font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11" letter-spacing="2" fill="rgba(203,209,222,.55)">
+              <g class="m-label" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="11" letter-spacing="2">
                 <text x="86" y="440">THAMES</text>
                 <text x="120" y="150">HYDE PARK</text>
                 <text x="624" y="164">REGENT'S PARK</text>
@@ -297,7 +321,10 @@
       </dl>
     </div>
     <figure class="plate ratio-4x5 reveal" style="--i:1">
-      <img src="/plates/stop-coffee-stall.jpg" width="1024" height="1280" loading="lazy" decoding="async" alt="Engraving of Londoners in top hats and shawls crowded around a coffee stall before dawn.">
+      <picture>
+        <source data-plate media="(prefers-color-scheme: light)" srcset="/plates/stop-coffee-stall-light.jpg">
+        <img src="/plates/stop-coffee-stall.jpg" width="1024" height="1280" loading="lazy" decoding="async" alt="Engraving of Londoners in top hats and shawls crowded around a coffee stall before dawn.">
+      </picture>
       <figcaption class="meta">Gustave Doré, Coffee Stall, Early Morning, 1872 · Yale Center for British Art</figcaption>
     </figure>
   </div>
@@ -321,7 +348,10 @@
       </ul>
     </div>
     <figure class="plate ratio-4x5 reveal" style="--i:1">
-      <img src="/plates/stop-ludgate-hill.jpg" width="1011" height="1264" loading="lazy" decoding="async" alt="Engraving of Ludgate Hill jammed with carts, omnibuses and crowds under a railway bridge, St Paul's behind, newspaper signs on the walls.">
+      <picture>
+        <source data-plate media="(prefers-color-scheme: light)" srcset="/plates/stop-ludgate-hill-light.jpg">
+        <img src="/plates/stop-ludgate-hill.jpg" width="1011" height="1264" loading="lazy" decoding="async" alt="Engraving of Ludgate Hill jammed with carts, omnibuses and crowds under a railway bridge, St Paul's behind, newspaper signs on the walls.">
+      </picture>
       <figcaption class="meta">Gustave Doré, Ludgate Hill, 1872 · London: A Pilgrimage</figcaption>
     </figure>
   </div>
@@ -338,7 +368,10 @@
 
     <div class="city">
       <figure class="plate ratio-4x5 reveal">
+        <picture>
+        <source data-plate media="(prefers-color-scheme: light)" srcset="/plates/stop-ladies-mile-light.jpg">
         <img src="/plates/stop-ladies-mile.jpg" width="1016" height="1270" loading="lazy" decoding="async" alt="Engraving of riders in top hats and veils on horseback under the trees of Hyde Park.">
+      </picture>
         <figcaption class="meta">Gustave Doré, The Ladies' Mile, 1872 · Yale Center for British Art</figcaption>
       </figure>
       <div class="reveal" style="--i:1">
@@ -352,7 +385,7 @@
               <p>Gaslight, coal smoke, the newspaper trade. Six stops on foot, from Fleet Street down to the river.</p>
               <p class="status">6 stops · 42 min · Free</p>
             </div>
-            <a class="btn btn-primary btn-sm" href="#download">Travel</a>
+            <a class="btn btn-primary btn-sm" href="#waitlist">Travel</a>
           </article>
           <article class="era archived">
             <span class="numeral">1940</span>
@@ -361,7 +394,7 @@
               <p>Blackout, shelters, the Underground at night.</p>
               <p class="status">In the archive</p>
             </div>
-            <a class="btn btn-secondary btn-sm" href="#download">Notify me</a>
+            <a class="btn btn-secondary btn-sm" href="#waitlist">Notify me</a>
           </article>
           <article class="era archived">
             <span class="numeral">1666</span>
@@ -370,7 +403,7 @@
               <p>Timber, pitch, an east wind and four days of fire.</p>
               <p class="status">In the archive</p>
             </div>
-            <a class="btn btn-secondary btn-sm" href="#download">Notify me</a>
+            <a class="btn btn-secondary btn-sm" href="#waitlist">Notify me</a>
           </article>
         </div>
       </div>
@@ -378,7 +411,10 @@
 
     <div class="city">
       <figure class="plate ratio-4x5 reveal">
+        <picture>
+        <source data-plate media="(prefers-color-scheme: light)" srcset="/plates/city-newyork-fifth-avenue-1880-light.jpg">
         <img src="/plates/city-newyork-fifth-avenue-1880.jpg" width="1024" height="1280" loading="lazy" decoding="async" alt="Photograph looking down Fifth Avenue in 1880, castellated houses on the left, a church spire in the distance.">
+      </picture>
         <figcaption class="meta">Charles Pollock, Down 5th Ave from Hotel Bristol, 1880 · Library of Congress</figcaption>
       </figure>
       <div class="reveal" style="--i:1">
@@ -392,7 +428,7 @@
               <p>Prohibition, speakeasies and the first real skyline.</p>
               <p class="status">In the archive</p>
             </div>
-            <a class="btn btn-secondary btn-sm" href="#download">Notify me</a>
+            <a class="btn btn-secondary btn-sm" href="#waitlist">Notify me</a>
           </article>
           <article class="era archived">
             <span class="numeral">1880</span>
@@ -401,7 +437,7 @@
               <p>Brownstones, gaslight and the elevated railway.</p>
               <p class="status">In the archive</p>
             </div>
-            <a class="btn btn-secondary btn-sm" href="#download">Notify me</a>
+            <a class="btn btn-secondary btn-sm" href="#waitlist">Notify me</a>
           </article>
         </div>
       </div>
@@ -409,7 +445,10 @@
 
     <div class="city">
       <figure class="plate ratio-4x5 reveal">
+        <picture>
+        <source data-plate media="(prefers-color-scheme: light)" srcset="/plates/city-rome-campo-vaccino-light.jpg">
         <img src="/plates/city-rome-campo-vaccino.jpg" width="1024" height="1280" loading="lazy" decoding="async" alt="Etching of the Roman Forum used as a cow pasture, the Arch of Septimius Severus half buried in the foreground.">
+      </picture>
         <figcaption class="meta">Piranesi, Veduta di Campo Vaccino, about 1775 · The Metropolitan Museum of Art</figcaption>
       </figure>
       <div class="reveal" style="--i:1">
@@ -423,7 +462,7 @@
               <p>Half ruin, half building site. Cattle grazing in the Forum.</p>
               <p class="status">In the archive</p>
             </div>
-            <a class="btn btn-secondary btn-sm" href="#download">Notify me</a>
+            <a class="btn btn-secondary btn-sm" href="#waitlist">Notify me</a>
           </article>
           <article class="era archived">
             <span class="numeral">100<small>AD</small></span>
@@ -432,7 +471,7 @@
               <p>A million people. The Forum at its height, and the grain ships in from Egypt.</p>
               <p class="status">In the archive</p>
             </div>
-            <a class="btn btn-secondary btn-sm" href="#download">Notify me</a>
+            <a class="btn btn-secondary btn-sm" href="#waitlist">Notify me</a>
           </article>
         </div>
       </div>
@@ -462,24 +501,38 @@
 </section>
 
 <!-- ============ DOWNLOAD ============ -->
-<section class="section" id="download">
+<section class="section" id="waitlist">
   <div class="wrap">
     <div class="section-head reveal" style="margin-bottom:0">
-      <p class="eyebrow">Download</p>
+      <p class="eyebrow">Coming soon</p>
       <h2 class="display-2">Made for a phone in your hand.</h2>
-      <p class="body">This is built for standing on the street it is describing, so it launches on iPhone and Android first. A web version comes later, and not in the next few months.</p>
-      <!-- Replace href="#download" with the real App Store / Google Play URLs at launch. -->
-      <div class="stores">
-        <a class="store" href="#download" aria-describedby="storeNote">
-          <span class="meta">iOS</span>
-          <b>Download on the App Store</b>
-        </a>
-        <a class="store" href="#download" aria-describedby="storeNote">
-          <span class="meta">Android</span>
-          <b>Get it on Google Play</b>
-        </a>
-      </div>
-      <p class="meta" id="storeNote">Store listings open at launch · London 1850 is free · New eras arrive inside the app</p>
+      <p class="body">This is built for standing on the street it is describing, so it launches on
+        iPhone and Android first. A web version comes later, and not in the next few months.
+        The apps are not in the stores yet. Leave an address and we will tell you the day they are.</p>
+
+      <form class="waitlist" id="waitlist-form" novalidate>
+        <div class="field">
+          <label class="meta" for="wl-email">Email address</label>
+          <input id="wl-email" name="email" type="email" inputmode="email" autocomplete="email"
+                 spellcheck="false" required placeholder="you@example.com"
+                 aria-describedby="wl-note">
+        </div>
+        <fieldset class="platforms">
+          <legend class="meta">Which phone</legend>
+          <label><input type="radio" name="platform" value="ios"><span>iPhone</span></label>
+          <label><input type="radio" name="platform" value="android"><span>Android</span></label>
+          <label><input type="radio" name="platform" value="either" checked><span>Either</span></label>
+        </fieldset>
+        <!-- a bot fills every field it finds; a person never sees this one -->
+        <div class="trap" aria-hidden="true">
+          <label for="wl-company">Company</label>
+          <input id="wl-company" name="company" type="text" tabindex="-1" autocomplete="off">
+        </div>
+        <button class="btn btn-primary" type="submit" id="wl-submit">Join the waitlist</button>
+        <p class="meta" id="wl-note">One email when the apps land. Nothing else, and you can ask us
+          to delete the address at any time.</p>
+        <p class="wl-status" id="wl-status" role="status" aria-live="polite"></p>
+      </form>
     </div>
   </div>
 </section>
@@ -493,7 +546,7 @@
       <nav class="footer-links meta" aria-label="Footer">
         <a href="#timeline">The timeline</a>
         <a href="#archive">The archive</a>
-        <a href="#download">Get the app</a>
+        <a href="#waitlist">Join the waitlist</a>
       </nav>
     </div>
     <p class="meta footer-note">The privacy policy, the account deletion page and a contact address go live with the app. They are not written yet, so they are not linked here.</p>
@@ -509,10 +562,11 @@
   /* ---- theme: system by default, pinned once the reader chooses ---- */
   var root = document.documentElement;
   var KEY = "waiw-theme";
-  var buttons = [].slice.call(document.querySelectorAll("[data-theme-set]"));
+  var toggle = document.getElementById("themeToggle");
   var mq = window.matchMedia ? window.matchMedia("(prefers-color-scheme: light)") : null;
   var metaDark = document.querySelector('meta[data-theme-color="dark"]');
   var metaLight = document.querySelector('meta[data-theme-color="light"]');
+  var plateSources = [].slice.call(document.querySelectorAll("source[data-plate]"));
 
   function effective() {
     return root.getAttribute("data-theme") || (mq && mq.matches ? "light" : "dark");
@@ -521,30 +575,34 @@
   function sync() {
     var now = effective();
     var pinned = !!root.getAttribute("data-theme");
-    buttons.forEach(function (b) {
-      b.setAttribute("aria-pressed", String(b.getAttribute("data-theme-set") === now));
+    var next = now === "light" ? "dark" : "light";
+
+    if (toggle) {
+      var label = "Switch to " + next + " theme";
+      toggle.setAttribute("aria-label", label);
+      toggle.setAttribute("title", label);
+    }
+    // a <source media> only listens to the system, so pinning a theme means
+    // rewriting the media rather than adding another source. Same trick as the metas.
+    plateSources.forEach(function (el) {
+      el.media = pinned
+        ? (now === "light" ? "all" : "not all")
+        : "(prefers-color-scheme: light)";
     });
-    // the browser picks the first theme-color whose media matches, so pinning a
-    // theme means taking the medias off rather than adding another tag
     if (metaDark && metaLight) {
-      if (pinned) {
-        metaDark.media = now === "dark" ? "all" : "not all";
-        metaLight.media = now === "light" ? "all" : "not all";
-      } else {
-        metaDark.media = "(prefers-color-scheme: dark)";
-        metaLight.media = "(prefers-color-scheme: light)";
-      }
+      metaDark.media = pinned ? (now === "dark" ? "all" : "not all") : "(prefers-color-scheme: dark)";
+      metaLight.media = pinned ? (now === "light" ? "all" : "not all") : "(prefers-color-scheme: light)";
     }
   }
 
-  buttons.forEach(function (b) {
-    b.addEventListener("click", function () {
-      var choice = b.getAttribute("data-theme-set");
-      root.setAttribute("data-theme", choice);
-      try { localStorage.setItem(KEY, choice); } catch (e) {}
+  if (toggle) {
+    toggle.addEventListener("click", function () {
+      var next = effective() === "light" ? "dark" : "light";
+      root.setAttribute("data-theme", next);
+      try { localStorage.setItem(KEY, next); } catch (e) {}
       sync();
     });
-  });
+  }
   if (mq && mq.addEventListener) {
     mq.addEventListener("change", function () { if (!root.getAttribute("data-theme")) sync(); });
   }
@@ -663,6 +721,71 @@
     b.addEventListener("click", function () { render(Number(b.dataset.era)); });
   });
   render(current);
+})();
+
+/* ---- waitlist ---- */
+(function () {
+  "use strict";
+  var form = document.getElementById("waitlist-form");
+  if (!form) return;
+  var email = document.getElementById("wl-email");
+  var button = document.getElementById("wl-submit");
+  var status = document.getElementById("wl-status");
+  var busy = false;
+
+  function say(message, tone) {
+    status.textContent = message;
+    status.setAttribute("data-tone", tone);
+  }
+
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+    if (busy) return;
+
+    var value = email.value.trim();
+    if (!value || value.indexOf("@") < 1 || value.lastIndexOf(".") < value.indexOf("@")) {
+      email.setAttribute("aria-invalid", "true");
+      email.focus();
+      say("That does not look like an email address.", "error");
+      return;
+    }
+    email.removeAttribute("aria-invalid");
+
+    var chosen = form.querySelector('input[name="platform"]:checked');
+    busy = true;
+    button.disabled = true;
+    var original = button.textContent;
+    button.textContent = "Adding you";
+    say("", "");
+
+    fetch("/api/waitlist", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        email: value,
+        platform: chosen ? chosen.value : "either",
+        company: form.querySelector('[name="company"]').value
+      })
+    })
+      .then(function (r) { return r.json().then(function (b) { return { ok: r.ok, body: b }; }); })
+      .then(function (res) {
+        if (!res.ok || !res.body.ok) throw new Error(res.body.error || "That did not work.");
+        form.querySelector(".field").hidden = true;
+        form.querySelector(".platforms").hidden = true;
+        button.hidden = true;
+        say(res.body.added
+          ? "You are on the list. We will write once, the day the apps land."
+          : "You were already on the list. We will write once, the day the apps land.", "ok");
+      })
+      .catch(function (err) {
+        say(err.message || "That did not work. Please try again.", "error");
+      })
+      .then(function () {
+        busy = false;
+        button.disabled = false;
+        button.textContent = original;
+      });
+  });
 })();
 </script>
 

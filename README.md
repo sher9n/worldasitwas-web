@@ -47,9 +47,9 @@ Three rules worth keeping:
 - **Confidence is shown, not hidden.** Known, Likely and Generated are marked on the words
   themselves (`.known`, `.likely`, `.generated`), on the sample narration and on every value
   in the arrival record.
-- **Night islands stay dark in both themes.** The hero, the phone mock, the plates and the era
-  viewer show the product or a print, and both are dark. Everything around them turns to paper
-  in light mode.
+- **Both themes go all the way.** Nothing stays dark in light mode. Every plate ships twice, a
+  dark file and a `-light` one, swapped by a `<picture>` source; the SVG map is styled from CSS
+  classes so it follows the theme too.
 
 ## Themes
 
@@ -89,11 +89,30 @@ Ceilings in use: `#c2b49a` for already-dark engravings, `#a89b84` for lighter en
 `#9a9080` for cream-paper etchings, `#8f8471` for photographs. The 1666 fire painting keeps
 its colour, since the fire is the only warm light in it.
 
+## Waitlist
+
+The apps are not in the stores yet, so the download section is a waitlist form instead of two
+dead buttons.
+
+- `POST /api/waitlist` takes `{email, platform, company}`. `company` is a honeypot: anything
+  that fills it gets a cheerful 200 and no write. Rate limited to 6 posts per IP per 10
+  minutes, addresses are never logged, and a repeat sign-up is a no-op via
+  `ON CONFLICT DO NOTHING`.
+- `GET /api/waitlist?key=...` returns the count, a breakdown by platform and the 500 most
+  recent rows. Add `&format=csv` for a download. Any other key, or none, gets a 404 rather
+  than a 401, so the endpoint does not advertise itself. The key lives in `WAITLIST_ADMIN_KEY`.
+- Storage is one table, created on boot (`db.js`): `email`, a lowercased `email_key` with a
+  unique index, `platform`, `source`, `created_at`. No IP address, no user agent.
+- `DATABASE_URL` is a Railway reference to the `postgres` service in the same project, so the
+  app reaches it over the private network with no TLS. The public proxy URL needs
+  `ssl: { rejectUnauthorized: false }`; `db.js` picks the right mode from the URL.
+
 ## Placeholders to replace at launch
 
-- The App Store and Google Play links in `#download` (`href="#download"` today).
+- Store links, once the apps exist. Until then the waitlist is the honest control.
 - Privacy, account deletion and contact. The footer says plainly that these are not written
-  yet rather than linking to nothing.
+  yet rather than linking to nothing. **Collecting email addresses makes the privacy note
+  more pressing than it was.**
 
 ## Deploy
 

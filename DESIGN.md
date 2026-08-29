@@ -37,52 +37,45 @@ content accident: it is the same promise the confidence tiers make, applied to t
 ### 2.1 Why there is a light theme at all
 
 The first version of this brief said not to build one, on the grounds that a bright site
-handing off to a dark app breaks the arrival. That objection is real and it is answered
-structurally rather than ignored. See the night islands rule below: the parts of the page that
-*are* the product stay dark in both themes, so the handoff to the app is never a jump from
-bright to black.
+handing off to a dark app breaks the arrival. We built one anyway, and the answer to that
+objection turned out not to be "keep half the page dark" but "commit". A page that is dark in
+patches reads as broken, not as atmospheric.
 
-Dark is still the default and still the brand. Light is for daylight, for projectors, for
+Dark is still the default and still the brand. Light is for daylight, for projectors, and for
 people who read long pages more comfortably on paper.
 
 ### 2.2 How the theme is chosen
 
 Three states, in priority order:
 
-1. **Pinned.** The reader clicked Light or Dark in the header. Stored in `localStorage`
-   under `waiw-theme` and applied as `data-theme` on `<html>` by a small script in `<head>`,
-   before first paint, so there is no flash of the wrong theme.
+1. **Pinned.** The reader used the toggle. Stored in `localStorage` under `waiw-theme` and
+   applied as `data-theme` on `<html>` by a small script in `<head>`, before first paint, so
+   there is no flash of the wrong theme.
 2. **System.** No pin, so `prefers-color-scheme` decides. This is pure CSS and needs no
    JavaScript at all.
 3. **Default.** Neither of the above resolves to light, so dark.
-
-The toggle shows two buttons and marks the one you are in with `aria-pressed="true"`. It never
-shows a third "system" state: a reader who wants system back has never pinned in the first
-place, and pinning the theme you are already in is harmless.
 
 `color-scheme` is set per theme so form controls, scrollbars and the like follow. Two
 `theme-color` meta tags carry the browser chrome colour, one per scheme; when a theme is
 pinned the script flips their `media` attributes rather than adding a third tag, because the
 browser uses the first tag whose media matches.
 
-### 2.3 Night islands (the important rule)
+### 2.3 Both themes go all the way
 
-**Four things stay dark in both themes**, because they show the product or a print, and both of
-those are dark:
+**Nothing stays dark in light mode.** Not the hero, not the phone mock, not the plates, not
+their captions, not the SVG map. If you add a component that looks right in only one theme,
+it is not finished.
 
-| Island | Why |
-|---|---|
-| The hero band | The arrival moment. It is the app's first screen in spirit. |
-| The phone mock | It depicts the app, and the app is dark. A light phone would be a lie. |
-| Every period plate | A dark print sits on paper. On cream it reads as an archive book. |
-| The era viewer | Same as the plates, plus its stamp and caption sit on the image. |
+That has three consequences worth knowing before you touch anything visual:
 
-These use the `--night-*` tokens, which never change. Their captions, stamps and buttons stay
-light-on-dark in both themes, and the hero's call to action stays amber, never bronze.
-
-Everything else is a role token and flips with the theme.
-
----
+- **Every plate exists twice**, a dark-toned file and a light-toned one. See section 7.
+- **The SVG map is styled from CSS**, never from `fill` attributes, so it follows the theme
+  like any other component. Its classes are `.m-ground`, `.m-park`, `.m-water`, `.m-blocks`,
+  `.m-streets`, `.m-road`, `.m-route`, `.m-stops`, `.m-pin`, `.m-halo`, `.m-chip`,
+  `.m-chip-text` and `.m-label`.
+- **Scrims are tokens**, not literals. `--hero-scrim`, `--plate-scrim` and `--viewer-scrim`
+  each fade to their theme's ground, which is what lets a caption sit on an image and still
+  take its colour from `--text-meta` in both themes.
 
 ## 3. Palette
 
@@ -125,8 +118,8 @@ Warm parchment, not white. Ratios measured against `#f7f2e7`.
 
 Three light-theme traps, all of them measured:
 
-- **Amber does not survive on paper.** `#e8b86a` is about 2:1 on cream. Bronze replaces it.
-  Amber still appears in light mode, but only inside a night island.
+- **Amber does not survive on paper.** `#e8b86a` is about 2:1 on cream. Bronze replaces it
+  everywhere in light mode, including inside the phone mock.
 - **Fill bronze and text bronze are different values.** `#9a5f1e` is 4.3:1 on the recessed
   ground, which fails, so it is used only as a fill where its own contrast does not apply.
   `#8a5a1f` clears 4.5:1 on all three light grounds and is the one you write text in.
@@ -198,22 +191,23 @@ headings. Minimum body size on the site is 16px; never set mono below 10px.
 
 ## 6. Components
 
-**Hero.** Full-bleed night island, one period plate behind a vignette
+**Hero.** Full-bleed, one period plate behind a vignette
 (`inset 0 0 130px 30px rgba(7,9,13,0.9)`) and a top scrim
 (`linear-gradient(#07090d, rgba(7,9,13,0.72) 42%, transparent)`). Display 1 in Cormorant italic
 carrying a place and a year. One amber call to action. One line of mono underneath stating what
 exists today, honestly: `LONDON 1850 · 6 STOPS · 42 MIN · FREE`. On a narrow screen the
-horizontal scrim lightens, because a phone viewport is almost entirely the dark left-hand edge
-of that gradient and the plate disappears behind it.
+horizontal scrim lightens, because a phone viewport is almost entirely the left-hand edge of
+that gradient and the plate disappears behind it.
 
-**Theme toggle.** Two mono buttons in a hairline pill, in the header beside the call to action.
-The button for the theme you are in is pressed: accent text on `--surface`. Below 560px the
-header's call to action is hidden and the toggle stays, because the hero's call to action is
-one scroll away and the toggle has nowhere else to live.
+**Theme toggle.** One 42px icon button in the header, showing the theme you can switch **to**:
+a sun while you are in dark, a crescent while you are in light. The icon swap is pure CSS on
+the same cascade as the palette, so it is correct before any JavaScript runs; the script only
+keeps `aria-label` and `title` in step. Below 560px the header's call to action is hidden and
+the toggle stays, because the hero's call to action is one scroll away.
 
 **Primary button.** Accent fill, `--accent-on` text, Inter 600 15px, height 48px (44px minimum
 touch target), radius 12px. Hover lightens in dark, deepens in light. There is one primary
-button per view. Inside a night island the primary button stays amber in both themes.
+button per view.
 
 **Secondary button.** Transparent, 1px `--border`, `--text`.
 
@@ -262,6 +256,14 @@ in the matching style plus a mono label.
 an empty result. On the site it is labelled the same way it is in the app: `LIGHT TOUR ·
 3 GENERATED STOPS`. Do not dress it up as equivalent to a reconstruction.
 
+**Waitlist.** The apps are not in the stores, so the page does not pretend they are. The
+download section is a form: one email field on `--surface`, three radio choices for the phone,
+one primary button, and a mono note stating exactly what the address is used for. On success
+the field and the button are removed and the status line replaces them, so there is nothing
+left to submit twice. Failures speak plainly and never blame the reader. The form carries a
+hidden `company` field that a person never sees; anything that fills it is treated as a bot and
+silently accepted without a write.
+
 **Footer.** `--footer-ground`, hairline top, mono for links and notes, `--text-meta`. Where the
 app has privacy and delete-account pages and the site does not yet, the footer says so in one
 sentence instead of linking nowhere.
@@ -287,7 +289,24 @@ emoji, no icon sets invented for the occasion.**
   pattern at about 7% accent, and a centred mono label naming the crop
   (`PERIOD PLATE · 4:5 · 1080×1350`). A labelled placeholder is better than a wrong image.
 
-### 7.1 Toning (do this before adding any plate)
+### 7.1 Every plate exists twice
+
+A plate ships as two files: `NAME.jpg` for dark and `NAME-light.jpg` for light. They are
+swapped by a `<picture>` source, which is native and needs no JavaScript for the system
+preference:
+
+```html
+<picture>
+  <source data-plate media="(prefers-color-scheme: light)" srcset="/plates/NAME-light.jpg">
+  <img src="/plates/NAME.jpg" alt="...">
+</picture>
+```
+
+A `<source media>` only listens to the system, so when a reader pins a theme the script
+rewrites that media to `all` or `not all`. That is the same trick the `theme-color` metas use.
+The browser downloads only the source it ends up using, so the second file costs nothing.
+
+### 7.2 Toning (do this before adding any plate)
 
 Historical engravings are dark ink on cream paper. Dropped in raw they blow out against the
 near-black ground: the New York 1880 photograph arrived with a pure white sky. So the tone is
@@ -309,7 +328,18 @@ The second colour is the highlight ceiling and it is the only knob you normally 
 | Cream-paper etching | `#9a9080` | Piranesi, Campo Vaccino |
 | Photograph | `#8f8471` | Oxford Circus, 1940 |
 
-Aim for a mean pixel value of roughly 60 to 100 out of 255; check with
+The light file is the same idea inverted: a dark floor, a paper ceiling, and a gamma lift so
+the paper carries the image rather than the ink.
+
+```sh
+magick SOURCE -crop WxH+X+Y +repage -resize 1500x \
+  -colorspace Gray -auto-level -gamma 1.45 +level-colors '#30261b,#fbf6ea' -colorspace sRGB \
+  -strip -interlace JPEG -sampling-factor 4:2:0 -quality 66 public/plates/NAME-light.jpg
+```
+
+Gamma is the knob here: 1.15 for a photograph that is already bright, 1.45 for a dense
+engraving. Aim for a mean of roughly 130 to 165, high enough to read as paper, low enough to
+keep its ink. The dark file aims for roughly 60 to 100; check with
 `magick FILE -format '%[fx:int(mean*255)]' info:`. Leave a plate in colour only when the colour
 is the subject: the 1666 fire painting keeps its flames, since they are the only warm light in
 it and they happen to be amber.
@@ -355,7 +385,7 @@ Matter-of-fact. Concrete places, concrete years. Short declaratives.
 
 ## 10. Tokens
 
-Colour is in three layers. Read them top to bottom and the rest of the stylesheet follows.
+Colour is in two layers. Read them top to bottom and the rest of the stylesheet follows.
 
 ```css
 :root{
@@ -367,16 +397,8 @@ Colour is in three layers. Read them top to bottom and the rest of the styleshee
   --parchment:#f7f2e7; --parchment-deep:#efe8d7; --parchment-lift:#fffdf8;
   --soot:#14110c;
 
-  /* 2. night island: fixed in BOTH themes (hero, phone, plates, viewer) */
-  --night-ground:#07090d; --night-field:#0b0e14; --night-surface:#11151c;
-  --night-text:#f4ecd8; --night-text-2:#cbd1de; --night-meta:#7d8597;
-  --night-hairline:rgba(244,236,216,.10);
-  --night-border:rgba(244,236,216,.24); --night-border-hover:rgba(244,236,216,.48);
-  --night-rule:rgba(244,236,216,.18);
-  --night-accent:#e8b86a; --night-accent-hover:#f0c884; --night-accent-on:#11151c;
-  --night-halo:rgba(232,184,106,.22);
-
-  /* 3. roles: dark is the default, light overrides these and only these */
+  /* 2. roles: dark is the default, light overrides these and only these.
+        This includes the hero, the phone, the plates, the viewer and the map. */
   --ground:#07090d; --ground-recessed:#0b0e14; --surface:#11151c;
   --footer-ground:#11151c; --header-ground:rgba(17,21,28,.78);
   --text:#f4ecd8;
@@ -420,11 +442,13 @@ if you change one, change the other in the same commit.
 ## 11. Working in this system
 
 **Adding a colour.** Do not write a hex or an rgba inside a component rule. Add a role token,
-give it a dark value and a light value, then use the token. The only exceptions are the night
-island scrims, which are deliberately fixed.
+give it a dark value and a light value, then use the token. Scrims and gradients are tokens
+too (`--hero-scrim`, `--plate-scrim`, `--viewer-scrim`), because each one has to fade to its
+own theme's ground.
 
-**Adding a component.** Ask which layer it belongs to. Is it part of the product being shown
-(night island), or part of the page around it (role tokens)? Almost everything is the second.
+**Adding a component.** Build it in dark, then read it in light before you commit. The usual
+misses are a hard-coded scrim, a colour sitting in an SVG `fill` attribute, and a black shadow
+that reads as dirt on parchment.
 
 **Changing a shared value.** Check both themes before committing. A change that looks fine on
 ink can vanish on paper: `--hairline` at 10% is a visible divider on `#07090d` and nearly
@@ -439,15 +463,17 @@ themes. Re-measure after any palette change rather than trusting the table above
 ## 12. Don't
 
 - Don't put a second accent colour next to the amber or the bronze.
-- Don't use amber on a light ground, or bronze on a dark one. Each belongs to its theme, and
-  the night islands keep amber wherever they appear.
+- Don't use amber on a light ground, or bronze on a dark one. Each belongs to its theme.
 - Don't use Cormorant for body copy or buttons.
 - Don't let a theme change move anything. Colour only.
-- Don't lighten the hero, the phone or the plates for light mode. They are the product and the
-  print, and both are dark.
+- Don't leave anything dark in light mode. If a component only works on ink, it is not done.
+- Don't put a colour in an SVG `fill` or `stroke` attribute. Give the node a class and style it,
+  or it will be stuck in one theme.
 - Don't use rounded cards with a left accent border, aggressive gradients, or glassmorphism
   beyond the single blur used on the header and floating controls.
 - Don't show a UI screenshot of the arrival screen. It isn't designed yet.
 - Don't imply offline mode, GPS arrival detection, a chat guide, or paid tiers. None ship at
   launch, and the site must not promise them. Where the roadmap names them, it says plainly
   that they are not in the first release and have no date.
+- Don't show App Store or Google Play buttons until there is something behind them. Until then
+  the honest control is the waitlist.
