@@ -8,26 +8,31 @@
   var KEY = "waiw-fx";
   var root = document.documentElement;
 
+  // `at` is where the effect can actually be seen, so toggling can take you there
   var EFFECTS = [
-    { id: "timeline", cls: "fx-timeline", on: true,
+    { id: "timeline", cls: "fx-timeline", on: true, at: "#timeline",
       name: "Tactile timeline", note: "Springs, rolling year, staggered record" },
-    { id: "load", cls: "fx-load", on: true,
+    { id: "autoplay", cls: "fx-autoplay", on: true, at: "#timeline",
+      name: "Timeline walks itself", note: "A step every ten seconds, yields to you" },
+    { id: "load", cls: "fx-load", on: true, at: "#top",
       name: "Load sequence", note: "The hero sets itself, line by line" },
-    { id: "marks", cls: "fx-marks", on: true,
+    { id: "marks", cls: "fx-marks", on: true, at: "#confidence",
       name: "Confidence draws in", note: "Known, then likely, then generated" },
-    { id: "drift", cls: "fx-drift", on: true,
+    { id: "drift", cls: "fx-drift", on: true, at: "#top",
       name: "Ambient hero drift", note: "The Thames, 1647 to today, by itself" },
-    { id: "atmos", cls: "fx-atmos", on: false,
-      name: "Atmosphere", note: "Slow drift on plates, faint smoke" },
-    { id: "edge", cls: "fx-edge", on: false,
+    { id: "edge", cls: "fx-edge", on: true, at: "#waitlist",
       name: "Travelling edge", note: "A light runs the border of the invitation" },
-    { id: "pulse", cls: "fx-pulse", on: false,
+    { id: "reveal", cls: "fx-reveal", on: true, at: "#arrive",
+      name: "Plates arrive", note: "Images settle out of a slow zoom as they scroll up" },
+    { id: "atmos", cls: "fx-atmos", on: false, at: "#archive",
+      name: "Atmosphere", note: "Slow drift on plates, faint smoke" },
+    { id: "pulse", cls: "fx-pulse", on: false, at: "#waitlist",
       name: "Pulse", note: "The panel breathes, the dot beats" },
-    { id: "lift", cls: "fx-lift", on: false,
+    { id: "lift", cls: "fx-lift", on: false, at: "#archive",
       name: "Surfaces lift", note: "Cards and plates answer the cursor" },
-    { id: "count", cls: "fx-count", on: false,
+    { id: "count", cls: "fx-count", on: false, at: "#archive",
       name: "Years arrive", note: "Numerals settle in as they scroll up" },
-    { id: "parallax", cls: "fx-parallax", on: false,
+    { id: "parallax", cls: "fx-parallax", on: false, at: "#top",
       name: "Parallax", note: "Not recommended, the brief says no" }
   ];
 
@@ -63,6 +68,40 @@
   var state = load();
   apply(state);
 
+  // take me to where this effect lives, and replay it if it only happens on arrival
+  function show(effect) {
+    if (!effect || !effect.at) return;
+    var target = document.querySelector(effect.at);
+    if (!target) return;
+    var calm = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    target.scrollIntoView({ behavior: calm ? "auto" : "smooth", block: "start" });
+    // effects that fire once on arrival need re-arming to be seen again
+    setTimeout(function () {
+      if (effect.id === "marks") {
+        document.querySelectorAll(".narration, .legend").forEach(function (el) {
+          el.classList.remove("drawn");
+          void el.offsetWidth;
+          el.classList.add("drawn");
+        });
+      }
+      if (effect.id === "reveal") {
+        document.querySelectorAll(".plate").forEach(function (el) {
+          el.classList.remove("shown");
+          void el.offsetWidth;
+          el.classList.add("shown");
+        });
+      }
+      if (effect.id === "count") {
+        document.querySelectorAll(".numeral").forEach(function (el) {
+          el.classList.remove("counting");
+          void el.offsetWidth;
+          el.classList.add("counting");
+        });
+      }
+      if (effect.id === "load") location.reload();
+    }, calm ? 0 : 620);
+  }
+
   function build() {
     var lab = document.createElement("aside");
     lab.className = "lab";
@@ -91,6 +130,7 @@
         state[e.id] = box.checked;
         save(state);
         apply(state);
+        show(e);
       });
 
       var txt = document.createElement("span");

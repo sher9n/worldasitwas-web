@@ -379,16 +379,24 @@ WebP files came out larger than progressive JPEG at matching quality.
 
 ## 8. Motion
 
-Every effect sits behind its own class on `<html>` (`fx-timeline`, `fx-load`, `fx-marks`,
-`fx-drift`, `fx-atmos`, `fx-edge`, `fx-pulse`, `fx-lift`, `fx-count`, `fx-parallax`) and lives
-in `public/motion.css`. Four are on: the timeline gets weight, the hero sets itself in sequence,
-the confidence marks draw themselves in, and the hero drifts through four centuries of the
-Thames on its own. The rest are built but off, so they can be judged rather than argued about.
+Every effect sits behind its own class on `<html>` and lives in `public/motion.css`. Seven are
+on: the timeline gets weight and walks itself a step every ten seconds, the hero sets itself in
+sequence, the confidence marks draw themselves in, the hero drifts through four centuries of the
+Thames, a light travels the border of the invitation, and the plates settle out of a slow zoom
+as they scroll up. `fx-atmos`, `fx-pulse`, `fx-lift`, `fx-count` and `fx-parallax` are built and
+off, so they can be judged rather than argued about.
 
-The switches are a floating dock, `public/lab.js`, which loads only on localhost or with `?lab`
-in the URL. It never reaches a visitor. To change what ships, change the `on` defaults in
-`lab.js` and the matching object in the head script of `index.html`; they must agree, because
-the head script is what applies the classes before first paint.
+Two rules the self-walking timeline has to keep, and they generalise to anything that moves on
+its own: **it yields the moment someone touches it** (twenty seconds before it resumes), and
+**it does not animate when nobody is looking**, meaning off-screen or in a background tab.
+Motion that competes with a reader is worse than no motion.
+
+The switches are a floating dock, `public/lab.js`, which loads on localhost only. To change what
+ships, change the `on` defaults in `lab.js` and the matching object in the head script of
+`index.html`; they must agree, because the head script is what applies the classes before first
+paint. Each effect also carries an `at` selector naming where it can be seen, so toggling one
+takes you to it. Keep those selectors honest: pointing at a section id that does not exist on
+the page is silent, and it looks exactly like a broken effect.
 
 
 The app uses springs, and the site should feel related without imitating a native sheet.

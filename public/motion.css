@@ -7,8 +7,11 @@
      fx-load       an orchestrated hero entrance
      fx-marks      the confidence underlines draw themselves in
      fx-drift      the hero cross-dissolves through centuries by itself
+     fx-edge       a light travels the border of the invitation
+     fx-autoplay   the timeline walks itself, ten seconds a step
+     fx-reveal     the plates settle in as they scroll up
      fx-atmos      a slow drift on the plates, and faint grain
-     fx-parallax   the hero plate moves against the scroll (the brief says no)
+     fx-pulse, fx-lift, fx-count, fx-parallax   built, off, there to be judged
 
    Nothing here animates layout. Opacity and transform only, so scrolling stays
    smooth, and the whole file stands down under prefers-reduced-motion.
@@ -188,6 +191,22 @@
   to{opacity:1;transform:none}
 }
 
+/* ---------- fx-reveal: the plates arrive rather than being there ---------- */
+.fx-reveal .plate{overflow:hidden}
+.fx-reveal .plate img{transform:scale(1.075);opacity:0;transform-origin:center 55%;
+  transition:transform 1.15s var(--spring),opacity .75s ease-out}
+.fx-reveal .plate.shown img{transform:none;opacity:1}
+/* the caption follows its plate in, a beat behind */
+.fx-reveal .plate figcaption{opacity:0;transform:translateY(8px);
+  transition:opacity .6s ease-out .28s,transform .6s var(--spring) .28s}
+.fx-reveal .plate.shown figcaption{opacity:1;transform:none}
+/* the phone is a picture too, so it gets the same arrival */
+.fx-reveal .phone{transition:transform 1.2s var(--spring),opacity .8s ease-out}
+
+/* ---------- fx-autoplay: the timeline walks itself ---------- */
+/* the marker leans forward just before it moves, so the change is expected */
+.fx-autoplay .scrub-halo{transition:left .62s var(--spring-back)}
+
 /* ---------- the lab dock ---------- */
 .lab{position:fixed;right:18px;bottom:18px;z-index:200;width:272px;
   background:var(--surface);border:1px solid var(--border);border-radius:16px;
@@ -257,4 +276,6 @@
   .fx-lift .era:hover,
   .fx-lift .plate:hover,
   .fx-lift .later li:hover{transform:none!important}
+  .fx-reveal .plate img,
+  .fx-reveal .plate figcaption{transform:none!important;opacity:1!important;transition:none!important}
 }

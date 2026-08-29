@@ -33,19 +33,18 @@
 
   // Motion is per-effect and applied before first paint so nothing flashes.
   // The lab (localhost, or ?lab) can change these live.
-  var FX = { timeline:"fx-timeline", load:"fx-load", marks:"fx-marks", drift:"fx-drift",
-             atmos:"fx-atmos", edge:"fx-edge", pulse:"fx-pulse", lift:"fx-lift",
-             count:"fx-count", parallax:"fx-parallax" };
-  var on = { timeline:true, load:true, marks:true, drift:true, atmos:false,
-             edge:false, pulse:false, lift:false, count:false, parallax:false };
+  var FX = { timeline:"fx-timeline", autoplay:"fx-autoplay", load:"fx-load", marks:"fx-marks",
+             drift:"fx-drift", edge:"fx-edge", reveal:"fx-reveal", atmos:"fx-atmos",
+             pulse:"fx-pulse", lift:"fx-lift", count:"fx-count", parallax:"fx-parallax" };
+  var on = { timeline:true, autoplay:true, load:true, marks:true, drift:true, edge:true,
+             reveal:true, atmos:false, pulse:false, lift:false, count:false, parallax:false };
   try {
     var saved = JSON.parse(localStorage.getItem("waiw-fx") || "null");
     if (saved) for (var k in FX) if (typeof saved[k] === "boolean") on[k] = saved[k];
   } catch (e) {}
   for (var k2 in FX) if (on[k2]) r.className += " " + FX[k2];
 
-  if (location.hostname === "localhost" || location.hostname === "127.0.0.1"
-      || /(^|[?&])lab(=|&|$)/.test(location.search)) {
+  if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
     var lab = document.createElement("script");
     lab.src = "/lab.js?v=1";
     lab.defer = true;
@@ -686,6 +685,24 @@
     if (legend) draw.observe(legend);
   })();
 
+  /* ---- the plates settle out of a slow zoom as they arrive ---- */
+  (function () {
+    var plates = document.querySelectorAll(".plate");
+    if (!plates.length) return;
+    if (!("IntersectionObserver" in window)) {
+      plates.forEach(function (p) { p.classList.add("shown"); });
+      return;
+    }
+    var seen = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        en.target.classList.add("shown");
+        seen.unobserve(en.target);
+      });
+    }, { threshold: 0.18, rootMargin: "0px 0px -6% 0px" });
+    plates.forEach(function (p) { seen.observe(p); });
+  })();
+
   /* ---- the years settle in as they arrive ---- */
   (function () {
     var numerals = document.querySelectorAll(".era .numeral, .viewer-stamp .numeral");
@@ -874,11 +891,43 @@
     range.setAttribute("aria-valuetext", era.year + ", " + era.label);
   }
 
-  range.addEventListener("input", function () { render(Number(range.value)); });
+  /* the timeline walks itself: a step every ten seconds, and it yields to you */
+  var walk = null, resume = null;
+  var calm = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)");
+  var viewer = document.getElementById("viewer");
+
+  function walking() {
+    return document.documentElement.classList.contains("fx-autoplay") && !(calm && calm.matches);
+  }
+  function stopWalk() { clearInterval(walk); walk = null; }
+  function startWalk() {
+    stopWalk();
+    if (!walking()) return;
+    walk = setInterval(function () {
+      if (document.hidden) return;
+      var box = viewer.getBoundingClientRect();
+      // no point animating a timeline nobody is looking at
+      if (box.bottom < 40 || box.top > window.innerHeight - 40) return;
+      render((current + 1) % ERAS.length);
+    }, 10000);
+  }
+  function yieldWalk() {
+    stopWalk();
+    clearTimeout(resume);
+    resume = setTimeout(startWalk, 20000);
+  }
+
+  range.addEventListener("input", function () { render(Number(range.value)); yieldWalk(); });
   labels.forEach(function (b) {
-    b.addEventListener("click", function () { render(Number(b.dataset.era)); });
+    b.addEventListener("click", function () { render(Number(b.dataset.era)); yieldWalk(); });
   });
+  window.addEventListener("waiw:fx", startWalk);
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) stopWalk(); else startWalk();
+  });
+
   render(current);
+  startWalk();
 })();
 
 /* ---- waitlist ---- */
