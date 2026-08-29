@@ -299,7 +299,25 @@ emoji, no icon sets invented for the occasion.**
   pattern at about 7% accent, and a centred mono label naming the crop
   (`PERIOD PLATE · 4:5 · 1080×1350`). A labelled placeholder is better than a wrong image.
 
-### 7.1 Every plate exists twice
+### 7.1 Light plates need more ink than you think
+
+The first light set was measured by its own recipe and looked fine in isolation, but on the page
+it vanished. The number that matters is not the plate's brightness, it is the gap between the
+plate and the ground it sits on. In dark the plates sit 55 to 88 tonal points off `#07090d` and
+read as prints. The first light set sat as little as 49 points off `#f7f2e7`, and read as a
+stain. The light set now sits 110 to 170 points off the paper, which is why it holds.
+
+Check the gap, never the plate alone:
+
+```sh
+magick FILE -format '%[fx:int(mean*255)]' info:   # paper is about 242, ink about 9
+```
+
+The scrims matter as much as the files. A light hero veil at 90% opacity is a sheet of paper
+laid over the engraving; the light hero now peaks around 40% across the middle and only reaches
+full opacity where type actually sits.
+
+### 7.2 Every plate exists twice
 
 A plate ships as two files: `NAME.jpg` for dark and `NAME-light.jpg` for light. They are
 swapped by a `<picture>` source, which is native and needs no JavaScript for the system
@@ -316,7 +334,7 @@ A `<source media>` only listens to the system, so when a reader pins a theme the
 rewrites that media to `all` or `not all`. That is the same trick the `theme-color` metas use.
 The browser downloads only the source it ends up using, so the second file costs nothing.
 
-### 7.2 Toning (do this before adding any plate)
+### 7.3 Toning (do this before adding any plate)
 
 Historical engravings are dark ink on cream paper. Dropped in raw they blow out against the
 near-black ground: the New York 1880 photograph arrived with a pure white sky. So the tone is
@@ -360,6 +378,18 @@ WebP files came out larger than progressive JPEG at matching quality.
 ---
 
 ## 8. Motion
+
+Every effect sits behind its own class on `<html>` (`fx-timeline`, `fx-load`, `fx-marks`,
+`fx-drift`, `fx-atmos`, `fx-edge`, `fx-pulse`, `fx-lift`, `fx-count`, `fx-parallax`) and lives
+in `public/motion.css`. Four are on: the timeline gets weight, the hero sets itself in sequence,
+the confidence marks draw themselves in, and the hero drifts through four centuries of the
+Thames on its own. The rest are built but off, so they can be judged rather than argued about.
+
+The switches are a floating dock, `public/lab.js`, which loads only on localhost or with `?lab`
+in the URL. It never reaches a visitor. To change what ships, change the `on` defaults in
+`lab.js` and the matching object in the head script of `index.html`; they must agree, because
+the head script is what applies the classes before first paint.
+
 
 The app uses springs, and the site should feel related without imitating a native sheet.
 
