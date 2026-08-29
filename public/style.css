@@ -27,7 +27,7 @@
   --plate-field:#0b0e14;
   --plate-scrim:linear-gradient(transparent 44%,rgba(7,9,13,.86) 80%,#07090d);
   --viewer-scrim:
-    linear-gradient(rgba(7,9,13,.78),rgba(7,9,13,.28) 16%,transparent 34%),
+    linear-gradient(rgba(7,9,13,.88),rgba(7,9,13,.46) 18%,transparent 38%),
     linear-gradient(transparent 50%,rgba(7,9,13,.84) 84%,#07090d);
   --hero-ground:#07090d;
   --hero-vignette:inset 0 0 130px 30px rgba(7,9,13,.9);
@@ -162,7 +162,7 @@
     --plate-field:#efe9dc;
     --plate-scrim:linear-gradient(transparent 58%,rgba(247,242,231,.7) 84%,#f7f2e7);
     --viewer-scrim:
-      linear-gradient(rgba(247,242,231,.82),rgba(247,242,231,.3) 16%,transparent 34%),
+      linear-gradient(rgba(247,242,231,.9),rgba(247,242,231,.48) 18%,transparent 38%),
       linear-gradient(transparent 56%,rgba(247,242,231,.84) 86%,#f7f2e7);
     --hero-ground:#f7f2e7;
     --hero-vignette:inset 0 0 130px 30px rgba(247,242,231,.86);
@@ -241,7 +241,7 @@
   --plate-field:#efe9dc;
   --plate-scrim:linear-gradient(transparent 58%,rgba(247,242,231,.7) 84%,#f7f2e7);
   --viewer-scrim:
-    linear-gradient(rgba(247,242,231,.82),rgba(247,242,231,.3) 16%,transparent 34%),
+    linear-gradient(rgba(247,242,231,.9),rgba(247,242,231,.48) 18%,transparent 38%),
     linear-gradient(transparent 56%,rgba(247,242,231,.84) 86%,#f7f2e7);
   --hero-ground:#f7f2e7;
   --hero-vignette:inset 0 0 130px 30px rgba(247,242,231,.86);
