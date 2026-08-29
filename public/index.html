@@ -34,10 +34,12 @@
   // Motion is per-effect and applied before first paint so nothing flashes.
   // The lab (localhost, or ?lab) can change these live.
   var FX = { timeline:"fx-timeline", autoplay:"fx-autoplay", load:"fx-load", marks:"fx-marks",
-             drift:"fx-drift", edge:"fx-edge", reveal:"fx-reveal", atmos:"fx-atmos",
-             pulse:"fx-pulse", lift:"fx-lift", count:"fx-count", parallax:"fx-parallax" };
+             drift:"fx-drift", edge:"fx-edge", alive:"fx-alive", phone:"fx-phone",
+             reveal:"fx-reveal", atmos:"fx-atmos", pulse:"fx-pulse", lift:"fx-lift",
+             count:"fx-count", parallax:"fx-parallax" };
   var on = { timeline:true, autoplay:true, load:true, marks:true, drift:true, edge:true,
-             reveal:true, atmos:false, pulse:false, lift:false, count:false, parallax:false };
+             alive:true, phone:true, reveal:false, atmos:false, pulse:false, lift:false,
+             count:false, parallax:false };
   try {
     var saved = JSON.parse(localStorage.getItem("waiw-fx") || "null");
     if (saved) for (var k in FX) if (typeof saved[k] === "boolean") on[k] = saved[k];
@@ -127,16 +129,17 @@
     </div>
 
     <div class="hero-device reveal" style="--i:2">
-      <div class="phone" role="img" aria-label="The app: a map of London with a pin on Fleet Street, a walking route of six stops, the year set to 1850, and a Travel button.">
+      <div class="phone" id="phone" role="img" aria-label="The app, demonstrating itself: a place is typed in, the map finds Fleet Street, the year is dragged back to 1850, and Travel is pressed.">
         <div class="phone-screen">
           <div class="phone-status" aria-hidden="true"><span>9:41</span><span>100%</span></div>
-          <div class="phone-search" aria-hidden="true"><span class="meta">Where</span><b>London</b></div>
+          <div class="phone-search" aria-hidden="true"><span class="meta">Where</span><b id="phWhere">London</b><i class="phone-caret"></i></div>
           <div class="phone-map" aria-hidden="true">
             <svg viewBox="0 0 280 380" preserveAspectRatio="xMidYMid slice" role="presentation">
               <defs>
                 <radialGradient id="pinHalo"><stop offset="0" stop-color="currentColor" stop-opacity=".26"/><stop offset=".7" stop-color="currentColor" stop-opacity="0"/></radialGradient>
               </defs>
               <rect class="m-ground" width="280" height="380"/>
+              <g class="map-now">
               <!-- park -->
               <path class="m-park" d="M12 96 C 34 84, 68 86, 84 102 S 92 142, 70 152 S 22 150, 12 130 Z"/>
               <!-- river -->
@@ -168,6 +171,29 @@
                 <circle cx="46" cy="226" r="3.4"/><circle cx="82" cy="214" r="3.4"/>
                 <circle cx="118" cy="196" r="3.4"/><circle cx="186" cy="172" r="3.4"/><circle cx="214" cy="150" r="3.4"/>
               </g>
+              </g>
+
+              <!-- the same ground, two hundred years earlier -->
+              <g class="map-then">
+                <path class="m-water" d="M-12 262 C 30 240, 74 250, 116 272 S 194 306, 236 286 S 282 262, 300 272 L 300 318 C 260 312, 228 336, 186 328 S 104 302, 62 296 S 16 286, -12 300 Z"/>
+                <g class="m-blocks">
+                  <path d="M96 104 h34 v26 h-34 z"/><path d="M138 96 h28 v30 h-28 z"/><path d="M176 106 h36 v24 h-36 z"/>
+                  <path d="M92 150 h30 v28 h-30 z"/><path d="M130 146 h26 v32 h-26 z"/><path d="M164 152 h34 v26 h-34 z"/><path d="M206 148 h30 v30 h-30 z"/>
+                  <path d="M100 196 h32 v24 h-32 z"/><path d="M142 194 h28 v26 h-28 z"/><path d="M180 198 h34 v22 h-34 z"/>
+                  <path d="M60 340 h34 v28 h-34 z"/><path d="M104 344 h30 v24 h-30 z"/><path d="M146 342 h36 v26 h-36 z"/>
+                </g>
+                <g class="m-streets" stroke-width="1.2" stroke-linecap="round">
+                  <path d="M0 138 C 46 132, 92 144, 140 136 S 226 122, 280 130"/>
+                  <path d="M0 188 C 52 182, 104 196, 156 186 S 236 170, 280 178"/>
+                  <path d="M0 232 C 60 226, 118 238, 176 230 S 246 218, 280 224"/>
+                  <path d="M86 60 C 92 110, 84 160, 92 232"/>
+                  <path d="M148 56 C 156 108, 146 162, 152 236"/>
+                  <path d="M212 62 C 218 112, 208 164, 214 230"/>
+                  <path d="M0 336 C 70 330, 140 342, 210 334 S 262 328, 280 332"/>
+                </g>
+                <path class="m-road" d="M0 176 C 54 170, 98 184, 150 174 S 234 158, 280 166" stroke-width="2" stroke-linecap="round"/>
+              </g>
+
               <!-- current stop -->
               <circle class="m-halo" cx="152" cy="178" r="30"/>
               <circle class="m-pin" cx="152" cy="178" r="6" stroke-width="2"/>
@@ -180,14 +206,14 @@
           </div>
           <div class="phone-sheet" aria-hidden="true">
             <p class="meta">When</p>
-            <div class="numeral phone-year">1850</div>
+            <div class="numeral phone-year" id="phYear">1850</div>
             <div class="mini">
               <div class="mini-line"></div>
               <div class="mini-ticks"><i></i><i></i><i></i><i></i><i></i></div>
               <div class="mini-years"><span>1600</span><span>1700</span><span>1800</span><span>1900</span><span>2000</span></div>
-              <div class="mini-dot"></div>
+              <div class="mini-dot" id="phDot"></div>
             </div>
-            <span class="btn btn-primary phone-travel">Travel</span>
+            <span class="btn btn-primary phone-travel" id="phTravel">Travel</span>
             <p class="meta phone-foot">6 stops · 42 min · On foot</p>
           </div>
         </div>
@@ -685,6 +711,98 @@
     if (legend) draw.observe(legend);
   })();
 
+  /* ---- the phone demonstrates the product, on a loop ---- */
+  (function () {
+    var phone = document.getElementById("phone");
+    var where = document.getElementById("phWhere");
+    var year = document.getElementById("phYear");
+    var dot = document.getElementById("phDot");
+    if (!phone || !where || !year || !dot) return;
+
+    var PLACE = "London";
+    var YEARS = [2026, 1980, 1930, 1890, 1850];
+    var DOTS = ["96%", "82%", "70%", "66%", "62.5%"];
+    var calm = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)");
+    var timers = [];
+    var running = false;
+
+    function at(ms, fn) { timers.push(setTimeout(fn, ms)); }
+    function clearAll() { timers.forEach(clearTimeout); timers = []; }
+
+    function still() {
+      // the state the mock holds when the demo is off: arrived, in 1850
+      clearAll();
+      running = false;
+      phone.classList.remove("p-typing", "scrubbing", "pressing", "zoomed");
+      phone.classList.add("pinned", "arrived");
+      where.textContent = PLACE;
+      year.textContent = "1850";
+      dot.style.left = "62.5%";
+    }
+
+    function loop() {
+      if (!running) return;
+      clearAll();
+      phone.classList.remove("pinned", "arrived", "zoomed", "pressing");
+      where.textContent = "";
+      year.textContent = String(YEARS[0]);
+      dot.style.left = DOTS[0];
+
+      // a place is typed in
+      phone.classList.add("p-typing");
+      PLACE.split("").forEach(function (ch, i) {
+        at(420 + i * 105, function () { where.textContent += ch; });
+      });
+      at(420 + PLACE.length * 105 + 260, function () {
+        phone.classList.remove("p-typing");
+        phone.classList.add("pinned", "zoomed");     // the map finds the street
+      });
+
+      // the year is dragged back
+      at(2500, function () { phone.classList.add("scrubbing"); });
+      YEARS.forEach(function (y, i) {
+        at(2500 + i * 340, function () {
+          year.textContent = String(y);
+          dot.style.left = DOTS[i];
+        });
+      });
+      at(2500 + YEARS.length * 340 + 200, function () { phone.classList.remove("scrubbing"); });
+
+      // and Travel is pressed
+      at(4500, function () { phone.classList.add("pressing"); });
+      at(4720, function () { phone.classList.remove("pressing"); });
+      at(4820, function () { phone.classList.add("arrived"); });
+
+      // hold on the arrival, then do it again
+      at(11000, loop);
+    }
+
+    function sync() {
+      var wanted = document.documentElement.classList.contains("fx-phone")
+        && !(calm && calm.matches);
+      if (wanted === running) return;
+      if (!wanted) { still(); return; }
+      running = true;
+      loop();
+    }
+
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) { clearAll(); }
+      else if (running) { loop(); }
+    });
+    // a demo nobody can see is just work
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (!running) return;
+          if (en.isIntersecting) loop(); else clearAll();
+        });
+      }, { threshold: 0.25 }).observe(phone);
+    }
+    window.addEventListener("waiw:fx", sync);
+    sync();
+  })();
+
   /* ---- the plates settle out of a slow zoom as they arrive ---- */
   (function () {
     var plates = document.querySelectorAll(".plate");
@@ -909,7 +1027,7 @@
       // no point animating a timeline nobody is looking at
       if (box.bottom < 40 || box.top > window.innerHeight - 40) return;
       render((current + 1) % ERAS.length);
-    }, 10000);
+    }, 4000);
   }
   function yieldWalk() {
     stopWalk();

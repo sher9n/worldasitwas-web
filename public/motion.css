@@ -207,6 +207,52 @@
 /* the marker leans forward just before it moves, so the change is expected */
 .fx-autoplay .scrub-halo{transition:left .62s var(--spring-back)}
 
+/* ---------- fx-alive: the images never sit perfectly still ---------- */
+/* smaller than you would design on purpose, which is the point: you read it as
+   depth rather than as an effect */
+.fx-alive .plate{overflow:hidden}
+.fx-alive .plate img{animation:alive 30s ease-in-out infinite alternate;
+  transform-origin:center 55%;will-change:transform}
+.fx-alive .plate:nth-of-type(even) img{animation-duration:38s;animation-direction:alternate-reverse}
+@keyframes alive{
+  from{transform:scale(1.012)}
+  to{transform:scale(1.055)}
+}
+
+/* ---------- fx-phone: the mock runs the product ---------- */
+.phone-caret{display:none}
+.fx-phone .phone-caret{display:inline-block;width:1px;height:1.05em;margin-left:1px;
+  background:var(--accent);vertical-align:-2px;animation:caret 1s steps(1) infinite}
+@keyframes caret{50%{opacity:0}}
+.fx-phone .p-typing .phone-caret{animation:none;opacity:1}
+
+/* the two maps: today, and the year you travelled to */
+.map-then{opacity:0;transition:opacity 1.1s var(--spring)}
+.phone.arrived .map-then{opacity:1}
+.map-now{transition:opacity 1.1s var(--spring)}
+.phone.arrived .map-now{opacity:0}
+.phone-map svg{transition:transform 1.6s var(--spring)}
+.phone.zoomed .phone-map svg{transform:scale(1.14)}
+
+.m-pin,.m-halo,.m-chip,.m-chip-text{opacity:0;transition:opacity .5s var(--spring)}
+.phone.pinned .m-pin,
+.phone.pinned .m-halo,
+.phone.pinned .m-chip,
+.phone.pinned .m-chip-text{opacity:1}
+.m-route,.m-stops{opacity:0;transition:opacity .7s var(--spring) .2s}
+.phone.arrived .m-route,
+.phone.arrived .m-stops{opacity:1}
+
+.phone .btn-primary{transition:transform .16s var(--spring-back),filter .3s}
+.phone.pressing .btn-primary{transform:scale(.965)}
+.phone.arrived .btn-primary{filter:saturate(.85)}
+
+.phone-year{transition:opacity .2s}
+.phone.scrubbing .phone-year{opacity:.72}
+.mini-dot{transition:left .9s var(--spring)}
+.fx-phone .phone-foot{transition:opacity .4s}
+.phone.scrubbing .phone-foot{opacity:.45}
+
 /* ---------- the lab dock ---------- */
 .lab{position:fixed;right:18px;bottom:18px;z-index:200;width:272px;
   background:var(--surface);border:1px solid var(--border);border-radius:16px;
@@ -278,4 +324,7 @@
   .fx-lift .later li:hover{transform:none!important}
   .fx-reveal .plate img,
   .fx-reveal .plate figcaption{transform:none!important;opacity:1!important;transition:none!important}
+  .fx-alive .plate img{animation:none!important}
+  .fx-phone .phone-caret{animation:none;opacity:0}
+  .phone-map svg,.mini-dot,.map-then,.map-now{transition:none!important}
 }

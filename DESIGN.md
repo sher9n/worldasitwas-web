@@ -379,12 +379,23 @@ WebP files came out larger than progressive JPEG at matching quality.
 
 ## 8. Motion
 
-Every effect sits behind its own class on `<html>` and lives in `public/motion.css`. Seven are
-on: the timeline gets weight and walks itself a step every ten seconds, the hero sets itself in
+Every effect sits behind its own class on `<html>` and lives in `public/motion.css`. What is on:
+the timeline gets weight and walks itself a step every four seconds, the hero sets itself in
 sequence, the confidence marks draw themselves in, the hero drifts through four centuries of the
-Thames, a light travels the border of the invitation, and the plates settle out of a slow zoom
-as they scroll up. `fx-atmos`, `fx-pulse`, `fx-lift`, `fx-count` and `fx-parallax` are built and
-off, so they can be judged rather than argued about.
+Thames, a light travels the border of the invitation, the plates never sit perfectly still, and
+the phone runs the product on a loop. `fx-reveal`, `fx-atmos`, `fx-pulse`, `fx-lift`, `fx-count`
+and `fx-parallax` are built and off, so they can be judged rather than argued about.
+
+**The phone is the product, demonstrated.** It types a place, the map finds the street, the year
+is dragged back, Travel is pressed, and the map becomes the older city. Two maps live in the same
+SVG (`.map-now`, `.map-then`) and cross-fade, which is the whole idea in four seconds without a
+word of copy. It is decorative, so it stays out of the accessibility tree, and its `aria-label`
+describes what it demonstrates rather than what it contains.
+
+**A slow zoom beats a reveal.** An entrance you only see once, and only if you happen to scroll
+past at the right moment, is invisible most of the time. A drift that never quite stops is
+legible whenever anyone looks. Keep it under about 5% of scale over half a minute: past that it
+reads as an effect rather than as depth.
 
 Two rules the self-walking timeline has to keep, and they generalise to anything that moves on
 its own: **it yields the moment someone touches it** (twenty seconds before it resumes), and
