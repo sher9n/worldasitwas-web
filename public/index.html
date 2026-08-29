@@ -33,9 +33,11 @@
 
   // Motion is per-effect and applied before first paint so nothing flashes.
   // The lab (localhost, or ?lab) can change these live.
-  var FX = { timeline:"fx-timeline", load:"fx-load", marks:"fx-marks",
-             drift:"fx-drift", atmos:"fx-atmos", parallax:"fx-parallax" };
-  var on = { timeline:true, load:true, marks:true, drift:true, atmos:false, parallax:false };
+  var FX = { timeline:"fx-timeline", load:"fx-load", marks:"fx-marks", drift:"fx-drift",
+             atmos:"fx-atmos", edge:"fx-edge", pulse:"fx-pulse", lift:"fx-lift",
+             count:"fx-count", parallax:"fx-parallax" };
+  var on = { timeline:true, load:true, marks:true, drift:true, atmos:false,
+             edge:false, pulse:false, lift:false, count:false, parallax:false };
   try {
     var saved = JSON.parse(localStorage.getItem("waiw-fx") || "null");
     if (saved) for (var k in FX) if (typeof saved[k] === "boolean") on[k] = saved[k];
@@ -682,6 +684,20 @@
     }, { threshold: 0.35 });
     draw.observe(narration);
     if (legend) draw.observe(legend);
+  })();
+
+  /* ---- the years settle in as they arrive ---- */
+  (function () {
+    var numerals = document.querySelectorAll(".era .numeral, .viewer-stamp .numeral");
+    if (!numerals.length || !("IntersectionObserver" in window)) return;
+    var seen = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        en.target.classList.add("counting");
+        seen.unobserve(en.target);
+      });
+    }, { threshold: 0.6 });
+    numerals.forEach(function (n) { seen.observe(n); });
   })();
 
   /* ---- the hero drifts through four centuries of the same river ---- */

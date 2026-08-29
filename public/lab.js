@@ -19,6 +19,14 @@
       name: "Ambient hero drift", note: "The Thames, 1647 to today, by itself" },
     { id: "atmos", cls: "fx-atmos", on: false,
       name: "Atmosphere", note: "Slow drift on plates, faint smoke" },
+    { id: "edge", cls: "fx-edge", on: false,
+      name: "Travelling edge", note: "A light runs the border of the invitation" },
+    { id: "pulse", cls: "fx-pulse", on: false,
+      name: "Pulse", note: "The panel breathes, the dot beats" },
+    { id: "lift", cls: "fx-lift", on: false,
+      name: "Surfaces lift", note: "Cards and plates answer the cursor" },
+    { id: "count", cls: "fx-count", on: false,
+      name: "Years arrive", note: "Numerals settle in as they scroll up" },
     { id: "parallax", cls: "fx-parallax", on: false,
       name: "Parallax", note: "Not recommended, the brief says no" }
   ];

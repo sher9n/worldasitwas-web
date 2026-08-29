@@ -133,6 +133,61 @@
 /* ---------- fx-parallax: kept switchable so it can be judged, not adopted ---------- */
 .fx-parallax .hero-plate{will-change:transform}
 
+/* ---------- fx-edge: a light travels the border of the invitation ---------- */
+/* an animatable angle, so the light can go all the way round rather than
+   sweep across. Where @property is unsupported the gradient simply sits still. */
+@property --edge{ syntax:'<angle>'; inherits:false; initial-value:0deg }
+
+.fx-edge .join::before{opacity:0}
+.fx-edge .join::after{
+  content:"";position:absolute;inset:0;border-radius:inherit;padding:1.5px;
+  pointer-events:none;z-index:1;
+  background:conic-gradient(from var(--edge),
+    transparent 0 66%, var(--accent) 78%, rgba(232,184,106,.25) 84%, transparent 92%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask-composite:exclude;
+  animation:edge-orbit 7s linear infinite}
+@keyframes edge-orbit{ to{ --edge:360deg } }
+
+/* ---------- fx-pulse: the invitation breathes instead ---------- */
+.fx-pulse .join{animation:panel-pulse 4.6s ease-in-out infinite}
+@keyframes panel-pulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(232,184,106,0)}
+  50%{box-shadow:0 0 0 6px rgba(232,184,106,.07)}
+}
+.fx-pulse .join .eyebrow .dot{animation:dot-pulse 2.4s ease-in-out infinite}
+@keyframes dot-pulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(232,184,106,.5);opacity:1}
+  70%{box-shadow:0 0 0 7px rgba(232,184,106,0);opacity:.75}
+}
+.fx-pulse .join .btn-primary{animation:cta-pulse 4.6s ease-in-out infinite}
+@keyframes cta-pulse{
+  0%,100%{transform:none}
+  50%{transform:translateY(-1px)}
+}
+
+/* ---------- fx-lift: surfaces answer the cursor ---------- */
+.fx-lift .era,
+.fx-lift .plate,
+.fx-lift .join{transition:transform .3s var(--spring),box-shadow .3s var(--spring),
+  border-color .2s var(--spring)}
+.fx-lift .era:hover,
+.fx-lift .plate:hover{transform:translateY(-3px);border-color:var(--border);
+  box-shadow:var(--shadow-lift)}
+.fx-lift .later li{transition:transform .3s var(--spring)}
+.fx-lift .later li:hover{transform:translateX(4px)}
+
+/* ---------- fx-count: the years arrive rather than sit there ---------- */
+.fx-count .numeral{display:inline-block}
+.fx-count .counting .numeral,
+.fx-count .numeral.counting{animation:year-in .68s var(--spring) both}
+@keyframes year-in{
+  from{opacity:0;transform:translateY(.28em) scale(.94)}
+  to{opacity:1;transform:none}
+}
+
 /* ---------- the lab dock ---------- */
 .lab{position:fixed;right:18px;bottom:18px;z-index:200;width:272px;
   background:var(--surface);border:1px solid var(--border);border-radius:16px;
@@ -192,4 +247,14 @@
   .fx-marks .legend .rule{transform:scaleX(1)!important;transition:none!important}
   .hero-drift .d-frame{transition:none}
   .fx-parallax .hero-plate{transform:none!important}
+  .fx-edge .join::after,
+  .fx-pulse .join,
+  .fx-pulse .join .eyebrow .dot,
+  .fx-pulse .join .btn-primary,
+  .fx-count .numeral.counting,
+  .fx-count .counting .numeral{animation:none!important}
+  .fx-edge .join::before{opacity:1}
+  .fx-lift .era:hover,
+  .fx-lift .plate:hover,
+  .fx-lift .later li:hover{transform:none!important}
 }
