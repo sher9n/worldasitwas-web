@@ -146,12 +146,19 @@ async function handleJoin(req, res) {
   }
 
   const allowed = ["ios", "android", "either"];
-  const platform = allowed.includes(body.platform) ? body.platform : "either";
+  const platformChosen = allowed.includes(body.platform);
+  const platform = platformChosen ? body.platform : "either";
+
+  const requestedCity = typeof body.city === "string"
+    ? body.city.trim().replace(/\s+/g, " ").slice(0, 80)
+    : "";
 
   try {
-    const { added } = await addToWaitlist({ email, platform, source: "site" });
+    const { added } = await addToWaitlist({
+      email, platform, platformChosen, requestedCity: requestedCity || null, source: "site",
+    });
     // never log the address itself
-    console.log(`[waitlist] sign-up accepted (new=${added}, platform=${platform})`);
+    console.log(`[waitlist] sign-up accepted (new=${added}, platform=${platform}, city=${requestedCity ? "yes" : "no"})`);
     return json(res, 200, { ok: true, added });
   } catch (err) {
     console.error("[waitlist] insert failed:", err.message);
@@ -169,9 +176,9 @@ async function handleExport(req, res, url) {
 
   const summary = await waitlistSummary();
   if (url.searchParams.get("format") === "csv") {
-    const rows = ["email,platform,source,created_at"];
+    const rows = ["email,platform,requested_city,source,created_at"];
     for (const r of summary.recent) {
-      rows.push([r.email, r.platform || "", r.source || "", r.created_at.toISOString()]
+      rows.push([r.email, r.platform || "", r.requested_city || "", r.source || "", r.created_at.toISOString()]
         .map((v) => `"${String(v).replace(/"/g, '""')}"`).join(","));
     }
     const csv = rows.join("\n");

@@ -592,6 +592,9 @@ body,.site-header,.site-footer,.section,.record,.narration,.era,.store,.theme-to
 .era.archived .status{color:var(--text-meta)}
 .tour-note{margin-top:clamp(32px,4vw,48px);padding-top:24px;border-top:1px solid var(--hairline);
   max-width:var(--measure)}
+.tour-note .request{margin-top:14px;font-size:15px;line-height:1.6;color:var(--text-86)}
+.tour-note .request a{border-bottom:1px solid var(--known-line);padding:3px 0 2px}
+.tour-note .request a:hover{border-bottom-color:currentColor}
 @media (max-width:1024px){ .city{grid-template-columns:1fr} .city > .plate{max-width:400px} }
 @media (max-width:560px){
   .era{grid-template-columns:62px minmax(0,1fr);row-gap:14px}
@@ -611,14 +614,16 @@ body,.site-header,.site-footer,.section,.record,.narration,.era,.store,.theme-to
 /* ---------- waitlist ---------- */
 .waitlist{margin-top:36px;max-width:520px}
 .waitlist .field{display:flex;flex-direction:column;gap:8px}
+.waitlist .field + .field{margin-top:20px}
+.waitlist .opt{text-transform:none;letter-spacing:.04em;color:var(--text-meta);opacity:.8}
 .waitlist label.meta,.waitlist legend.meta{display:block}
-.waitlist input[type="email"]{
+.waitlist input[type="email"],.waitlist input[type="text"]{
   height:52px;padding:0 16px;font-family:var(--ui);font-size:16px;color:var(--text);
   background:var(--surface);border:1px solid var(--border);border-radius:var(--r-ui);
   transition:border-color .12s,background-color .12s}
-.waitlist input[type="email"]::placeholder{color:var(--text-meta)}
-.waitlist input[type="email"]:hover{border-color:var(--border-hover)}
-.waitlist input[type="email"]:focus{outline:none;border-color:var(--accent);
+.waitlist input[type="email"]::placeholder,.waitlist input[type="text"]::placeholder{color:var(--text-meta)}
+.waitlist input[type="email"]:hover,.waitlist input[type="text"]:hover{border-color:var(--border-hover)}
+.waitlist input[type="email"]:focus,.waitlist input[type="text"]:focus{outline:none;border-color:var(--accent);
   box-shadow:0 0 0 3px var(--accent-ring)}
 .waitlist input[type="email"][aria-invalid="true"]{border-color:var(--accent)}
 .platforms{border:0;padding:0;margin:22px 0 0;min-width:0}
