@@ -1,0 +1,136 @@
+/* World As It Was, version 2
+   Layout only. Colour, type and components come from /style.css, so both
+   versions stay one design system and one set of tokens. */
+
+:root{ --v2-hero-min:660px; }
+
+/* ---------- the stage: one river, four centuries ---------- */
+.v2-hero{position:relative;isolation:isolate;overflow:hidden;background:var(--plate-field);
+  min-height:min(760px,calc(100svh - 64px));display:flex;flex-direction:column;
+  justify-content:flex-end;padding-top:clamp(72px,12vh,140px)}
+.v2-stage{position:absolute;inset:0;z-index:0}
+.v2-frame{position:absolute;inset:0;opacity:0;transition:opacity .7s var(--ease)}
+.v2-frame.on{opacity:1}
+.v2-frame img{width:100%;height:100%;object-fit:cover;object-position:50% 46%}
+/* the scrims are tokens so the hero belongs to whichever theme is on */
+.v2-veil{position:absolute;inset:0;z-index:1;pointer-events:none;background:var(--v2-veil)}
+
+.v2-hero-copy{position:relative;z-index:2;width:100%;max-width:var(--page);margin:0 auto;
+  padding:0 var(--gutter) clamp(28px,5vh,56px)}
+.v2-kicker{display:inline-flex;align-items:center;gap:10px;margin-bottom:20px}
+.v2-kicker .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);flex:none}
+.v2-hero h1{margin-bottom:22px;max-width:15ch}
+.v2-hero .lede{margin-bottom:28px;max-width:46ch}
+.v2-hero-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+
+/* ---------- the timeline, sitting on the river ---------- */
+.v2-scrub{position:relative;z-index:2;width:100%;max-width:var(--page);margin:0 auto;
+  padding:0 var(--gutter) clamp(74px,11vh,116px)}
+.v2-rail{position:relative;height:40px}
+.v2-line{position:absolute;left:0;right:0;top:19px;height:2px;border-radius:2px;background:var(--v2-rail)}
+.v2-fill{position:absolute;left:0;top:19px;height:2px;border-radius:2px;background:var(--accent);
+  transition:width .5s var(--ease)}
+.v2-nodes{position:absolute;left:0;right:0;top:15px;display:flex;justify-content:space-between}
+.v2-nodes i{width:9px;height:9px;border-radius:50%;background:var(--v2-node);
+  border:1px solid var(--v2-rail);transition:background-color .3s,border-color .3s}
+.v2-nodes i.past{background:var(--accent);border-color:var(--accent)}
+.v2-knob{position:absolute;top:19px;width:19px;height:19px;border-radius:50%;background:var(--accent);
+  border:3px solid var(--v2-knob-ring);transform:translate(-50%,-50%);box-shadow:var(--shadow-pin);
+  transition:left .5s var(--ease);pointer-events:none}
+.v2-knob::before{content:"";position:absolute;inset:-15px;border-radius:50%;
+  background:radial-gradient(circle,var(--accent-halo),transparent 70%)}
+.v2-range{-webkit-appearance:none;appearance:none;position:absolute;inset:0;width:100%;height:40px;
+  margin:0;background:transparent;cursor:grab;z-index:2}
+.v2-range:active{cursor:grabbing}
+.v2-range::-webkit-slider-runnable-track{height:40px;background:transparent}
+.v2-range::-moz-range-track{height:40px;background:transparent}
+.v2-range::-webkit-slider-thumb{-webkit-appearance:none;width:34px;height:34px;opacity:0}
+.v2-range::-moz-range-thumb{width:34px;height:34px;opacity:0;border:0}
+.v2-range:focus-visible{outline:none}
+.v2-range:focus-visible ~ .v2-knob{box-shadow:0 0 0 4px var(--accent-ring)}
+
+.v2-ticks{display:flex;justify-content:space-between;margin-top:14px;gap:8px}
+.v2-tick{display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center;
+  padding:4px 2px;min-width:0;transition:color .2s}
+.v2-tick .y{font-family:var(--display);font-style:italic;font-weight:400;font-size:26px;line-height:1;
+  color:var(--v2-tick)}
+.v2-tick .n{font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--v2-tick-dim);white-space:nowrap}
+.v2-tick[aria-current="true"] .y{color:var(--accent-text)}
+.v2-tick[aria-current="true"] .n{color:var(--v2-tick)}
+.v2-tick:hover .y{color:var(--accent-text)}
+.v2-credit{margin-top:18px;text-align:right}
+@media (max-width:760px){
+  .v2-tick .n{display:none}
+  .v2-tick .y{font-size:17px}
+  .v2-credit{text-align:left}
+}
+
+/* ---------- the arrival card, half on the river ---------- */
+.v2-arrival{position:relative;z-index:3;margin-top:clamp(-90px,-7vw,-56px);padding-bottom:var(--section)}
+.v2-card{background:var(--surface);border:1px solid var(--hairline);border-radius:var(--r-card);
+  box-shadow:var(--shadow-lift);padding:clamp(26px,3.4vw,40px);
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,4vw,52px)}
+.v2-card h2{margin:10px 0 14px}
+.v2-card .body{font-size:16px}
+.v2-card dl{display:grid;grid-template-columns:auto 1fr;gap:14px 20px;align-items:baseline;margin:0}
+.v2-card dt{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--text-meta);white-space:nowrap}
+.v2-card dd{margin:0;font-size:15px;line-height:1.5}
+.v2-card .note{margin-top:22px;padding-top:18px;border-top:1px solid var(--hairline)}
+@media (max-width:820px){ .v2-card{grid-template-columns:1fr;gap:26px} }
+
+/* ---------- everything below ---------- */
+.v2-band{padding:var(--section) 0;background:var(--ground)}
+.v2-band.recessed{background:var(--ground-recessed)}
+.v2-head{max-width:var(--measure);margin-bottom:clamp(40px,5vw,60px)}
+.v2-head .eyebrow{margin-bottom:18px}
+.v2-head .body{margin-top:18px}
+
+.v2-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,3vw,28px)}
+.v2-step{background:var(--surface);border:1px solid var(--hairline);border-radius:var(--r-card);
+  padding:clamp(22px,2.6vw,30px)}
+.v2-step .numeral{font-size:34px;display:block;margin-bottom:18px}
+.v2-step h3{font-family:var(--ui);font-weight:600;font-size:16px;margin-bottom:10px}
+.v2-step p{font-size:14.5px;line-height:1.65;color:var(--text-2)}
+@media (max-width:820px){ .v2-steps{grid-template-columns:1fr} }
+
+.v2-split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,5vw,64px);
+  align-items:start}
+@media (max-width:900px){ .v2-split{grid-template-columns:1fr;gap:36px} }
+
+.v2-facets{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 clamp(24px,3vw,40px)}
+.v2-facets > div{padding:18px 0;border-top:1px solid var(--hairline)}
+.v2-facets dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--text-meta);margin-bottom:7px}
+.v2-facets dd{margin:0;font-size:14.5px;line-height:1.55;color:var(--text-86)}
+@media (max-width:600px){ .v2-facets{grid-template-columns:1fr} }
+
+.v2-cities{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(20px,2.6vw,26px)}
+.v2-city{background:var(--surface);border:1px solid var(--hairline);border-radius:var(--r-card);
+  padding:clamp(22px,2.6vw,28px)}
+.v2-city h3{margin-bottom:6px}
+.v2-city > .meta{margin-bottom:20px}
+.v2-city ul{display:grid;gap:12px}
+.v2-city li{display:grid;grid-template-columns:56px minmax(0,1fr);gap:14px;align-items:baseline;
+  padding-top:12px;border-top:1px solid var(--hairline)}
+.v2-city li:first-child{padding-top:0;border-top:0}
+.v2-city .numeral{font-size:26px}
+.v2-city li.archived .numeral{color:var(--text-50)}
+.v2-city b{display:block;font-family:var(--ui);font-weight:500;font-size:14.5px;margin-bottom:3px}
+.v2-city .st{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--accent-dim)}
+.v2-city li.archived .st{color:var(--text-meta)}
+@media (max-width:900px){ .v2-cities{grid-template-columns:1fr} }
+
+.v2-cta{background:var(--surface);border:1px solid var(--hairline);border-radius:var(--r-card);
+  padding:clamp(30px,4vw,52px)}
+.v2-cta h2{margin-bottom:16px}
+.v2-cta .waitlist{margin-top:28px}
+
+.v2-foot{background:var(--footer-ground);border-top:1px solid var(--hairline);padding:44px 0 40px}
+.v2-foot .row{display:flex;flex-wrap:wrap;justify-content:space-between;gap:18px 40px;align-items:center}
+.v2-foot .links{display:flex;flex-wrap:wrap;gap:8px 22px}
+.v2-foot .links a{display:inline-flex;align-items:center;min-height:28px}
+.v2-foot .note{margin-top:28px;padding-top:22px;border-top:1px solid var(--hairline);max-width:80ch}
+.v2-foot .note + .note{margin-top:10px;padding-top:0;border-top:0}

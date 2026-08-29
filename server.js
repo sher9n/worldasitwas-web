@@ -245,7 +245,11 @@ const server = createServer((req, res) => {
   if (pathname.endsWith("/")) filePath = join(filePath, "index.html");
 
   if (sendFile(req, res, filePath)) return;
-  if (!extname(filePath) && sendFile(req, res, `${filePath}.html`)) return;
+  if (!extname(filePath)) {
+    if (sendFile(req, res, `${filePath}.html`)) return;
+    // /v2 should serve /v2/index.html
+    if (sendFile(req, res, join(filePath, "index.html"))) return;
+  }
   if (sendFile(req, res, join(root, "404.html"), 404)) return;
   res.writeHead(404, { "content-type": "text/plain; charset=utf-8" });
   res.end("Not found");

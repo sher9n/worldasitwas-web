@@ -60,6 +60,16 @@
   --map-chip-text:#f4ecd8;
   --map-label:rgba(203,209,222,.45);
 
+  /* version 2 */
+  --v2-veil:
+    linear-gradient(rgba(7,9,13,.5),rgba(7,9,13,.08) 24%,rgba(7,9,13,.34) 60%,rgba(7,9,13,.95)),
+    linear-gradient(90deg,rgba(7,9,13,.88),rgba(7,9,13,.46) 40%,rgba(7,9,13,.04) 72%);
+  --v2-rail:rgba(244,236,216,.34);
+  --v2-node:rgba(7,9,13,.7);
+  --v2-knob-ring:#0b0e14;
+  --v2-tick:rgba(244,236,216,.94);
+  --v2-tick-dim:rgba(244,236,216,.6);
+
   /* ---- 3. roles: DARK is the default theme ---- */
   --ground:#07090d;
   --ground-recessed:#0b0e14;
@@ -192,6 +202,15 @@
     --map-chip-edge:rgba(20,17,12,.2);
     --map-chip-text:#14110c;
     --map-label:rgba(20,17,12,.45);
+
+    --v2-veil:
+      linear-gradient(rgba(247,242,231,.46),rgba(247,242,231,.06) 24%,rgba(247,242,231,.34) 60%,rgba(247,242,231,.96)),
+      linear-gradient(90deg,rgba(247,242,231,.9),rgba(247,242,231,.5) 40%,rgba(247,242,231,.04) 72%);
+    --v2-rail:rgba(20,17,12,.3);
+    --v2-node:rgba(255,253,248,.9);
+    --v2-knob-ring:#fffdf8;
+    --v2-tick:rgba(20,17,12,.92);
+    --v2-tick-dim:rgba(20,17,12,.62);
     color-scheme:light;
   }
 }
@@ -270,6 +289,15 @@
   --map-chip-edge:rgba(20,17,12,.2);
   --map-chip-text:#14110c;
   --map-label:rgba(20,17,12,.45);
+
+  --v2-veil:
+    linear-gradient(rgba(247,242,231,.46),rgba(247,242,231,.06) 24%,rgba(247,242,231,.34) 60%,rgba(247,242,231,.96)),
+    linear-gradient(90deg,rgba(247,242,231,.9),rgba(247,242,231,.5) 40%,rgba(247,242,231,.04) 72%);
+  --v2-rail:rgba(20,17,12,.3);
+  --v2-node:rgba(255,253,248,.9);
+  --v2-knob-ring:#fffdf8;
+  --v2-tick:rgba(20,17,12,.92);
+  --v2-tick-dim:rgba(20,17,12,.62);
   color-scheme:light;
 }
 
