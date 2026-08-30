@@ -3,7 +3,9 @@
 Marketing site for **World As It Was**, an app that rebuilds a city as it stood in a chosen
 year. Choose a place, choose a year, press Travel.
 
-Live at [worldasitwas.com](https://worldasitwas.com).
+Live at [worldasitwas.com](https://worldasitwas.com). The product itself is live at
+[app.worldasitwas.com](https://app.worldasitwas.com), so this site's job is to hand people
+over to it, not to take their address and promise something later.
 
 ## What is here
 
@@ -15,6 +17,7 @@ public/
   style.css       all styling, driven by the design tokens in :root
   404.html
   plates/         period plates, pre-toned (see "Plates" below)
+  qr-app.svg      the handoff code, ink on paper, decodes to https://app.worldasitwas.com/
   robots.txt, sitemap.xml
 server.js         static file server: brotli/gzip, cache headers, www -> apex, /health
 ```
@@ -90,10 +93,58 @@ Ceilings in use: `#c2b49a` for already-dark engravings, `#a89b84` for lighter en
 `#9a9080` for cream-paper etchings, `#8f8471` for photographs. The 1666 fire painting keeps
 its colour, since the fire is the only warm light in it.
 
+Tune by measuring, not by eye: a new plate should land inside the range the shipped ones
+already occupy. For the 4:5 city plates that is a **mean of 82 to 100** on the dark ground
+and **127 to 157** on the paper one, measured with
+`magick FILE -colorspace Gray -format '%[fx:mean*255]' info:`. Stockholm needed `#928778`
+and Colombo `#a09585` to get there, neither of which is the ceiling their material would
+suggest, because the source histogram matters more than the medium.
+
+Light variants use a raised floor and a ceiling below the paper, so the plate never goes
+brighter than the page it sits on:
+
+```sh
+magick SOURCE -crop WxH+X+Y +repage -resize 1024x1280^ -gravity center -extent 1024x1280 \
+  -colorspace Gray -auto-level +level-colors '#2a251e,#dbd2c0' -colorspace sRGB \
+  -strip -interlace JPEG -sampling-factor 4:2:0 -quality 62 public/plates/NAME-light.jpg
+```
+
+## One action, two devices
+
+The web app is a phone product, and it says so itself: it renders a gate, not the map, to
+anything with a mouse (`@media (pointer:fine)` in the app's own stylesheet). So this site
+asks the same question rather than guessing from screen width, and hands out a different
+control on each side:
+
+- **coarse pointer or none** (a phone, a tablet): `Open the app`, straight to
+  `https://app.worldasitwas.com/`.
+- **fine pointer** (a laptop): the QR code and the address, because that person cannot use
+  the app on the screen they are looking at. There is still a quiet link through to it,
+  labelled honestly.
+
+Both controls are in the HTML and CSS picks one, so it is settled before the first paint and
+works with JavaScript off. **The two rules live at the very end of `style.css` and carry
+`!important`.** That is deliberate: they lost once to `.handoff`, declared later at the same
+specificity, which put the QR code on phones. This is not styling, it is which of two links
+a person is given, and the cost of losing is sending someone to a screen that turns them
+away.
+
+A matching pair of media queries is the whole mechanism:
+
+```css
+@media not all and (pointer:fine){ .for-desktop{display:none!important} }
+@media (pointer:fine){ .for-phone{display:none!important} }
+```
+
+They are exact complements, so precisely one always applies, including on a browser too old
+to know the `pointer` feature at all.
+
 ## Waitlist
 
-The apps are not in the stores yet, so the download section is a waitlist form instead of two
-dead buttons.
+The apps are not in the stores yet. The waitlist is no longer the page's main action, it
+sits under the launch panel and promises one specific thing: an email the day the store
+versions land. The app has its own, separate email door for a different promise (when a
+city becomes ready), which is why a person can be asked twice.
 
 - `POST /api/waitlist` takes `{email, platform, company}`. `company` is a honeypot: anything
   that fills it gets a cheerful 200 and no write. Rate limited to 6 posts per IP per 10
@@ -108,12 +159,21 @@ dead buttons.
   app reaches it over the private network with no TLS. The public proxy URL needs
   `ssl: { rejectUnauthorized: false }`; `db.js` picks the right mode from the URL.
 
-## Placeholders to replace at launch
+## Keeping the page honest
 
-- Store links, once the apps exist. Until then the waitlist is the honest control.
-- Privacy, account deletion and contact. The footer says plainly that these are not written
-  yet rather than linking to nothing. **Collecting email addresses makes the privacy note
-  more pressing than it was.**
+The archive is a claim about what exists, so it is written from the app's own catalogue, not
+from memory. `GET https://app.worldasitwas.com/places` returns every city with its eras and
+each era's `status` and `durationMin`; the page should list exactly the ones that say
+`ready`. At the time of writing that is twelve walks across London, Rome, Stockholm and
+Colombo, thirteen to sixteen minutes each, all free, with sixty eight more cities in the
+picker that are not built. **Re-check it whenever a walk ships**, or the page starts
+underselling the product, which is what it had been doing.
+
+Still outstanding:
+
+- Store links, once the apps exist.
+- Per-city links into the app. It is a single page today and the URL carries no city, so
+  every `Travel` button can only open the map.
 
 ## Deploy
 

@@ -372,7 +372,8 @@ body,.site-header,.site-footer,.section,.record,.narration,.era,.store,.theme-to
 .theme-toggle:hover svg{transform:rotate(18deg)}
 :root[data-theme="light"] .theme-toggle:hover svg{transform:rotate(-18deg)}
 @media (max-width:560px){
-  .header-end .btn{display:none}          /* the hero CTA sits directly below */
+  .header-end .btn,
+  .header-end .go{display:none}           /* the hero CTA sits directly below */
 }
 
 /* ---------- hero ---------- */
@@ -601,7 +602,7 @@ body,.site-header,.site-footer,.section,.record,.narration,.era,.store,.theme-to
 @media (max-width:1024px){ .city{grid-template-columns:1fr} .city > .plate{max-width:400px} }
 @media (max-width:560px){
   .era{grid-template-columns:62px minmax(0,1fr);row-gap:14px}
-  .era .btn{grid-column:2;justify-self:start}
+  .era .go{grid-column:2;justify-self:start}
   .era .numeral{font-size:34px}
 }
 
@@ -675,6 +676,48 @@ body,.site-header,.site-footer,.section,.record,.narration,.era,.store,.theme-to
   font-family:var(--ui);font-size:15px;color:var(--text-86)}
 @keyframes wl-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){ .wl-more{animation:none} }
+
+/* ---------- one action, two devices ---------- */
+/* The app refuses anything with a mouse, using exactly (pointer:fine), so the site asks
+   the same question and a person is never sent to a screen that will turn them away.
+   The switch itself is at the very end of this file and has to stay there; see the note
+   above it. What follows is only how each of the two sides looks. */
+.go{display:inline-flex}
+
+/* the phone side: one button, and the address spelled out under it */
+.launch-go .btn{height:58px;padding:0 34px;font-size:16.5px;border-radius:14px}
+.launch-note{margin-top:20px;font-size:15px;line-height:1.7;color:var(--text-2);max-width:34ch}
+.launch-go .meta{margin-top:12px;text-transform:none;letter-spacing:.06em;font-size:12px}
+
+/* the desktop side: a paper tile you point a camera at. The code stays ink on paper in
+   both themes, because a scanner wants dark on light and nothing else, so it is drawn
+   from the fixed brand scale rather than the role tokens that flip. */
+.handoff{display:flex;align-items:center;gap:clamp(18px,2.2vw,28px)}
+.handoff-qr{flex:none;width:clamp(126px,14vw,160px);height:auto;
+  border-radius:12px;background:var(--parchment);
+  border:1px solid var(--hairline);box-shadow:var(--shadow-pin)}
+.handoff-copy h3{font-family:var(--display);font-style:italic;font-weight:400;
+  font-size:clamp(21px,2.1vw,26px);line-height:1.2;color:var(--text);
+  margin-bottom:14px;max-width:17ch}
+.handoff-copy p{font-size:15px;line-height:1.7;color:var(--text-2);max-width:36ch}
+.handoff-copy b{font-family:var(--mono);font-weight:400;font-size:14px;
+  letter-spacing:.01em;color:var(--text);white-space:nowrap}
+.handoff-aside{margin-top:12px;font-size:13.5px;color:var(--text-meta)}
+.handoff-aside a{color:var(--text-2);border-bottom:1px solid var(--known-line);padding-bottom:1px}
+.handoff-aside a:hover{color:var(--text);border-bottom-color:currentColor}
+@media (max-width:620px){ .handoff{flex-direction:column;align-items:flex-start;gap:20px} }
+
+/* the quieter promise underneath: the web app is live, the stores are not */
+.notify{margin-top:clamp(30px,3.6vw,46px);padding-top:clamp(30px,3.6vw,46px);
+  border-top:1px solid var(--hairline);
+  display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);
+  gap:clamp(28px,4vw,56px);align-items:start}
+.notify .eyebrow{margin-bottom:16px}
+.notify .title{font-size:clamp(24px,2.5vw,30px);margin-bottom:14px}
+.notify-copy p{font-size:15px;line-height:1.7;color:var(--text-2);max-width:44ch}
+.notify .waitlist{margin-top:0;max-width:none}
+.notify .waitlist .meta{margin-top:18px}
+@media (max-width:900px){ .notify{grid-template-columns:1fr;gap:26px} }
 
 /* ---------- footer ---------- */
 .site-footer{background:var(--footer-ground);border-top:1px solid var(--hairline);padding:48px 0 40px}
@@ -771,3 +814,11 @@ body,.site-header,.site-footer,.section,.record,.narration,.era,.store,.theme-to
   border:1px solid var(--border);font-weight:500}
 .ph-foot{margin-top:10px;text-align:center;font-family:var(--mono);font-size:9.5px;
   letter-spacing:.1em;text-transform:uppercase;color:var(--text-meta)}
+
+/* ---------- the device switch, last and absolute ---------- */
+/* These two queries are exact complements, so precisely one always applies. They live at
+   the end and carry !important on purpose: this is not styling, it is which of two links
+   a person is given, and losing to a later layout rule (it happened, .handoff won and put
+   the QR on a phone) means sending someone to a screen that turns them away. */
+@media not all and (pointer:fine){ .for-desktop{display:none!important} }
+@media (pointer:fine){ .for-phone{display:none!important} }

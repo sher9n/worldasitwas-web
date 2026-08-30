@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>World As It Was</title>
-<meta name="description" content="Choose a place. Choose a year. Press Travel. World As It Was rebuilds a city as it stood, from the historical record, and tells you how sure it is. Coming to iPhone and Android.">
+<meta name="description" content="Choose a place. Choose a year. Press Travel. World As It Was rebuilds a city as it stood, from the historical record, and tells you how sure it is. Twelve walks in four cities, free, in your phone&#39;s browser.">
 <meta name="theme-color" content="#07090d" media="(prefers-color-scheme: dark)" data-theme-color="dark">
 <meta name="theme-color" content="#f7f2e7" media="(prefers-color-scheme: light)" data-theme-color="light">
 <link rel="canonical" href="https://worldasitwas.com/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="World As It Was">
 <meta property="og:title" content="World As It Was">
-<meta property="og:description" content="Choose a place. Choose a year. Press Travel. History as somewhere you can go.">
+<meta property="og:description" content="Choose a place. Choose a year. Press Travel. History as somewhere you can go. Live now on your phone.">
 <meta property="og:url" content="https://worldasitwas.com/">
 <meta property="og:image" content="https://worldasitwas.com/plates/hero-over-london-by-rail-1600.jpg">
 <meta property="og:image:alt" content="Gustave Doré's engraving of London rooftops and a railway viaduct, 1872.">
@@ -54,7 +54,7 @@
   }
 })();
 </script>
-<link rel="stylesheet" href="/style.css?v=3">
+<link rel="stylesheet" href="/style.css?v=4">
 <link rel="stylesheet" href="/motion.css?v=2">
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
@@ -85,7 +85,10 @@
           <path d="M20.4 13.8A8.6 8.6 0 1 1 10.2 3.6a6.9 6.9 0 0 0 10.2 10.2z"/>
         </svg>
       </button>
-      <a class="btn btn-secondary btn-sm" href="#waitlist">Join the waitlist</a>
+      <span class="go">
+        <a class="btn btn-primary btn-sm for-phone" href="https://app.worldasitwas.com/">Open the app</a>
+        <a class="btn btn-primary btn-sm for-desktop" href="#launch">Open the app</a>
+      </span>
     </div>
   </div>
 </header>
@@ -121,14 +124,17 @@
 
   <div class="wrap hero-grid">
     <div class="hero-copy reveal">
-      <p class="eyebrow">Coming soon to iPhone and Android</p>
+      <p class="eyebrow">Live now in your phone&rsquo;s browser</p>
       <h1 class="display-1">London,<br>1850.</h1>
       <p class="lede">Search a place. Choose a year. Press Travel. The world around you becomes the one that stood there, reconstructed from what the record actually says.</p>
       <div class="actions">
-        <a class="btn btn-primary" href="#timeline">Move the year</a>
-        <a class="btn btn-secondary" href="#waitlist">Join the waitlist</a>
+        <span class="go">
+          <a class="btn btn-primary for-phone" href="https://app.worldasitwas.com/">Open the app</a>
+          <a class="btn btn-primary for-desktop" href="#launch">Open the app</a>
+        </span>
+        <a class="btn btn-secondary" href="#timeline">Move the year</a>
       </div>
-      <p class="meta">London 1850 · 6 stops · 42 min · Free</p>
+      <p class="meta">12 walks · 4 cities · Free · Nothing to install</p>
     </div>
 
     <div class="hero-device reveal" style="--i:2">
@@ -218,7 +224,7 @@
               <div class="mini-dot" id="phDot"></div>
             </div>
             <span class="btn btn-primary phone-travel" id="phTravel">Travel</span>
-            <p class="meta phone-foot">6 stops · 42 min · On foot</p>
+            <p class="meta phone-foot">6 stops · 14 min · On foot</p>
           </div>
         </div>
       </div>
@@ -240,17 +246,17 @@
       <li class="reveal" style="--i:0">
         <span class="meta">Step 01</span>
         <h3>Search a place</h3>
-        <p>Type a city or drop a pin on the map. London, New York and Rome are in the archive today.</p>
+        <p>Type a city or pick one off the map. London, Rome, Stockholm and Colombo are walkable today.</p>
       </li>
       <li class="reveal" style="--i:1">
         <span class="meta">Step 02</span>
         <h3>Choose a year</h3>
-        <p>Drag the timeline back. Today to 1850. Then 1666. Then, in Rome, 100 AD.</p>
+        <p>Drag the year back. 1908, then 1850, then 1666. In Rome, back to 1600.</p>
       </li>
       <li class="reveal" style="--i:2">
         <span class="meta">Step 03</span>
         <h3>Press Travel</h3>
-        <p>You arrive, and you walk. Six stops, forty two minutes, each one standing where the thing it describes stood.</p>
+        <p>You arrive, and you walk. Six stops, about a quarter of an hour, each one standing where the thing it describes stood.</p>
       </li>
     </ol>
   </div>
@@ -403,8 +409,8 @@
   <div class="wrap">
     <div class="section-head reveal">
       <p class="eyebrow">The archive</p>
-      <h2 class="display-2">Three cities. Seven eras.<br>One of them rebuilt.</h2>
-      <p class="body">The idea works anywhere, eventually. It does not work everywhere yet, so we would rather tell you what exists than sell you what does not. London in 1850 is reconstructed and walkable today. Everything else is in the archive, being built, and says so.</p>
+      <h2 class="display-2">Four cities. Twelve walks.<br>All of them free.</h2>
+      <p class="body">The idea works anywhere, eventually. It does not work everywhere yet, so we would rather tell you what exists than sell you what does not. These twelve are reconstructed and walkable today, on your phone, for nothing. Everything else is honest about not being built.</p>
     </div>
 
     <div class="city">
@@ -420,31 +426,160 @@
         <h3 class="title city-name">London</h3>
         <div class="eras">
           <article class="era">
+            <span class="numeral">1666</span>
+            <div>
+              <h4>The Fire and the Waterman</h4>
+              <p>Will Chandler works the Thames at Old Swan Stairs, in the week the city burns.</p>
+              <p class="status">14 min on foot · Free</p>
+            </div>
+            <span class="go"><a class="btn btn-primary btn-sm for-phone" href="https://app.worldasitwas.com/">Travel</a><a class="btn btn-primary btn-sm for-desktop" href="#launch">Travel</a></span>
+          </article>
+          <article class="era">
+            <span class="numeral">1755</span>
+            <div>
+              <h4>The Coffee House and the New Bridge</h4>
+              <p>Hannah Pyke keeps a coffee house off Fleet Street, in a city running on coffee, news and credit.</p>
+              <p class="status">14 min on foot · Free</p>
+            </div>
+            <span class="go"><a class="btn btn-primary btn-sm for-phone" href="https://app.worldasitwas.com/">Travel</a><a class="btn btn-primary btn-sm for-desktop" href="#launch">Travel</a></span>
+          </article>
+          <article class="era">
             <span class="numeral">1850</span>
             <div>
-              <h4>Victorian London</h4>
-              <p>Gaslight, coal smoke, the newspaper trade. Six stops on foot, from Fleet Street down to the river.</p>
-              <p class="status">6 stops · 42 min · Free</p>
+              <h4>A Walk with a Flower Seller</h4>
+              <p>Nell Baker sells violets and watercress outside St Paul&rsquo;s. Six stops, from Ludgate Hill down to the river.</p>
+              <p class="status">14 min on foot · Free</p>
             </div>
-            <a class="btn btn-primary btn-sm" href="#waitlist">Travel</a>
+            <span class="go"><a class="btn btn-primary btn-sm for-phone" href="https://app.worldasitwas.com/">Travel</a><a class="btn btn-primary btn-sm for-desktop" href="#launch">Travel</a></span>
           </article>
-          <article class="era archived">
-            <span class="numeral">1940</span>
+          <article class="era">
+            <span class="numeral">1908</span>
             <div>
-              <h4>The Blitz</h4>
-              <p>Blackout, shelters, the Underground at night.</p>
-              <p class="status">In the archive</p>
+              <h4>The Conductor&rsquo;s Round</h4>
+              <p>Ernie Marsh takes the fares on a motor omnibus, in the years the horse starts losing.</p>
+              <p class="status">16 min on foot · Free</p>
             </div>
-            <a class="btn btn-secondary btn-sm" href="#waitlist">Notify me</a>
+            <span class="go"><a class="btn btn-primary btn-sm for-phone" href="https://app.worldasitwas.com/">Travel</a><a class="btn btn-primary btn-sm for-desktop" href="#launch">Travel</a></span>
           </article>
-          <article class="era archived">
-            <span class="numeral">1616</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="city">
+      <figure class="plate ratio-4x5 reveal">
+        <picture>
+        <source data-plate media="(prefers-color-scheme: light)" srcset="/plates/city-rome-campo-vaccino-light.jpg">
+        <img src="/plates/city-rome-campo-vaccino.jpg" width="1024" height="1280" loading="lazy" decoding="async" alt="Etching of the Roman Forum used as a cow pasture, the Arch of Septimius Severus half buried in the foreground.">
+      </picture>
+        <figcaption class="meta">Piranesi, Veduta di Campo Vaccino, about 1775 &middot; The Metropolitan Museum of Art</figcaption>
+      </figure>
+      <div class="reveal" style="--i:1">
+        <p class="meta">41.9028 N · 12.4964 E</p>
+        <h3 class="title city-name">Rome</h3>
+        <div class="eras">
+          <article class="era">
+            <span class="numeral">1600</span>
             <div>
-              <h4>Shakespeare's London</h4>
-              <p>Steeples, watermen, and the playhouses full at Bankside.</p>
-              <p class="status">In the archive</p>
+              <h4>The Holy Year</h4>
+              <p>Caterina Ruspoli sells herbs in Campo de&rsquo; Fiori, in a Jubilee year that fills the city with pilgrims.</p>
+              <p class="status">14 min on foot · Free</p>
             </div>
-            <a class="btn btn-secondary btn-sm" href="#waitlist">Notify me</a>
+            <span class="go"><a class="btn btn-primary btn-sm for-phone" href="https://app.worldasitwas.com/">Travel</a><a class="btn btn-primary btn-sm for-desktop" href="#launch">Travel</a></span>
+          </article>
+          <article class="era">
+            <span class="numeral">1750</span>
+            <div>
+              <h4>The Cicerone&rsquo;s Round</h4>
+              <p>Domenico Fabbri guides Grand Tourists through a city that is half building site, half cattle pasture.</p>
+              <p class="status">15 min on foot · Free</p>
+            </div>
+            <span class="go"><a class="btn btn-primary btn-sm for-phone" href="https://app.worldasitwas.com/">Travel</a><a class="btn btn-primary btn-sm for-desktop" href="#launch">Travel</a></span>
+          </article>
+          <article class="era">
+            <span class="numeral">1870</span>
+            <div>
+              <h4>The Year Everything Changed</h4>
+              <p>Assunta Belli, a seamstress, in the autumn the army breaches the wall at Porta Pia.</p>
+              <p class="status">14 min on foot · Free</p>
+            </div>
+            <span class="go"><a class="btn btn-primary btn-sm for-phone" href="https://app.worldasitwas.com/">Travel</a><a class="btn btn-primary btn-sm for-desktop" href="#launch">Travel</a></span>
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="city">
+      <figure class="plate ratio-4x5 reveal">
+        <picture>
+        <source data-plate media="(prefers-color-scheme: light)" srcset="/plates/city-stockholm-stokholmia-1693-light.jpg">
+        <img src="/plates/city-stockholm-stokholmia-1693.jpg" width="1024" height="1280" loading="lazy" decoding="async" alt="Engraving of Stockholm seen from the east in 1693, the old town packed with gabled houses and spires, tall ships anchored across the foreground.">
+      </picture>
+        <figcaption class="meta">Erik Dahlbergh and Willem Swidde, Stokholmia, 1693 &middot; Suecia Antiqua et Hodierna</figcaption>
+      </figure>
+      <div class="reveal" style="--i:1">
+        <p class="meta">59.3293 N · 18.0686 E</p>
+        <h3 class="title city-name">Stockholm</h3>
+        <div class="eras">
+          <article class="era">
+            <span class="numeral">1650</span>
+            <div>
+              <h4>Queen Christina&rsquo;s Harbour</h4>
+              <p>Olof Nilsson carries cargo on the Skeppsbron quay, with the tall ships in and the whole Baltic trade behind them.</p>
+              <p class="status">16 min on foot · Free</p>
+            </div>
+            <span class="go"><a class="btn btn-primary btn-sm for-phone" href="https://app.worldasitwas.com/">Travel</a><a class="btn btn-primary btn-sm for-desktop" href="#launch">Travel</a></span>
+          </article>
+          <article class="era">
+            <span class="numeral">1755</span>
+            <div>
+              <h4>The Tavern on the Square</h4>
+              <p>Brita Lindqvist keeps a tavern on Stortorget, in the middle of the old town.</p>
+              <p class="status">14 min on foot · Free</p>
+            </div>
+            <span class="go"><a class="btn btn-primary btn-sm for-phone" href="https://app.worldasitwas.com/">Travel</a><a class="btn btn-primary btn-sm for-desktop" href="#launch">Travel</a></span>
+          </article>
+          <article class="era">
+            <span class="numeral">1900</span>
+            <div>
+              <h4>The Last of the Horse Trams</h4>
+              <p>Gustav Ek works a horse tram through the city, in its final years on the streets.</p>
+              <p class="status">14 min on foot · Free</p>
+            </div>
+            <span class="go"><a class="btn btn-primary btn-sm for-phone" href="https://app.worldasitwas.com/">Travel</a><a class="btn btn-primary btn-sm for-desktop" href="#launch">Travel</a></span>
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="city">
+      <figure class="plate ratio-4x5 reveal">
+        <picture>
+        <source data-plate media="(prefers-color-scheme: light)" srcset="/plates/city-colombo-street-1890-light.jpg">
+        <img src="/plates/city-colombo-street-1890.jpg" width="1024" height="1280" loading="lazy" decoding="async" alt="Photograph of a Colombo street about 1890, a bullock cart carrying a high arched load, drivers walking beside it, a colonnaded building behind.">
+      </picture>
+        <figcaption class="meta">Photoglob Co., Ceylon. Colombo. Street Scene, about 1890 &middot; Library of Congress</figcaption>
+      </figure>
+      <div class="reveal" style="--i:1">
+        <p class="meta">6.9271 N · 79.8612 E</p>
+        <h3 class="title city-name">Colombo</h3>
+        <div class="eras">
+          <article class="era">
+            <span class="numeral">1700</span>
+            <div>
+              <h4>The Cinnamon Coast</h4>
+              <p>Kumari peels cinnamon in Dutch Colombo, on the coast the whole spice trade turns on.</p>
+              <p class="status">13 min on foot · Free</p>
+            </div>
+            <span class="go"><a class="btn btn-primary btn-sm for-phone" href="https://app.worldasitwas.com/">Travel</a><a class="btn btn-primary btn-sm for-desktop" href="#launch">Travel</a></span>
+          </article>
+          <article class="era">
+            <span class="numeral">1905</span>
+            <div>
+              <h4>The Rickshaw Man&rsquo;s Colombo</h4>
+              <p>Sena pulls a rickshaw through the Fort, past the arcades and the bullock carts.</p>
+              <p class="status">14 min on foot · Free</p>
+            </div>
+            <span class="go"><a class="btn btn-primary btn-sm for-phone" href="https://app.worldasitwas.com/">Travel</a><a class="btn btn-primary btn-sm for-desktop" href="#launch">Travel</a></span>
           </article>
         </div>
       </div>
@@ -456,7 +591,7 @@
         <source data-plate media="(prefers-color-scheme: light)" srcset="/plates/city-newyork-fifth-avenue-1880-light.jpg">
         <img src="/plates/city-newyork-fifth-avenue-1880.jpg" width="1024" height="1280" loading="lazy" decoding="async" alt="Photograph looking down Fifth Avenue in 1880, castellated houses on the left, a church spire in the distance.">
       </picture>
-        <figcaption class="meta">Charles Pollock, Down 5th Ave from Hotel Bristol, 1880 · Library of Congress</figcaption>
+        <figcaption class="meta">Charles Pollock, Down 5th Ave from Hotel Bristol, 1880 &middot; Library of Congress</figcaption>
       </figure>
       <div class="reveal" style="--i:1">
         <p class="meta">40.7128 N · 74.0060 W</p>
@@ -469,7 +604,7 @@
               <p>Prohibition, speakeasies and the first real skyline.</p>
               <p class="status">In the archive</p>
             </div>
-            <a class="btn btn-secondary btn-sm" href="#waitlist">Notify me</a>
+            <span class="go"><a class="btn btn-secondary btn-sm for-phone" href="https://app.worldasitwas.com/">Notify me</a><a class="btn btn-secondary btn-sm for-desktop" href="#launch">Notify me</a></span>
           </article>
           <article class="era archived">
             <span class="numeral">1880</span>
@@ -478,49 +613,15 @@
               <p>Brownstones, gaslight and the elevated railway.</p>
               <p class="status">In the archive</p>
             </div>
-            <a class="btn btn-secondary btn-sm" href="#waitlist">Notify me</a>
-          </article>
-        </div>
-      </div>
-    </div>
-
-    <div class="city">
-      <figure class="plate ratio-4x5 reveal">
-        <picture>
-        <source data-plate media="(prefers-color-scheme: light)" srcset="/plates/city-rome-campo-vaccino-light.jpg">
-        <img src="/plates/city-rome-campo-vaccino.jpg" width="1024" height="1280" loading="lazy" decoding="async" alt="Etching of the Roman Forum used as a cow pasture, the Arch of Septimius Severus half buried in the foreground.">
-      </picture>
-        <figcaption class="meta">Piranesi, Veduta di Campo Vaccino, about 1775 · The Metropolitan Museum of Art</figcaption>
-      </figure>
-      <div class="reveal" style="--i:1">
-        <p class="meta">41.9028 N · 12.4964 E</p>
-        <h3 class="title city-name">Rome</h3>
-        <div class="eras">
-          <article class="era archived">
-            <span class="numeral">1500</span>
-            <div>
-              <h4>The Renaissance city</h4>
-              <p>Half ruin, half building site. Cattle grazing in the Forum.</p>
-              <p class="status">In the archive</p>
-            </div>
-            <a class="btn btn-secondary btn-sm" href="#waitlist">Notify me</a>
-          </article>
-          <article class="era archived">
-            <span class="numeral">100<small>AD</small></span>
-            <div>
-              <h4>Trajan's Rome</h4>
-              <p>A million people. The Forum at its height, and the grain ships in from Egypt.</p>
-              <p class="status">In the archive</p>
-            </div>
-            <a class="btn btn-secondary btn-sm" href="#waitlist">Notify me</a>
+            <span class="go"><a class="btn btn-secondary btn-sm for-phone" href="https://app.worldasitwas.com/">Notify me</a><a class="btn btn-secondary btn-sm for-desktop" href="#launch">Notify me</a></span>
           </article>
         </div>
       </div>
     </div>
 
     <div class="tour-note reveal">
-      <p class="meta">Where a city is not built yet, the app offers a light tour, three generated stops, and labels it exactly that. It is not sold as a reconstruction.</p>
-      <p class="request">Somewhere missing? <a href="#waitlist">Join the waitlist</a> and tell us which city to build next.</p>
+      <p class="meta">A city we have not reconstructed yet says so plainly, and offers you nothing pretend in its place. Sixty eight more are already in the list, waiting their turn.</p>
+      <p class="request">Somewhere missing? Open the app, search for it, and ask us to build it next.</p>
     </div>
   </div>
 </section>
@@ -544,23 +645,56 @@
   </div>
 </section>
 
-<!-- ============ DOWNLOAD ============ -->
-<section class="section" id="waitlist">
+<!-- ============ LAUNCH ============ -->
+<!-- One action, two devices. The app shows a gate to anything with a mouse, keyed on
+     (pointer:fine); this section uses the same query, so nobody is sent to that gate
+     by accident. CSS only, so it is right before the first paint. -->
+<section class="section" id="launch">
   <div class="wrap">
+
     <div class="join reveal">
       <div class="join-copy">
-        <p class="eyebrow"><span class="dot" aria-hidden="true"></span>Coming soon</p>
-        <h2 class="display-2">Coming to iPhone and Android.</h2>
-        <p class="join-sub">Six stops, forty two minutes, on foot. Free.</p>
+        <p class="eyebrow"><span class="dot" aria-hidden="true"></span>Live now</p>
+        <h2 class="display-2">Twelve walks. Four cities.</h2>
+        <p class="body">It runs in your phone&rsquo;s browser. Nothing to install, nothing to pay, and every walk is free while we build the rest.</p>
+        <p class="join-sub">London &middot; Rome &middot; Stockholm &middot; Colombo</p>
       </div>
+
       <div class="join-form">
+        <div class="for-phone launch-go">
+          <a class="btn btn-primary" href="https://app.worldasitwas.com/">Open the app</a>
+          <p class="launch-note">It opens in the browser you are already using. There is nothing to download.</p>
+          <p class="meta">app.worldasitwas.com</p>
+        </div>
+
+        <div class="for-desktop handoff">
+          <img class="handoff-qr" src="/qr-app.svg" width="168" height="168"
+               alt="A QR code that opens app.worldasitwas.com">
+          <div class="handoff-copy">
+            <h3>It is made for walking, so it lives on your phone.</h3>
+            <p>Point your phone&rsquo;s camera at this, or type
+              <b>app.worldasitwas.com</b> into it.</p>
+            <p class="handoff-aside"><a href="https://app.worldasitwas.com/">Open it on this screen anyway</a>
+              and it will tell you, politely, that it wants a phone.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="notify reveal" id="waitlist">
+      <div class="notify-copy">
+        <p class="eyebrow">Still coming</p>
+        <h3 class="title">The iPhone and Android apps.</h3>
+        <p>The web app is the whole product today. The store versions add offline walks and
+          a lock screen you can walk with in your pocket.</p>
+      </div>
 
       <form class="waitlist" id="waitlist-form" novalidate>
         <div class="wl-row">
           <label class="sr-only" for="wl-email">Email address</label>
           <input id="wl-email" name="email" type="email" inputmode="email" autocomplete="email"
                  spellcheck="false" required placeholder="you@example.com" aria-describedby="wl-note">
-          <button class="btn btn-primary" type="submit" id="wl-submit">Join the waitlist</button>
+          <button class="btn btn-primary" type="submit" id="wl-submit">Tell me when they land</button>
         </div>
         <!-- a bot fills every field it finds; a person never sees this one -->
         <div class="trap" aria-hidden="true">
@@ -582,8 +716,8 @@
           <p class="wl-status" id="wl-city-status" role="status" aria-live="polite"></p>
         </div>
       </form>
-      </div>
     </div>
+
   </div>
 </section>
 
@@ -594,13 +728,14 @@
     <div class="footer-top">
       <span class="wordmark">World As It Was</span>
       <nav class="footer-links meta" aria-label="Footer">
-        <a href="#timeline">The timeline</a>
+        <a href="https://app.worldasitwas.com/">Open the app</a>
         <a href="#archive">The archive</a>
-        <a href="#waitlist">Join the waitlist</a>
+        <a href="https://app.worldasitwas.com/privacy">Privacy</a>
+        <a href="mailto:worldasitwas@gmail.com">Contact</a>
       </nav>
     </div>
-    <p class="meta footer-note">The privacy policy, the account deletion page and a contact address go live with the app. They are not written yet, so they are not linked here.</p>
-    <p class="meta footer-note">Period plates are the closest surviving views of each era, not photographs of the exact year. All public domain, from the Yale Center for British Art, the Library of Congress, the Imperial War Museum, the Museum of London and The Metropolitan Museum of Art.</p>
+    <p class="meta footer-note">The <a href="https://app.worldasitwas.com/privacy">privacy policy</a> lives with the app, and says what is held and for how long. To have your address deleted, email <a href="mailto:worldasitwas@gmail.com">worldasitwas@gmail.com</a> from it and it is removed.</p>
+    <p class="meta footer-note">Period plates are the closest surviving views of each era, not photographs of the exact year. All public domain, from the Yale Center for British Art, the Library of Congress, the Imperial War Museum, the Museum of London, The Metropolitan Museum of Art and Suecia Antiqua et Hodierna.</p>
     <p class="meta footer-note">© 2026 World As It Was</p>
   </div>
 </footer>
@@ -954,7 +1089,7 @@
       rows: [
         ["People", "About 8.9 million", "known"],
         ["Crossings", "More than thirty in Greater London", "known"],
-        ["Waiting for you", "6 stops in 1850, 42 minutes on foot", "known"]
+        ["Waiting for you", "6 stops in 1850, 14 minutes on foot", "known"]
       ]
     }
   ];

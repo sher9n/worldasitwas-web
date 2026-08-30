@@ -256,27 +256,49 @@ raised to 92 / 86 / 78, because on paper a low alpha goes pale and thin far fast
 dim on ink. Any page showing narration also shows the three-item legend beneath it: a 15px rule
 in the matching style plus a mono label.
 
-**Light tour.** Where a city is not built, the honest offer is three generated stops rather than
-an empty result. On the site it is labelled the same way it is in the app: `LIGHT TOUR ·
-3 GENERATED STOPS`. Do not dress it up as equivalent to a reconstruction.
+**A city that is not built.** The light tour of three generated stops was never built, and the
+site must not advertise it. What the app actually does is say `We haven't reconstructed <city>
+yet`, count how many people have asked for it, and take the request. The site says the same:
+nothing pretend in place of a reconstruction.
 
-**Waitlist.** The apps are not in the stores, so the page does not pretend they are. The
-download section is a panel, not a paragraph that trails off the page: `--surface`, hairline
+**The device switch.** The web app is a phone product and refuses a mouse, so the page hands out
+a different control depending on what is holding it, using the same question the app asks:
+`@media (pointer:fine)`, never screen width. Both controls ship in the HTML and CSS reveals one,
+so it is decided before the first paint and survives JavaScript being off. The two rules sit at
+the end of `style.css` with `!important`, because this is not styling, it is which of two links
+a person is given, and losing to a later rule means sending someone to a screen that turns them
+away. It has already happened once.
+
+**The handoff.** For the reader on a laptop, a QR code on a paper tile, the address in mono
+beside it, and a quiet link through to the app labelled with what will happen. **The code stays
+ink on paper in both themes.** It is drawn from the fixed brand scale rather than the role
+tokens, because a scanner wants dark modules on a light field and nothing else. This is the one
+sanctioned exception to "nothing stays dark in light mode", and it runs the other way: a light
+thing that stays light.
+
+**The launch panel.** The main action of the page, a panel rather than a paragraph that trails
+off the edge: `--surface`, hairline
 border, an amber hairline across its top edge, and inside it exactly one thing to do. The email
 field and the button share a single rounded box that takes the focus ring as a whole, and that
 box sits on `--ground` so it reads as a slot cut into the panel. The panel is two columns on a
-wide screen, the promise on the left and the box on the right, because a form alone in a
+wide screen, the promise on the left and the control on the right, because a form alone in a
 full-width band leaves half the page empty and reads as an afterthought. Nothing else competes
-with it. On
+with it.
+
+**Waitlist.** Demoted, and deliberately so. The web app is the product today, so the email box
+sits below the launch panel behind a hairline, promising one narrow thing: a message the day the
+store versions land. The app has its own email door making a different promise, when a city
+becomes ready, which is why a person can be asked twice. Keep the two promises visibly
+different or the second ask reads as a bug. On
 success the box is removed and the status line replaces it, so there is nothing left to submit
 twice, and only then does the follow-up question appear, asking which city to build next. Ask
 for the smallest thing first and the rest afterwards. Failures speak plainly and never blame the reader. The form carries a
 hidden `company` field that a person never sees; anything that fills it is treated as a bot and
 silently accepted without a write.
 
-**Footer.** `--footer-ground`, hairline top, mono for links and notes, `--text-meta`. Where the
-app has privacy and delete-account pages and the site does not yet, the footer says so in one
-sentence instead of linking nowhere.
+**Footer.** `--footer-ground`, hairline top, mono for links and notes, `--text-meta`. It links
+the app's privacy page and the deletion address, because those now exist. The rule it follows is
+unchanged: link a real thing or say plainly that it is not written, never link nowhere.
 
 **Links.** Default `--accent-text`, hover `--text`, no underline in navigation, underline in
 body copy. Set both states explicitly: an unstyled link is browser blue and breaks the page.
@@ -551,6 +573,8 @@ themes. Re-measure after any palette change rather than trusting the table above
 - Don't use Cormorant for body copy or buttons.
 - Don't let a theme change move anything. Colour only.
 - Don't leave anything dark in light mode. If a component only works on ink, it is not done.
+  The single exception is the QR code, which stays ink on paper in both themes because a
+  scanner requires it.
 - Don't put a colour in an SVG `fill` or `stroke` attribute. Give the node a class and style it,
   or it will be stuck in one theme.
 - Don't use rounded cards with a left accent border, aggressive gradients, or glassmorphism
@@ -560,4 +584,11 @@ themes. Re-measure after any palette change rather than trusting the table above
   launch, and the site must not promise them. Where the roadmap names them, it says plainly
   that they are not in the first release and have no date.
 - Don't show App Store or Google Play buttons until there is something behind them. Until then
-  the honest control is the waitlist.
+  the honest control is the app itself, which is live on the web, with the waitlist underneath
+  it for the store versions.
+- Don't detect a phone by screen width. The app gates on `(pointer:fine)`, so a narrow window on
+  a laptop would be told to open an app that will then refuse it. Ask the same question the app
+  asks.
+- Don't state a count, a duration or a city list from memory. `GET /places` on the app is the
+  source of truth for what is walkable, and the page was wrong by four cities and thirty
+  minutes before anyone checked.

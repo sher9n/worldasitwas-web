@@ -201,7 +201,7 @@
           }, arrived ? "You are in " + year : "Travel"),
           h("p", { className: "ph-foot" }, arrived
             ? era.people + " · " + era.ruler
-            : "6 stops · 42 min · on foot")));
+            : "6 stops · 14 min · on foot")));
     }
 
     function MapView(props) {
