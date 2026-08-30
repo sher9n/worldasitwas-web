@@ -9,7 +9,8 @@ over to it, not to take their address and promise something later.
 
 ## What is here
 
-A single static page plus a small Node server. No framework, no build step, no dependencies.
+A single static page plus a small Node server. No framework, no build step, no client-side
+dependencies at all: the page loads no third-party JavaScript.
 
 ```
 public/
@@ -17,7 +18,11 @@ public/
   style.css       all styling, driven by the design tokens in :root
   404.html
   plates/         period plates, pre-toned (see "Plates" below)
+  app/            screenshots of the live app, played inside the hero phone
+  phone.js        picks which app screen the hero phone is showing
   qr-app.svg      the handoff code, ink on paper, decodes to https://app.worldasitwas.com/
+tools/
+  shoot-app.mjs   re-shoots public/app/ from the live app, both themes
   robots.txt, sitemap.xml
 server.js         static file server: brotli/gzip, cache headers, www -> apex, /health
 ```
@@ -73,6 +78,44 @@ content lives in the `ERAS` array in `index.html`. To add an era, add an entry, 
 
 Entrance animations are progressive enhancement: `.reveal` is only hidden when the document
 has the `js` class, so with JavaScript off nothing is invisible.
+
+## The phone
+
+The phone in the hero is not a drawing of the product. It plays **photographs of the live
+app** at app.worldasitwas.com: the world map with every built city on it, and the sheet that
+slides up when you pick one. `phone.js` only adds and removes one class; the slide is a CSS
+transition, so with JavaScript off, with the effect switched off in the lab, or for a reader
+who asked for reduced motion, the phone is a still of the app rather than an empty frame.
+
+There used to be a hand-drawn React widget here. It is gone, and so are the two React scripts
+the page pulled from a CDN for it, which is why the page now loads no third-party JavaScript.
+
+**These screens go stale the moment the app changes.** Take them again with:
+
+```sh
+node tools/shoot-app.mjs
+```
+
+It needs Chrome and ImageMagick 7, and no npm packages. It drives a real browser because the
+app decides what to draw from the device it is on:
+
+- It gates on `@media (pointer:fine)`, so the browser has to be **emulating touch** or every
+  screenshot comes back as "This one is made for a phone". The script fails loudly if that
+  happens rather than writing the gate into `public/app/`.
+- The map is MapLibre, so **software WebGL** has to be on or headless Chrome draws nothing.
+- It sets a remembered address in `localStorage` to skip the app's email door. That posts
+  nothing to `/signup`, so re-shooting never writes a row to the app's database. It also
+  marks the install prompt dismissed, because "Keep this on your home screen" is not what a
+  marketing page should be showing.
+
+The sheets are cropped away from the map and their top corners masked out to transparency, so
+one image can slide over the other at any position. The script prints each sheet's height;
+if a walk is added or removed those heights change, so update the matching `height` attribute
+in `index.html` when it does.
+
+The screen is sized to the captures exactly (`aspect-ratio:560/1212`), which is also what
+keeps the map's OpenStreetMap attribution on screen rather than cropped off the bottom. The
+tile licence needs it there.
 
 ## Plates
 

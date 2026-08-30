@@ -55,10 +55,8 @@
 })();
 </script>
 <link rel="stylesheet" href="/style.css?v=4">
-<link rel="stylesheet" href="/motion.css?v=2">
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
-<script defer src="/phone.js?v=1"></script>
+<link rel="stylesheet" href="/motion.css?v=3">
+<script defer src="/phone.js?v=2"></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -138,96 +136,43 @@
     </div>
 
     <div class="hero-device reveal" style="--i:2">
-      <div class="phone" id="phone" role="img" aria-label="The app, demonstrating itself: a place is typed in, the map finds Fleet Street, the year is dragged back to 1850, and Travel is pressed.">
+      <!-- The real app, not a drawing of one. These are screenshots of the live app at
+           app.worldasitwas.com, captured on a phone-sized viewport in BOTH themes, so the
+           phone follows whichever theme the reader is in, like every other image here.
+           The sheets are cropped from the same captures with their top corners masked to
+           transparency, so they can slide over the map the way the real sheet does.
+           Re-shoot them whenever the app changes: see "The phone" in the README. -->
+      <figure class="phone" id="phone">
         <div class="phone-screen">
-          <div id="phoneApp"></div>
           <div class="phone-status" aria-hidden="true"><span>9:41</span><span>100%</span></div>
-          <div class="phone-search" aria-hidden="true"><span class="meta">Where</span><b id="phWhere">London</b><i class="phone-caret"></i></div>
-          <div class="phone-map" aria-hidden="true">
-            <svg viewBox="0 0 280 380" preserveAspectRatio="xMidYMid slice" role="presentation">
-              <defs>
-                <radialGradient id="pinHalo"><stop offset="0" stop-color="currentColor" stop-opacity=".26"/><stop offset=".7" stop-color="currentColor" stop-opacity="0"/></radialGradient>
-              </defs>
-              <rect class="m-ground" width="280" height="380"/>
-              <g class="map-now">
-              <!-- park -->
-              <path class="m-park" d="M12 96 C 34 84, 68 86, 84 102 S 92 142, 70 152 S 22 150, 12 130 Z"/>
-              <!-- river -->
-              <path d="M-12 268 C 34 246, 78 254, 118 274 S 196 308, 238 288 S 282 266, 300 274 L 300 312 C 262 306, 232 330, 190 322 S 108 298, 66 292 S 18 282, -12 296 Z" class="m-water"/>
-              <!-- blocks -->
-              <g class="m-blocks">
-                <path d="M100 44 h44 v34 h-44 z"/><path d="M152 40 h40 v40 h-40 z"/><path d="M200 46 h48 v32 h-48 z"/>
-                <path d="M96 90 h52 v40 h-52 z"/><path d="M156 88 h38 v44 h-38 z"/><path d="M202 92 h50 v38 h-50 z"/>
-                <path d="M20 168 h46 v34 h-46 z"/><path d="M74 164 h40 v40 h-40 z"/><path d="M122 166 h52 v36 h-52 z"/><path d="M182 162 h40 v42 h-40 z"/><path d="M230 168 h48 v34 h-48 z"/>
-                <path d="M18 214 h48 v30 h-48 z"/><path d="M76 214 h38 v28 h-38 z"/><path d="M124 212 h52 v32 h-52 z"/><path d="M186 214 h36 v28 h-36 z"/><path d="M232 210 h46 v34 h-46 z"/>
-                <path d="M40 330 h50 v40 h-50 z"/><path d="M100 336 h46 v36 h-46 z"/><path d="M156 340 h56 v32 h-56 z"/><path d="M222 332 h54 v40 h-54 z"/>
-              </g>
-              <!-- streets -->
-              <g class="m-streets" stroke-width="1.1" stroke-linecap="round">
-                <path d="M0 84 C 60 80, 120 86, 180 82 S 250 76, 280 80"/>
-                <path d="M0 140 H 280"/><path d="M0 208 H 280"/>
-                <path d="M0 250 C 60 244, 120 254, 180 248 S 250 240, 280 246"/>
-                <path d="M92 30 V 250"/><path d="M148 30 V 252"/><path d="M196 30 V 248"/><path d="M244 30 V 250"/>
-                <path d="M0 322 C 70 316, 140 326, 210 320 S 262 314, 280 318"/>
-                <path d="M96 300 V 380"/><path d="M154 302 V 380"/><path d="M218 300 V 380"/>
-              </g>
-              <!-- main road -->
-              <path class="m-road" d="M0 180 C 54 176, 96 186, 148 178 S 232 162, 280 168" stroke-width="2" stroke-linecap="round"/>
-              <!-- walking route -->
-              <path class="m-route" d="M46 226 L 82 214 L 118 196 L 152 178 L 186 172 L 214 150"
-                    stroke-width="1.6" stroke-dasharray="1 5"
-                    stroke-linecap="round" stroke-linejoin="round"/>
-              <g class="m-stops" stroke-width="1.5">
-                <circle cx="46" cy="226" r="3.4"/><circle cx="82" cy="214" r="3.4"/>
-                <circle cx="118" cy="196" r="3.4"/><circle cx="186" cy="172" r="3.4"/><circle cx="214" cy="150" r="3.4"/>
-              </g>
-              </g>
-
-              <!-- the same ground, two hundred years earlier -->
-              <g class="map-then">
-                <path class="m-water" d="M-12 262 C 30 240, 74 250, 116 272 S 194 306, 236 286 S 282 262, 300 272 L 300 318 C 260 312, 228 336, 186 328 S 104 302, 62 296 S 16 286, -12 300 Z"/>
-                <g class="m-blocks">
-                  <path d="M96 104 h34 v26 h-34 z"/><path d="M138 96 h28 v30 h-28 z"/><path d="M176 106 h36 v24 h-36 z"/>
-                  <path d="M92 150 h30 v28 h-30 z"/><path d="M130 146 h26 v32 h-26 z"/><path d="M164 152 h34 v26 h-34 z"/><path d="M206 148 h30 v30 h-30 z"/>
-                  <path d="M100 196 h32 v24 h-32 z"/><path d="M142 194 h28 v26 h-28 z"/><path d="M180 198 h34 v22 h-34 z"/>
-                  <path d="M60 340 h34 v28 h-34 z"/><path d="M104 344 h30 v24 h-30 z"/><path d="M146 342 h36 v26 h-36 z"/>
-                </g>
-                <g class="m-streets" stroke-width="1.2" stroke-linecap="round">
-                  <path d="M0 138 C 46 132, 92 144, 140 136 S 226 122, 280 130"/>
-                  <path d="M0 188 C 52 182, 104 196, 156 186 S 236 170, 280 178"/>
-                  <path d="M0 232 C 60 226, 118 238, 176 230 S 246 218, 280 224"/>
-                  <path d="M86 60 C 92 110, 84 160, 92 232"/>
-                  <path d="M148 56 C 156 108, 146 162, 152 236"/>
-                  <path d="M212 62 C 218 112, 208 164, 214 230"/>
-                  <path d="M0 336 C 70 330, 140 342, 210 334 S 262 328, 280 332"/>
-                </g>
-                <path class="m-road" d="M0 176 C 54 170, 98 184, 150 174 S 234 158, 280 166" stroke-width="2" stroke-linecap="round"/>
-              </g>
-
-              <!-- current stop -->
-              <circle class="m-halo" cx="152" cy="178" r="30"/>
-              <circle class="m-pin" cx="152" cy="178" r="6" stroke-width="2"/>
-              <g transform="translate(166 166)">
-                <rect class="m-chip" width="92" height="23" rx="6"/>
-                <text class="m-chip-text" x="46" y="15.5" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="8.5" letter-spacing="1">FLEET STREET</text>
-              </g>
-              <text class="m-label" x="20" y="316" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="8" letter-spacing="1.4">THAMES</text>
-            </svg>
-          </div>
-          <div class="phone-sheet" aria-hidden="true">
-            <p class="meta">When</p>
-            <div class="numeral phone-year" id="phYear">1850</div>
-            <div class="mini">
-              <div class="mini-line"></div>
-              <div class="mini-ticks"><i></i><i></i><i></i><i></i><i></i></div>
-              <div class="mini-years"><span>1600</span><span>1700</span><span>1800</span><span>1900</span><span>2000</span></div>
-              <div class="mini-dot" id="phDot"></div>
-            </div>
-            <span class="btn btn-primary phone-travel" id="phTravel">Travel</span>
-            <p class="meta phone-foot">6 stops · 14 min · On foot</p>
+          <div class="phone-app">
+            <picture class="phone-app-map">
+              <source data-plate media="(prefers-color-scheme: light)" srcset="/app/app-map-light.webp">
+              <img src="/app/app-map.webp" width="560" height="1212" alt="" fetchpriority="high" decoding="async">
+            </picture>
+            <picture class="phone-sheet-pic is-on" data-city="london">
+              <source data-plate media="(prefers-color-scheme: light)" srcset="/app/app-panel-london-light.webp">
+              <img src="/app/app-panel-london.webp" width="560" height="688" alt="" decoding="async">
+            </picture>
+            <picture class="phone-sheet-pic" data-city="rome">
+              <source data-plate media="(prefers-color-scheme: light)" srcset="/app/app-panel-rome-light.webp">
+              <img src="/app/app-panel-rome.webp" width="560" height="613" alt="" decoding="async">
+            </picture>
+            <picture class="phone-sheet-pic" data-city="stockholm">
+              <source data-plate media="(prefers-color-scheme: light)" srcset="/app/app-panel-stockholm-light.webp">
+              <img src="/app/app-panel-stockholm.webp" width="560" height="613" alt="" decoding="async">
+            </picture>
+            <picture class="phone-sheet-pic" data-city="colombo">
+              <source data-plate media="(prefers-color-scheme: light)" srcset="/app/app-panel-colombo-light.webp">
+              <img src="/app/app-panel-colombo.webp" width="560" height="538" alt="" decoding="async">
+            </picture>
           </div>
         </div>
-      </div>
+        <figcaption class="sr-only">The live app at app.worldasitwas.com: a world map marked
+          with London, Rome, Stockholm and Colombo, and the walks it offers in each. London
+          has 1908, 1850, 1755 and 1666; Rome 1870, 1750 and 1600; Stockholm 1900, 1755 and
+          1650; Colombo 1905 and 1700.</figcaption>
+      </figure>
     </div>
   </div>
 
@@ -1001,7 +946,12 @@
     });
 
     function sync() {
-      if (document.documentElement.classList.contains("fx-drift")) { start(); }
+      if (document.documentElement.classList.contains("fx-drift")) {
+        // the drift shows frame 0 from the first paint, so the credit has to name
+        // frame 0 from the first paint too, not the still it replaced
+        credit.textContent = CREDITS[String(years[at])] || STILL;
+        start();
+      }
       else { stop(); credit.textContent = STILL; }
     }
     window.addEventListener("waiw:fx", sync);

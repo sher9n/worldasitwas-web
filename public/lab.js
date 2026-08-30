@@ -25,7 +25,7 @@
     { id: "alive", cls: "fx-alive", on: true, at: "#arrive",
       name: "Images breathe", note: "A slow zoom that never quite stops" },
     { id: "phone", cls: "fx-phone", on: true, at: "#top",
-      name: "The phone runs itself", note: "Types, pins, scrubs the year, travels" },
+      name: "The phone plays the app", note: "Real screens, city after city" },
     { id: "reveal", cls: "fx-reveal", on: false, at: "#arrive",
       name: "Plates arrive", note: "Images settle out of a slow zoom as they scroll up" },
     { id: "atmos", cls: "fx-atmos", on: false, at: "#archive",

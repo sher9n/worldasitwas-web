@@ -261,6 +261,13 @@ site must not advertise it. What the app actually does is say `We haven't recons
 yet`, count how many people have asked for it, and take the request. The site says the same:
 nothing pretend in place of a reconstruction.
 
+**The phone.** It shows the real app, not a picture of a made-up one: screenshots of the live
+app taken in both themes, so it follows the reader's theme like every other image on the page.
+One sheet is up at a time and it slides, which is the app's own motion rather than an
+invention. The rule this settles: **if the product exists, show the product.** A drawn mock of
+a screen you can go and look at is a small dishonesty, and it also drifts out of date silently,
+which is how the page came to claim four fewer cities than the app had.
+
 **The device switch.** The web app is a phone product and refuses a mouse, so the page hands out
 a different control depending on what is holding it, using the same question the app asks:
 `@media (pointer:fine)`, never screen width. Both controls ship in the HTML and CSS reveals one,
@@ -580,6 +587,8 @@ themes. Re-measure after any palette change rather than trusting the table above
 - Don't use rounded cards with a left accent border, aggressive gradients, or glassmorphism
   beyond the single blur used on the header and floating controls.
 - Don't show a UI screenshot of the arrival screen. It isn't designed yet.
+- Don't draw a mock of a screen that exists. Shoot the real one (`node tools/shoot-app.mjs`)
+  and re-shoot it when the app changes.
 - Don't imply offline mode, GPS arrival detection, a chat guide, or paid tiers. None ship at
   launch, and the site must not promise them. Where the roadmap names them, it says plainly
   that they are not in the first release and have no date.

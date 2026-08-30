@@ -227,39 +227,12 @@
   to{transform:scale(1.185) translate3d(-1.8%,-2%,0)}
 }
 
-/* ---------- fx-phone: the mock runs the product ---------- */
-.phone-caret{display:none}
-.fx-phone .phone-caret{display:inline-block;width:1px;height:1.05em;margin-left:1px;
-  background:var(--accent);vertical-align:-2px;animation:caret 1s steps(1) infinite}
-@keyframes caret{50%{opacity:0}}
-.fx-phone .p-typing .phone-caret{animation:none;opacity:1}
-
-/* the two maps: today, and the year you travelled to */
-.map-then{opacity:0;transition:opacity 1.1s var(--spring)}
-.phone.arrived .map-then{opacity:1}
-.map-now{transition:opacity 1.1s var(--spring)}
-.phone.arrived .map-now{opacity:0}
-.phone-map svg{transition:transform 1.6s var(--spring)}
-.phone.zoomed .phone-map svg{transform:scale(1.14)}
-
-.m-pin,.m-halo,.m-chip,.m-chip-text{opacity:0;transition:opacity .5s var(--spring)}
-.phone.pinned .m-pin,
-.phone.pinned .m-halo,
-.phone.pinned .m-chip,
-.phone.pinned .m-chip-text{opacity:1}
-.m-route,.m-stops{opacity:0;transition:opacity .7s var(--spring) .2s}
-.phone.arrived .m-route,
-.phone.arrived .m-stops{opacity:1}
-
-.phone .btn-primary{transition:transform .16s var(--spring-back),filter .3s}
-.phone.pressing .btn-primary{transform:scale(.965)}
-.phone.arrived .btn-primary{filter:saturate(.85)}
-
-.phone-year{transition:opacity .2s}
-.phone.scrubbing .phone-year{opacity:.72}
-.mini-dot{transition:left .9s var(--spring)}
-.fx-phone .phone-foot{transition:opacity .4s}
-.phone.scrubbing .phone-foot{opacity:.45}
+/* ---------- fx-phone: the phone plays the app ---------- */
+/* Nothing to declare here any more. The phone is no longer a drawing being animated,
+   it is a set of screenshots of the live app, and the only thing moving is which
+   sheet is up. The slide itself is a transition on .phone-sheet-pic in style.css,
+   because the phone must still look right with this effect switched off; phone.js
+   only adds and removes .is-on, and only when this class is present. */
 
 /* ---------- the lab dock ---------- */
 .lab{position:fixed;right:18px;bottom:18px;z-index:200;width:272px;
@@ -334,6 +307,5 @@
   .fx-reveal .plate figcaption{transform:none!important;opacity:1!important;transition:none!important}
   .fx-alive .plate img,
   .fx-alive .viewer-layer img{animation:none!important}
-  .fx-phone .phone-caret{animation:none;opacity:0}
-  .phone-map svg,.mini-dot,.map-then,.map-now{transition:none!important}
+  .phone-sheet-pic{transition:none!important}
 }
